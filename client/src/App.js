@@ -7,6 +7,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import GoogleMaps from '../src/components/googleMaps/googleMap'
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -32,6 +33,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+      <GoogleMaps />
       <div>Enter your code here</div>
       <Router>
         <Routes>

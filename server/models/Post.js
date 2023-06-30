@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const postSchema = new Schema(
     {
         description: {
-
+            
         },
         date: {
 
@@ -16,6 +16,8 @@ const postSchema = new Schema(
         },
         comment: {
 
-        }
+        },
     }
     )
+
+    // Have a virtual that keeps track of a users sales or post?
