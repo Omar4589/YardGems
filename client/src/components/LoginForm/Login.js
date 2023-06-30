@@ -8,8 +8,8 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
-import Auth from '../utils/auth';
+import { LOGIN_USER } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 
 
