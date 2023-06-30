@@ -34,8 +34,6 @@ const typeDefs = gql`
     createUser(username: String!, email: String!, password: String!): Auth
     addPost(description: String!,  address: String!, dateOfSale: String!, image: String): Post
   }
-
-
 `;
 
 module.exports = typeDefs;
