@@ -4,10 +4,8 @@ export const USER_QUERY = gql`
 query userMe {
     user {
       _id
-      name
       username
       email
-      name
       savedPost {
        description
        address
