@@ -6,7 +6,7 @@ import Auth from "../../utils/auth";
 import { useMutation } from "@apollo/client";
 import greenGem from "../../assets/greenGem.png";
 
-const SignUpForm = () => {
+const SignUpForm = ({handleComponentChange, LoginForm}) => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({
     username: "",
@@ -32,7 +32,7 @@ const SignUpForm = () => {
     try {
       const { data } = await createUser({ variables: userFormData });
 
-      Auth.login(data.addUser.token);
+      Auth.login(data.createUser.token);
     } catch (err) {
       console.error(err);
     }
@@ -170,9 +170,9 @@ const SignUpForm = () => {
       <Box sx={{ mt: 3, textAlign: "center" }}>
         <Typography variant="body2">
           Already have an account?
-          <Link to="/users/login" style={{ margin: 10 }}>
+          <Button onClick={() => handleComponentChange(LoginForm)} style={{ margin: 10 }}>
             Login
-          </Link>
+          </Button>
         </Typography>
       </Box>
     </Box>
