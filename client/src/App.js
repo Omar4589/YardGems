@@ -8,6 +8,8 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GoogleMaps from '../src/components/googleMaps/googleMap'
+//import SignUpForm from "./components/SignUpForm/SignUpForm";
+import SignUpLoginPage from "./pages/SignUpLogin";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -34,10 +36,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <GoogleMaps />
-      <div>Enter your code here</div>
       <Router>
         <Routes>
-          <Route path="/" />
+          <Route path="/signup-login" element={<SignUpLoginPage/>}/>
         </Routes>
       </Router>
     </ApolloProvider>
