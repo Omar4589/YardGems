@@ -7,6 +7,8 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+//import SignUpForm from "./components/SignUpForm/SignUpForm";
+import SignUpLoginPage from "./pages/SignUpLogin";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -32,10 +34,9 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div>Enter your code here</div>
       <Router>
         <Routes>
-          <Route path="/" />
+          <Route path="/signup-login" element={<SignUpLoginPage/>}/>
         </Routes>
       </Router>
     </ApolloProvider>

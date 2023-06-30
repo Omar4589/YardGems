@@ -22,6 +22,7 @@
   "homepage": "https://github.com/Omar4589/YardGems#readme",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "dotenv": "^16.3.1"
   }
 }
