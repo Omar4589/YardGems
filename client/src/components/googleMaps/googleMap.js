@@ -25,7 +25,7 @@ return (
     mapContainerClassName="map-container" 
     options={{mapId: 'b347f09b91c16629'}}
     >
-        <MarkerF key='1' position={center} icon={ LiaGemSolid }
+        <MarkerF key='1' position={center} icon={ <LiaGemSolid /> }
         />
     </GoogleMap>
 );
