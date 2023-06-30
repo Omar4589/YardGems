@@ -6,7 +6,7 @@ import Auth from "../../utils/auth";
 import { useMutation } from "@apollo/client";
 import greenGem from "../../assets/greenGem.png";
 
-const SignUpForm = ({handleComponentChange, LoginForm}) => {
+const SignUpForm = ({ handleComponentChange, LoginForm }) => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({
     username: "",
@@ -27,10 +27,18 @@ const SignUpForm = ({handleComponentChange, LoginForm}) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(userFormData);
+    console.log(userFormData.username);
+    console.log(userFormData.email);
+    console.log(userFormData.password);
 
     try {
-      const { data } = await createUser({ variables: userFormData });
+      const { data } = await createUser({
+        variables: {
+          username: userFormData.username,
+          email: userFormData.email,
+          password: userFormData.password,
+        },
+      });
 
       Auth.login(data.createUser.token);
     } catch (err) {
@@ -91,7 +99,7 @@ const SignUpForm = ({handleComponentChange, LoginForm}) => {
           <TextField
             type="text"
             id="name-signup"
-            name="name"
+            name="username"
             fullWidth
             variant="outlined"
             required
@@ -170,7 +178,10 @@ const SignUpForm = ({handleComponentChange, LoginForm}) => {
       <Box sx={{ mt: 3, textAlign: "center" }}>
         <Typography variant="body2">
           Already have an account?
-          <Button onClick={() => handleComponentChange(LoginForm)} style={{ margin: 10 }}>
+          <Button
+            onClick={() => handleComponentChange(LoginForm)}
+            style={{ margin: 10 }}
+          >
             Login
           </Button>
         </Typography>

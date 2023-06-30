@@ -22,7 +22,7 @@ const SignUpLoginPage = () => {
     setComponent(component);
   };
 
-  return <div onChange={handleComponentChange}> {renderComponent()}</div>;
+  return <div> {renderComponent()}</div>;
 };
 
 export default SignUpLoginPage;
