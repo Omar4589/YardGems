@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import GoogleMaps from '../src/components/googleMaps/googleMap'
 //import SignUpForm from "./components/SignUpForm/SignUpForm";
 import SignUpLoginPage from "./pages/SignUpLogin";
+import Test from "./pages/SignUpTest";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -38,6 +39,7 @@ function App() {
       {/* <GoogleMaps /> */}
       <Router>
         <Routes>
+          <Route path="/test" element={<Test />}/>
           <Route path="/signup-login" element={<SignUpLoginPage/>}/>
         </Routes>
       </Router>
