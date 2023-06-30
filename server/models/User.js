@@ -5,7 +5,7 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: [true, 'Please enter a username'],
       trim: true,
     },
     email: {
@@ -17,8 +17,14 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      minlength: 8,
+      minlength: [8, 'Please enter a password that contains 8 or more characters'],
     },
+    savedPost: [
+      { // referrances the Post table to the id
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+      },
+    ],
   },
   // set this to use virtual below
   {
@@ -42,6 +48,11 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
+
+// when we query a user, we'll also get another field called `postCount` with the number of saved post a user has created for holding a sell
+userSchema.virtual('postCount').get(function () {
+  return this.savedPost.length;
+});
 
 
 const User = model("User", userSchema);
