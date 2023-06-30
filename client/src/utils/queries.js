@@ -4,6 +4,7 @@ export const USER_QUERY = gql`
 query userMe {
     user {
       _id
+      name
       username
       email
       name
@@ -16,3 +17,16 @@ query userMe {
       }
   }
 }`;
+
+export const QUERY_POSTS = gql`
+  query getPosts {
+    posts {
+      _id
+      description
+      address
+      dateOfSale
+      image
+      createdAt
+    }
+  }
+`;
