@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <Box sx={{ ...styles.header }}>
       <Box sx={{ ...styles.bizName }}>
-        <Link sx={{ ...styles.link }} color={"inherit"}>
+        <Link href="/" sx={{ ...styles.link }} color={"inherit"}>
           <Typography sx={{ ...styles.appName }}>YardGems </Typography>
           <img
             src={greenGem}
