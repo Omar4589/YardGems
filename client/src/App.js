@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import GoogleMaps from '../src/components/googleMaps/googleMap'
 //import SignUpForm from "./components/SignUpForm/SignUpForm";
 import SignUpLoginPage from "./pages/SignUpLogin";
-import Test from "./pages/SignUpTest";
+import Test from "./pages/HeaderTest";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
