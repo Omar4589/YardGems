@@ -24,6 +24,7 @@ export const QUERY_POSTS = gql`
       address
       dateOfSale
       image
+      postAuthor
       createdAt
     }
   }

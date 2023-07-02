@@ -24,12 +24,13 @@ export const LOGIN_USER = gql`
 `;
 export const ADD_POST = gql`
   mutation addPost($description: String!,  $address: String!, $dateOfSale: String!, $image: String) {
-    addPost(description: $description, address: $adress, dateOfSale: $dateOfSale, image: $image ) {
+    addPost(description: $description, address: $address, dateOfSale: $dateOfSale, image: $image) {
       _id
       description
       address
       dateOfSale
       image
+      postAuthor
       createdAt
     }
   }

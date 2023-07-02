@@ -8,6 +8,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GoogleMaps from '../src/components/googleMaps/GoogleMaps'
+import UserDashboard from './pages/UserDashboard'
 // import SignUpForm from "./components/SignUpForm/SignUpForm";
 import SignUpLoginPage from "./pages/SignUpLogin";
 import Test from "./pages/SignUpTest";
@@ -36,9 +37,12 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <GoogleMaps />
+      {/* <GoogleMaps /> */}
+     
       <Router>
         <Routes>
+          <Route path="/userdash" element={ <UserDashboard />}/>
+          <Route path="/" element={<h1>this is the home screen</h1>}/>
           <Route path="/test" element={<Test />}/>
           <Route path="/signup-login" element={<SignUpLoginPage/>}/>
         </Routes>
