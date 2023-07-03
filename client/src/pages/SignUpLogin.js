@@ -22,7 +22,7 @@ const SignUpLoginPage = () => {
     setComponent(component);
   };
 
-  return <div> {renderComponent()}</div>;
+  return <div>{renderComponent()}</div>;
 };
 
 export default SignUpLoginPage;

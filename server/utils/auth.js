@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-
-const secret ="aTtHeEndOfTherainboW";
-const expiration = "2h";
+ const secret = 'aTtHeEndOfTherainboW'
+const expiration = "5h";
 
 module.exports = {
   authMiddleware: function ({ req }) {
@@ -25,6 +24,7 @@ module.exports = {
       req.user = data;
     } catch {
       console.log("Invalid token");
+      // console.error(error)
     }
 
     // return the request object so it can be passed to the resolver as `context`

@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const USER_QUERY = gql`
 query userMe {
-    user {
+    me {
       _id
       username
       email
@@ -11,19 +11,23 @@ query userMe {
        address
        dateOfSale
        image
+       postName
        createdAt
       }
+    }
   }
-}`;
+`;
 
 export const QUERY_POSTS = gql`
   query getPosts {
-    posts {
+    allPost {
       _id
       description
       address
       dateOfSale
       image
+      postAuthor
+      postName
       createdAt
     }
   }
