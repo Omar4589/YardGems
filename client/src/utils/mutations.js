@@ -23,14 +23,30 @@ export const LOGIN_USER = gql`
   }
 `;
 export const ADD_POST = gql`
-  mutation addPost($description: String!,  $address: String!, $dateOfSale: String!, $image: String) {
-    addPost(description: $description, address: $adress, dateOfSale: $dateOfSale, image: $image ) {
+  mutation addPost($description: String!,  $address: String!, $dateOfSale: String!, $image: String, $postName: String!) {
+    addPost(description: $description, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName) {
       _id
       description
       address
       dateOfSale
       image
+      postAuthor
+      postName
       createdAt
     }
   }
 `;
+export const EDIT_POST = gql`
+mutation editPost($description: String!,  $address: String!, $dateOfSale: String!, $image: String, $postName: String!) {
+  editPost(description: $description, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName) {
+    _id
+    description
+    address
+    dateOfSale
+    image
+    postAuthor
+    postName
+    createdAt
+  }
+}
+`
