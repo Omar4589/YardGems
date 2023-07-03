@@ -1,12 +1,23 @@
-import React from "react";
-import { Box, Typography, IconButton, Link } from "@mui/material";
+import React, { useState } from "react";
+import { Box, IconButton, Link, InputBase } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import SearchIcon from "@mui/icons-material/Search";
-import greenGem from "../../assets/images/greenGem.png";
-import appName from "../../assets/images/appName.jpg"
+import appName from "../../assets/images/appName.jpg";
 import styles from "./styles";
 
 const Header = () => {
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
+  const toggleSearch = () => {
+    setIsSearchVisible(!isSearchVisible);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Add search logic here
+    setIsSearchVisible(false);
+  };
+
   return (
     <Box sx={{ ...styles.header }}>
       <Box sx={{ ...styles.bizName }}>
@@ -22,15 +33,24 @@ const Header = () => {
       </Box>
 
       <Box>
-        <IconButton
-          sx={{ color: "inherit" }}
-          aria-label="search"
-          onClick={() => {
-            alert("You clicked the search button");
-          }}
-        >
-          <SearchIcon sx={{ ...styles.icons }} />
-        </IconButton>
+        {isSearchVisible ? (
+          <form onSubmit={handleSubmit} style={{ display: "inline" }}>
+            <InputBase
+              placeholder="Search..."
+              inputProps={{ "aria-label": "search" }}
+              sx={{ ...styles.searchInput }}
+            />
+          </form>
+        ) : (
+          <IconButton
+            sx={{ color: "inherit" }}
+            aria-label="search"
+            onClick={toggleSearch}
+          >
+            <SearchIcon sx={{ ...styles.icons }} />
+          </IconButton>
+        )}
+
         <IconButton
           sx={{ color: "inherit", size: "small" }}
           aria-label="message"
