@@ -3,8 +3,8 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    background: "green",
-    color: "white",
+    background: "white",
+    color: "#24CF6B",
     padding: "0px 10px 0px 20px",
   },
   bizName: {

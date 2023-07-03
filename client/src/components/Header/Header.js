@@ -2,7 +2,8 @@ import React from "react";
 import { Box, Typography, IconButton, Link } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import SearchIcon from "@mui/icons-material/Search";
-import greenGem from "../../assets/greenGem.png";
+import greenGem from "../../assets/images/greenGem.png";
+import appName from "../../assets/images/appName.jpg"
 import styles from "./styles";
 
 const Header = () => {
@@ -10,11 +11,10 @@ const Header = () => {
     <Box sx={{ ...styles.header }}>
       <Box sx={{ ...styles.bizName }}>
         <Link href="/" sx={{ ...styles.link }} color={"inherit"}>
-          <Typography sx={{ ...styles.appName }}>YardGems </Typography>
           <img
-            src={greenGem}
-            width="30px"
-            height="30px"
+            src={appName}
+            width="150px"
+            height="27px"
             alt="green_gem"
             style={styles.greenGem}
           />
