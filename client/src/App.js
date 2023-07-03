@@ -7,10 +7,18 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+<<<<<<< HEAD
 import GoogleMaps from '../src/components/googleMaps/googleMap'
 //import SignUpForm from "./components/SignUpForm/SignUpForm";
+=======
+import GoogleMaps from '../src/components/googleMaps/GoogleMaps';
+import UserDashboard from './pages/UserDashboard';
+import SignUpForm from "./components/SignUpForm/SignUpForm";
+>>>>>>> main
 import SignUpLoginPage from "./pages/SignUpLogin";
-import Test from "./pages/SignUpTest";
+import Test from "./pages/HeaderTest";
+import Header from "./components/Header/Header";
+
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -36,9 +44,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <GoogleMaps />
+      <Header />
       <Router>
         <Routes>
+          <Route path="/userdash" element={ <UserDashboard />}/> 
+          <Route path="/" element={<GoogleMaps />}/>
           <Route path="/test" element={<Test />}/>
           <Route path="/signup-login" element={<SignUpLoginPage/>}/>
         </Routes>

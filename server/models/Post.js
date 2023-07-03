@@ -23,6 +23,13 @@ const postSchema = new Schema({
     type: String,
     required: [true, 'Leave an image of the the sale or particular item']
   }, 
+  postAuthor: {
+    type: String,
+  },
+  postName: {
+    type: String,
+  },
+
   // date of when the user create a sale post
   createdAt: {
     type: Date,
