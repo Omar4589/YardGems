@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Typography, Box, TextField, Button, Card } from "@mui/material/";
-import { Link } from "react-router-dom";
+import { Typography, Box, TextField, Button } from "@mui/material/";
 import { CREATE_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 import { useMutation } from "@apollo/client";
