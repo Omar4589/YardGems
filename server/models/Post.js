@@ -26,6 +26,10 @@ const postSchema = new Schema({
   postAuthor: {
     type: String,
   },
+  postName: {
+    type: String,
+  },
+
   // date of when the user create a sale post
   createdAt: {
     type: Date,

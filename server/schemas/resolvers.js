@@ -11,11 +11,12 @@ const resolvers = {
       return Post.find();
     },
      // By adding context to our query, we can retrieve the logged in user without specifically searching for them
-     user: async (parent, args, context) => {
-      // if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('savedPost');
-      // }
-      // throw new AuthenticationError('You need to be logged in!');
+     me: async (parent, args, context) => {
+       if (context.user) {
+        const me = User.findOne({_id: context.user._id}).populate('savedPost');
+        return me
+       }
+       throw new AuthenticationError('You need to be logged in!');
     },
   },
   Mutation: {
@@ -43,10 +44,10 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addPost: async (parent, { description, address, dateOfSale, image, postAuthor}, context) => {
+    addPost: async (parent, { description, address, dateOfSale, image, postAuthor, postName}, context) => {
       if (context.user) {
         const newPost = await Post.create({
-          description, address, dateOfSale, image, postAuthor: context.user.username
+          description, address, dateOfSale, image, postAuthor: context.user.username, postName
         });
 
         await User.findOneAndUpdate(

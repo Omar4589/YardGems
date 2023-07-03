@@ -48,6 +48,7 @@ export default function SignIn() {
     <Container component="main" maxWidth="sm">
       <Box
         sx={{
+          backgroundColor:'white',
           boxShadow: 3,
           borderRadius: 2,
           px: 4,
