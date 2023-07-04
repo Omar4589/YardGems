@@ -50,3 +50,17 @@ mutation editPost($description: String!,  $address: String!, $dateOfSale: String
   }
 }
 `
+export const REMOVE_POST = gql`
+  mutation removePost($postId: ID!) {
+    removePost(postId: $postId) {
+      _id
+      description
+      address
+      dateOfSale
+      image
+      postAuthor
+      postName
+      createdAt
+    }
+  }
+`;

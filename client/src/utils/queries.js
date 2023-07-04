@@ -7,12 +7,22 @@ query userMe {
       username
       email
       savedPost {
+        _id
        description
        address
        dateOfSale
        image
        postName
        createdAt
+      }
+      savedFavorites {
+        _id
+        description
+        address
+        dateOfSale
+        image
+        postName
+        createdAt
       }
     }
   }

@@ -4,9 +4,9 @@ import {Box, Button} from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
-import { ADD_POST, EDIT_POST } from '../../utils/mutations';
+import { ADD_POST, EDIT_POST} from '../../utils/mutations';
 import { TextField, Container} from '@mui/material';
-import {useMutation, useQuery } from '@apollo/client';
+import {useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import style from './modalStyles';
 
@@ -127,7 +127,7 @@ export const FormModal = ({handleClose, handleOpen}) => {
   );
 };
 
-// -------------Edit modal------------------\\
+// -------------EDIT modal------------------\\
 export const EditModal = ({handleEdit, handleEditClose}) => {
   const [editPost, { error }] = useMutation(EDIT_POST);
   const [formState, setFormState] = useState({ 
@@ -238,4 +238,6 @@ export const EditModal = ({handleEdit, handleEditClose}) => {
       </div>
     );
 };
+
+
 
