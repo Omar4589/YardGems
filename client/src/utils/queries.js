@@ -42,3 +42,17 @@ export const QUERY_POSTS = gql`
     }
   }
 `;
+export const QUERY_SINGLE_POST= gql`
+  query getSinglePost($listingId: ID!) {
+    post(listingId: $listingId) {
+      _id
+      description
+      address
+      dateOfSale
+      image
+      postAuthor
+      postName
+      createdAt
+    }
+  }
+`;

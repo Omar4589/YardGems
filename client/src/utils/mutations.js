@@ -37,8 +37,8 @@ export const ADD_POST = gql`
   }
 `;
 export const EDIT_POST = gql`
-mutation editPost($description: String!,  $address: String!, $dateOfSale: String!, $image: String, $postName: String!) {
-  editPost(description: $description, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName) {
+mutation editPost($id: ID, $description: String,  $address: String, $dateOfSale: String, $image: String, $postName: String) {
+  editPost(id: $id, description: $description, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName) {
     _id
     description
     address

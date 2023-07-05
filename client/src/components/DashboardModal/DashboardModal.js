@@ -188,7 +188,7 @@ export const EditModal = ({handleEdit, handleEditClose}) => {
               <Typography id="transition-modal-title" variant="h6" component="h2">
                 Edit listing
               </Typography>
-              <Box component="form"  onClick={editPostSubmit}>
+              <Box component="form"  onSubmit={editPostSubmit}>
                   <TextField
                       helperText="Update the name for you item or event"
                       label="Name"
@@ -196,14 +196,17 @@ export const EditModal = ({handleEdit, handleEditClose}) => {
                       onChange={handleInputChange}
                       placeholder={formState.name}
                       value={formState.postName}
+                      required
                   />
-                  <TextField
+                  <TextField 
+                      multiline
                       helperText="Update description about your listing"
                       label="Description"
                       name ='description'
                       onChange={handleInputChange}
                       placeholder={formState.description}
                       value={formState.description}
+                      required
                   />
                   <TextField
                       helperText="Update the address for your listing"
@@ -212,6 +215,7 @@ export const EditModal = ({handleEdit, handleEditClose}) => {
                       onChange={handleInputChange}
                       placeholder={formState.address}
                       value={formState.address}
+                      required
                   />
                   <TextField
                       helperText="Update a date to hold your yard sale"
@@ -220,13 +224,13 @@ export const EditModal = ({handleEdit, handleEditClose}) => {
                       onChange={handleInputChange}
                       placeholder={formState.dateOfSale}
                       value={formState.dateOfSale}
+                      required
                   />
                   <TextField
                       helperText=" Update or add an image"
                       label="Image"
                       name = 'image'
                       onChange={handleInputChange}
-                      placeholder={formState.image}
                       value={formState.image}
                   />
                   <br></br>
