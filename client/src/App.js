@@ -9,12 +9,13 @@ import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GoogleMaps from "../src/components/googleMaps/GoogleMaps";
 import UserDashboard from "./pages/UserDashboard";
-import SignUpForm from "./components/SignUpForm/SignUpForm";
 import SignUpLoginPage from "./pages/SignUpLogin";
 import Test from "./pages/HeaderTest";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import AboutUs from "./pages/AboutUs";
+import SinglePost from "./pages/SinglePost";
+import BottomNavBar from "./components/Nav/nav";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -43,13 +44,15 @@ function App() {
       <Header />
       <Router>
         <Routes>
-          <Route path="/userdash" element={<UserDashboard />} />
+          <Route path="/userdashboard" element={<UserDashboard />} />
           <Route path="/" element={<GoogleMaps />} />
           <Route path="/test" element={<Test />} />
           <Route path="/signup-login" element={<SignUpLoginPage />} />
           <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/listings/:listingId" element={<SinglePost />} />
         </Routes>
       </Router>
+      <BottomNavBar />
       <Footer />
     </ApolloProvider>
   );
