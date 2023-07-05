@@ -47,8 +47,8 @@ const Footer = () => {
           &copy; 2023 YardGems. All rights reserved.
         </Typography>
         <Box sx={{ paddingTop: 1 }}>
-          <Link href="/about" sx={{ ...styles.links }}>
-            About
+          <Link href="/AboutUs" sx={{ ...styles.links }}>
+            About Us
           </Link>
           <Link href="/contact" sx={{ ...styles.links }}>
             Contact
