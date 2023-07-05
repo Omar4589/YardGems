@@ -25,15 +25,8 @@ export const ButtonComponent = ({ openModal }) => {
     </div>
   );
 };
-// edit button for modal pop up
- export const EditComponent = ({ editButton }) => {
-  return (
-    <div>
-      <Button  onClick={editButton} size="small" color='primary' variant="outlined">
-        Edit
-      </Button>
-    </div>
-  );
-};
+
+
+
 
 

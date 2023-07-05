@@ -25,6 +25,12 @@ const userSchema = new Schema(
         ref: 'Post',
       },
     ],
+    savedFavorites: [
+      { 
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+      },
+    ],
   },
   // set this to use virtual below
   {

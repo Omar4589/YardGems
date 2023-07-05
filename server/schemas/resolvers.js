@@ -10,6 +10,9 @@ const resolvers = {
     allPost: async () => {
       return Post.find();
     },
+    post: async (parent, { listingId }) => {
+      return Post.findOne({ _id: listingId });
+    },
      // By adding context to our query, we can retrieve the logged in user without specifically searching for them
      me: async (parent, args, context) => {
        if (context.user) {
@@ -52,10 +55,37 @@ const resolvers = {
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $push: { savedPost: newPost._id } } // or would it be push
+          { $push: { savedPost: newPost._id } }, // or would it be push
+          {new:true}
         );
 
         return newPost;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removePost: async (parent, { postId }, context) => {
+      if (context.user) {
+        const removePost = await Post.findOneAndDelete({
+          _id: postId,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedPost: removePost._id } },
+          {new:true}
+        );
+
+        return removePost;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    editPost: async (parent, {id, description, address, dateOfSale, image, postName}, context) => {
+      if (context.user) {
+        const updatePost = await Post.findOneAndUpdate(
+          { _id: id }, {description, address, dateOfSale, image, postName}, {new:true}
+        );
+
+        return updatePost;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
