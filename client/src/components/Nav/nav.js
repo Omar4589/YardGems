@@ -75,7 +75,7 @@ export default function BottomNavBar() {
 								</MuiLink>
 
 								<MuiLink
-									href="/userdash"
+									href="/userdashboard"
 									color="inherit"
 									sx={{ textDecoration: "none" }}>
 									<ListItem button>
