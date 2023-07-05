@@ -14,6 +14,7 @@ import SignUpLoginPage from "./pages/SignUpLogin";
 import Test from "./pages/HeaderTest";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import AboutUs from "./pages/AboutUs";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -46,6 +47,7 @@ function App() {
           <Route path="/" element={<GoogleMaps />} />
           <Route path="/test" element={<Test />} />
           <Route path="/signup-login" element={<SignUpLoginPage />} />
+          <Route path="/AboutUs" element={<AboutUs />} />
         </Routes>
       </Router>
       <Footer />
