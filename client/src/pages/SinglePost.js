@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_POST } from '../utils/queries';
 import {  EDIT_POST} from '../utils/mutations';
-import { Container, Box, FormControl, Grid, TextField, Button, Typography} from "@mui/material/";
+import { Container, Box,  Grid, TextField, Button, Typography} from "@mui/material/";
 
 
 const SinglePost = () => {
@@ -14,15 +14,15 @@ const SinglePost = () => {
       variables: { listingId: listingId }, // Pass the `listingId` URL parameter into query to retrieve this post only data
     });
     const post = data?.post || {};
-   
+     //console.log(post._id)
     const [formState, setFormState] = useState({ 
-        description: '',
-        address: '',
-        dateOfSale: '',
+        description: post.description,
+        address: post.address,
+        dateOfSale: post.dateOfSale,
         image: '',
-        postName:''
+        postName: post.postName
       });
-       //console.log(post._id)
+  
      
     const handleInputChange = (event) => {
         const { name, value} = event.target;
@@ -41,7 +41,7 @@ const SinglePost = () => {
             variables: {
               ...formState, id: post._id},
           });
-          console.log(data);
+         //console.log(data);
           setFormState({
             description: '',
             address: '',
@@ -54,7 +54,6 @@ const SinglePost = () => {
           console.error(err);
         }
       };
-
 
     if (loading) {
       return <div>Loading...</div>;
@@ -72,7 +71,7 @@ const SinglePost = () => {
                         onChange={handleInputChange}
                         value={formState.dateOfSale}
                         name ='dateOfSale'
-                        required
+                    
                         
                         />
                     </Grid>
@@ -82,7 +81,7 @@ const SinglePost = () => {
                         onChange={handleInputChange}
                         value={formState.postName}
                         name ='postName'
-                        required
+                     
                         />
                         </Grid>
                     <Grid item xs={12}>
@@ -91,7 +90,7 @@ const SinglePost = () => {
                         onChange={handleInputChange}
                         value={formState.description}
                         name ='description'
-                        required
+                       
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -100,7 +99,7 @@ const SinglePost = () => {
                         onChange={handleInputChange}
                         value={formState.address}
                         name ='address'
-                        required 
+                        
                         />
                     </Grid>
                     <Grid item xs={12}>
