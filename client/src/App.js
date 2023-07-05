@@ -7,17 +7,14 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-<<<<<<< HEAD
-import GoogleMaps from '../src/components/googleMaps/googleMap'
-//import SignUpForm from "./components/SignUpForm/SignUpForm";
-=======
 import GoogleMaps from '../src/components/googleMaps/GoogleMaps';
 import UserDashboard from './pages/UserDashboard';
 import SignUpForm from "./components/SignUpForm/SignUpForm";
->>>>>>> main
 import SignUpLoginPage from "./pages/SignUpLogin";
 import Test from "./pages/HeaderTest";
 import Header from "./components/Header/Header";
+import BottomNavBar from "./components/Nav/nav";
+
 
 
 const httpLink = createHttpLink({
@@ -53,6 +50,7 @@ function App() {
           <Route path="/signup-login" element={<SignUpLoginPage/>}/>
         </Routes>
       </Router>
+      <BottomNavBar />
     </ApolloProvider>
   );
 }
