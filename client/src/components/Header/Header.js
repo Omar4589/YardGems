@@ -4,6 +4,7 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import SearchIcon from "@mui/icons-material/Search";
 import appName from "../../assets/images/appName.jpg";
 import styles from "./styles";
+import AuthService from "../../utils/auth";
 
 const Header = () => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -19,26 +20,20 @@ const Header = () => {
   };
 
   return (
-    <Box sx={{ ...styles.header }}>
-      <Box sx={{ ...styles.bizName }}>
-        <Link href="/" sx={{ ...styles.link }} color={"inherit"}>
-          <img
-            src={appName}
-            width="150px"
-            height="27px"
-            alt="green_gem"
-            style={styles.greenGem}
-          />
+    <Box sx={{ ...styles.mainContainer }}>
+      <Box sx={{ ...styles.appLogo }}>
+        <Link href="/" sx={{ ...styles.logoLink }} color={"inherit"}>
+          <img src={appName} width="100%" height="100%" alt="green_gem" />
         </Link>
       </Box>
 
       <Box>
         {isSearchVisible ? (
-          <form onSubmit={handleSubmit} style={{ display: "inline" }}>
+          <form onSubmit={handleSubmit}>
             <InputBase
               placeholder="Search..."
               inputProps={{ "aria-label": "search" }}
-              sx={{ ...styles.searchInput }}
+              sx={{}}
             />
           </form>
         ) : (
@@ -47,7 +42,7 @@ const Header = () => {
             aria-label="search"
             onClick={toggleSearch}
           >
-            <SearchIcon sx={{ ...styles.icons }} />
+            <SearchIcon sx={{ ...styles.searchIcon }} />
           </IconButton>
         )}
 
@@ -58,9 +53,23 @@ const Header = () => {
             alert("You clicked the message button");
           }}
         >
-          <InboxIcon sx={{ ...styles.icons }} />
+          <InboxIcon sx={{ ...styles.messagesIcon }} />
         </IconButton>
       </Box>
+
+      {AuthService.loggedIn() ? (
+        <Link color="inherit" href="/logout" sx={{}}>
+          Logout
+        </Link>
+      ) : (
+        <Link
+          color="inherit"
+          href="/signup-login"
+          sx={{ ...styles.signUpLoginLink }}
+        >
+          SignUp/Login
+        </Link>
+      )}
     </Box>
   );
 };
