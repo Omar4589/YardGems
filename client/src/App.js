@@ -14,6 +14,9 @@ import SignUpLoginPage from "./pages/SignUpLogin";
 import Test from "./pages/HeaderTest";
 import Header from "./components/Header/Header";
 import SinglePost from './pages/SinglePost';
+import BottomNavBar from "./components/Nav/nav";
+
+
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -52,6 +55,7 @@ function App() {
             />
         </Routes>
       </Router>
+      <BottomNavBar />
     </ApolloProvider>
   );
 }
