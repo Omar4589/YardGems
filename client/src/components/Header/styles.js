@@ -31,13 +31,87 @@ const styles = {
     },
   },
   signUpLoginLink: {
-    mr: 1,
-    color: "#2a2a35f2",
-    textDecoration: "none",
-    padding: "5px 10px",
-    borderRadius: "10px",
-    "&:hover": {
-      color: "#66bb6a",
+    display: "none",
+    "@media (min-width: 768px)": {
+      display: "inline",
+      mr: 1,
+      color: "#2a2a35f2",
+      textDecoration: "none",
+      padding: "5px 10px",
+      borderRadius: "10px",
+      "&:hover": {
+        color: "#66bb6a",
+      },
+    },
+  },
+  myListingsLink: {
+    display: "none",
+    "@media (min-width: 768px)": {
+      display: "inline",
+      mr: 1,
+      color: "#2a2a35f2",
+      textDecoration: "none",
+      padding: "5px 10px",
+      borderRadius: "10px",
+      "&:hover": {
+        color: "#66bb6a",
+      },
+    },
+  },
+  savedListingLink: {
+    display: "none",
+    "@media (min-width: 768px)": {
+      display: "inline",
+      mr: 1,
+      color: "#2a2a35f2",
+      textDecoration: "none",
+      padding: "5px 10px",
+      borderRadius: "10px",
+      "&:hover": {
+        color: "#66bb6a",
+      },
+    },
+  },
+  myAccountLink: {
+    display: "none",
+    "@media (min-width: 768px)": {
+      display: "inline",
+      mr: 1,
+      color: "#2a2a35f2",
+      textDecoration: "none",
+      padding: "5px 10px",
+      borderRadius: "10px",
+      "&:hover": {
+        color: "#66bb6a",
+      },
+    },
+  },
+  homeLink: {
+    display: "none",
+    "@media (min-width: 768px)": {
+      display: "inline",
+      mr: 1,
+      color: "#2a2a35f2",
+      textDecoration: "none",
+      padding: "5px 10px",
+      borderRadius: "10px",
+      "&:hover": {
+        color: "#66bb6a",
+      },
+    },
+  },
+  logoutLink: {
+    display: "none",
+    "@media (min-width: 768px)": {
+      display: "inline",
+      mr: 1,
+      color: "#2a2a35f2",
+      textDecoration: "none",
+      padding: "5px 10px",
+      borderRadius: "10px",
+      "&:hover": {
+        color: "#66bb6a",
+      },
     },
   },
 };
