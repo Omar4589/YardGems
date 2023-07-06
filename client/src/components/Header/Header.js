@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import appName from "../../assets/images/appName.jpg";
 import styles from "./styles";
 import AuthService from "../../utils/auth";
+import { Link as RouterLink } from "react-router-dom";
 
 const Header = () => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -26,15 +27,28 @@ const Header = () => {
 
   return (
     <Box sx={{ ...styles.mainContainer }}>
-      <Link to="/MyListings" sx={{ ...styles.myListingsLink }}>
+      <Link
+        component={RouterLink}
+        to="/MyListings"
+        sx={{ ...styles.myListingsLink }}
+      >
         My Listings
       </Link>
-      <Link to="/SavedListings" sx={{ ...styles.savedListingLink }}>
+      <Link
+        component={RouterLink}
+        to="/SavedListings"
+        sx={{ ...styles.savedListingLink }}
+      >
         Saved Listings
       </Link>
 
       <Box sx={{ ...styles.appLogo }}>
-        <Link to="/" sx={{ ...styles.logoLink }} color={"inherit"}>
+        <Link
+          component={RouterLink}
+          to="/"
+          sx={{ ...styles.logoLink }}
+          color={"inherit"}
+        >
           <img src={appName} width="100%" height="100%" alt="green_gem" />
         </Link>
       </Box>
@@ -70,22 +84,35 @@ const Header = () => {
         )}
       </Box>
 
-      <Link to="/" sx={{ ...styles.homeLink }}>
+      <Link component={RouterLink} to="/" sx={{ ...styles.homeLink }}>
         Home
       </Link>
 
       {AuthService.loggedIn() ? (
         <>
-          <Link to="/MyAccount" sx={{ ...styles.myAccountLink }}>
+          <Link
+            component={RouterLink}
+            to="/MyAccount"
+            sx={{ ...styles.myAccountLink }}
+          >
             My Account
           </Link>
-          <Link to="/" onClick={handleLogout} sx={{ ...styles.logoutLink }}>
+          <Link
+            component={RouterLink}
+            to="/"
+            onClick={handleLogout}
+            sx={{ ...styles.logoutLink }}
+          >
             Logout
           </Link>
         </>
       ) : (
         <>
-          <Link to="/signup-login" sx={{ ...styles.signUpLoginLink }}>
+          <Link
+            component={RouterLink}
+            to="/signup-login"
+            sx={{ ...styles.signUpLoginLink }}
+          >
             SignUp/Login
           </Link>
         </>
