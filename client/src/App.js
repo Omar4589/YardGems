@@ -41,8 +41,8 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/MyListings" element={<MyListings />} />
           <Route path="/" element={<Home />} />
@@ -51,9 +51,9 @@ function App() {
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/listings/:listingId" element={<SinglePost />} />
         </Routes>
+        <BottomNavBar />
+        <Footer />
       </Router>
-      <BottomNavBar />
-      <Footer />
     </ApolloProvider>
   );
 }
