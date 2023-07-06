@@ -6,6 +6,7 @@ import "@reach/combobox/styles.css";
 import './google.css';
 
 
+
 export default function GoogleMaps() {
     // isLoaded is gives us access to the apiKey
  const { isLoaded } = useLoadScript({ 
@@ -38,7 +39,9 @@ const [selected, setSelected] = useState(null);
      mapContainerClassName='map-container' // styling 
     >
     {/* below the selected state for the marker to render on the map */}
-    { selected && <MarkerF position={selected} />}
+    { selected && 
+    <MarkerF 
+    position={selected} />}
     </GoogleMap>
   </div>
  );

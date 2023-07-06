@@ -15,6 +15,7 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import styles from "./styles";
+import { Link as RouterLink} from 'react-router-dom';
 
 export default function BottomNavBar() {
   const pathname = window.location.pathname; // in case user visits the path directly. The BottomNavBar is able to follow suit.
@@ -55,124 +56,122 @@ export default function BottomNavBar() {
     return null;
   }
 
-  return (
-    <>
-      <Box className="navMobile" sx={{ width: "inherit", ...styles.icons }}>
-        <BottomNavigation
-          value={value}
-          onChange={handleChange}
-          showLabels={true}
-        >
-          <BottomNavigationAction
-            component="a"
-            href="/signup-login"
-            // Need to change this to saved listings
-            label="Saved Listings"
-            sx={{ ...styles.icons }}
-            icon={<FavoriteIcon />}
-          />
-          <BottomNavigationAction
-            component="a"
-            href="/"
-            label="Home"
-            icon={<MapOutlinedIcon />}
-            sx={{ ...styles.icons }}
-          />
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="logo"
-            onClick={() => setIsDrawerOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Drawer
-            anchor="right"
-            open={isDrawerOpen}
-            onClose={() => setIsDrawerOpen(false)}
-          >
-            <Box p={2} width="250px" textAlign="center" role="presentation">
-              <List>
-                <MuiLink
-                  href="/signup-login"
-                  color="inherit"
-                  sx={{ textDecoration: "none" }}
-                >
-                  <ListItem button>
-                    <ListItemIcon>
-                      <LoginIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Login" />
-                  </ListItem>
-                </MuiLink>
-                <MuiLink
-                  href="/MyListings"
-                  color="inherit"
-                  sx={{ textDecoration: "none" }}
-                >
-                  <ListItem button>
-                    <ListItemIcon>
-                      <DashboardIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="My Listings" />
-                  </ListItem>
-                </MuiLink>
-                <MuiLink
-                  href="/"
-                  // Need to fix this link to take you to all listings I think
-                  color="inherit"
-                  sx={{ textDecoration: "none" }}
-                >
-                  <ListItem button>
-                    <ListItemIcon>
-                      <PostAddIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="All Listings" />
-                  </ListItem>
-                </MuiLink>
-                <MuiLink
-                  href="/"
-                  color="inherit"
-                  sx={{ textDecoration: "none" }}
-                >
-                  <ListItem button>
-                    <ListItemIcon>
-                      <MapOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Map" />
-                  </ListItem>
-                </MuiLink>
-                <MuiLink
-                  href="/"
-                  // Need to fix this to take you to account settings
-                  color="inherit"
-                  sx={{ textDecoration: "none" }}
-                >
-                  <ListItem button>
-                    <ListItemIcon>
-                      <SettingsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Account Settings" />
-                  </ListItem>
-                </MuiLink>
-                <MuiLink
-                  href="/"
-                  color="inherit"
-                  sx={{ textDecoration: "none" }}
-                >
-                  <ListItem button>
-                    <ListItemIcon>
-                      <DarkModeIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Theme Switcher" />
-                  </ListItem>
-                </MuiLink>
-              </List>
-            </Box>
-          </Drawer>
-        </BottomNavigation>
-      </Box>
-    </>
-  );
+	return (
+		<>
+			<Box className="navMobile" sx={{ width: "inherit", ...styles.icons }}>
+				<BottomNavigation
+					value={value}
+					onChange={handleChange}
+					showLabels='true'
+				>
+					<BottomNavigationAction
+						component={ RouterLink }
+						to="/signup-login"
+						// Need to change this to saved listings
+						label="Saved Listings"
+						sx={{ ...styles.icons }}
+						icon={<FavoriteIcon />}
+					/>
+					<BottomNavigationAction
+						component= { RouterLink }
+						to="/"
+						label="Home"
+						icon={<MapOutlinedIcon />}
+						sx={{ ...styles.icons }}
+					/>
+					<IconButton
+						size="large"
+						edge="start"
+						color="inherit"
+						aria-label="logo"
+						onClick={() => setIsDrawerOpen(true)}>
+						<MenuIcon />
+					</IconButton>
+					<Drawer
+						anchor="right"
+						open={isDrawerOpen}
+						onClose={() => setIsDrawerOpen(false)}>
+						<Box p={2} width="250px" textAlign="center" role="presentation">
+							<List>
+								<MuiLink
+									component={ RouterLink }
+									to="/signup-login"
+									color="inherit"
+									sx={{ textDecoration: "none" }}>
+									<ListItem button>
+										<ListItemIcon>
+											<LoginIcon />
+										</ListItemIcon>
+										<ListItemText primary="Login" />
+									</ListItem>
+								</MuiLink>
+								<MuiLink
+									component={ RouterLink }
+									to="/MyListings"
+									color="inherit"
+									sx={{ textDecoration: "none" }}>
+									<ListItem button>
+										<ListItemIcon>
+											<DashboardIcon />
+										</ListItemIcon>
+										<ListItemText primary="My Listings" />
+									</ListItem>
+								</MuiLink>
+								<MuiLink
+									component={ RouterLink }
+									to="/"
+									// Need to fix this link to take you to all listings I think
+									color="inherit"
+									sx={{ textDecoration: "none" }}>
+									<ListItem button>
+										<ListItemIcon>
+											<PostAddIcon />
+										</ListItemIcon>
+										<ListItemText primary="All Listings" />
+									</ListItem>
+								</MuiLink>
+								<MuiLink
+									component={ RouterLink }
+									to="/"
+									color="inherit"
+									sx={{ textDecoration: "none" }}>
+									<ListItem button>
+										<ListItemIcon>
+											<MapOutlinedIcon />
+										</ListItemIcon>
+										<ListItemText primary="Map" />
+									</ListItem>
+								</MuiLink>
+								<MuiLink
+									component={ RouterLink }
+									to="/"
+									// Need to fix this to take you to account settings
+									color="inherit"
+									sx={{ textDecoration: "none" }}>
+									<ListItem button>
+										<ListItemIcon>
+											<SettingsIcon />
+										</ListItemIcon>
+										<ListItemText primary="Account Settings" />
+									</ListItem>
+								</MuiLink>
+								<MuiLink
+									component={ RouterLink }
+									to="/"
+									color="inherit"
+									sx={{ textDecoration: "none" }}>
+									<ListItem button>
+										<ListItemIcon>
+											<DarkModeIcon />
+										</ListItemIcon>
+										<ListItemText primary="Theme Switcher" />
+									</ListItem>
+								</MuiLink>
+							</List>
+						</Box>
+					</Drawer>
+				</BottomNavigation>
+			</Box>
+		</>
+	);
 }
