@@ -103,10 +103,10 @@ export const FormModal = ({handleClose, handleOpen}) => {
                     disabled={!ready}
                     className='comboBox-input'
                     placeholder="Add a location"
-                    style={{ zIndex: '99999', width: '65.5%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em'}}
+                    style={{width: '65.5%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em', paddingLeft: '1em', fontSize: '1em'}}
                     required
                   />
-                  <ComboboxPopover style={{ zIndex: '99999', width: '40%'}}>
+                  <ComboboxPopover style={{ zIndex: '99999', width: '40%', fontSize: '1em', fontFamily: 'sans-serif'}}>
                     <ComboboxList>
                       {status === 'OK' &&
                         data.map(({ place_id, description }) => (
