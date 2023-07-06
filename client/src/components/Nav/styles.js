@@ -2,12 +2,12 @@ const styles = {
     icons: {
         '&:focus': {color: 'green'},
         '&:active': {color: 'green'},
-        '&:hover': {color: 'green'}  
+        '&:hover': {color: 'green'}, 
     },
     navMobile: {
         'position': 'fixed',
         'bottom': '0',
-        'width': '90%',
+        'width': '100%',
         'margin': 'auto',
         'float': 'center',
     }

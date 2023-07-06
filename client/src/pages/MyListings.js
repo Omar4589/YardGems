@@ -50,7 +50,7 @@ const deletePostSubmit = async (_id) => {
         <Container maxWidth='md'>
             <Typography component='div' variant="h2" align='center' color='textPrimary' gutterBottom style={{fontSize: '3rem'}}>
                 {userData.savedPost.length
-                ? `Viewing ${userData.savedPost.length} saved ${userData.savedPost.length === 1 ? 'listing' : 'listings'}:`
+                ? `You have ${userData.savedPost.length} garage sale ${userData.savedPost.length === 1 ? 'listing' : 'listings'}:`
                 : 'You have no saved listings!'}
             </Typography> 
             {/* button is the create new listing button to open modal, passing a prop that handles a function */}
