@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Typography, Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import styles from "./styles";
 import appName from "../../assets/images/appName.jpg";
 
@@ -47,13 +48,13 @@ const Footer = () => {
           &copy; 2023 YardGems. All rights reserved.
         </Typography>
         <Box sx={{ paddingTop: 1 }}>
-          <Link to="/AboutUs" sx={{ ...styles.links }}>
+          <Link component={RouterLink} to="/AboutUs" sx={{ ...styles.links }}>
             About Us
           </Link>
-          <Link to="/contact" sx={{ ...styles.links }}>
+          <Link component={RouterLink} to="/contact" sx={{ ...styles.links }}>
             Contact
           </Link>
-          <Link to="/faq" sx={{ ...styles.links }}>
+          <Link component={RouterLink} to="/faq" sx={{ ...styles.links }}>
             FAQ
           </Link>
         </Box>
