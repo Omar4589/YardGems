@@ -47,13 +47,13 @@ const Footer = () => {
           &copy; 2023 YardGems. All rights reserved.
         </Typography>
         <Box sx={{ paddingTop: 1 }}>
-          <Link href="/AboutUs" sx={{ ...styles.links }}>
+          <Link to="/AboutUs" sx={{ ...styles.links }}>
             About Us
           </Link>
-          <Link href="/contact" sx={{ ...styles.links }}>
+          <Link to="/contact" sx={{ ...styles.links }}>
             Contact
           </Link>
-          <Link href="/faq" sx={{ ...styles.links }}>
+          <Link to="/faq" sx={{ ...styles.links }}>
             FAQ
           </Link>
         </Box>
