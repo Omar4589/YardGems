@@ -51,10 +51,10 @@ const Footer = () => {
           <Link component={RouterLink} to="/AboutUs" sx={{ ...styles.links }}>
             About Us
           </Link>
-          <Link component={RouterLink} to="/contact" sx={{ ...styles.links }}>
-            Contact
+          <Link component={RouterLink} to="/ContactUs" sx={{ ...styles.links }}>
+            Contact Us
           </Link>
-          <Link component={RouterLink} to="/faq" sx={{ ...styles.links }}>
+          <Link component={RouterLink} to="/FAQ" sx={{ ...styles.links }}>
             FAQ
           </Link>
         </Box>
