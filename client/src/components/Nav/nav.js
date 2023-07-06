@@ -61,7 +61,8 @@ export default function BottomNavBar() {
 				<BottomNavigation
 					value={value}
 					onChange={handleChange}
-					showLabels={true}>
+					showLabels={true}
+					>
 					<BottomNavigationAction
 						component="a"
 						href="/signup-login"
