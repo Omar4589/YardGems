@@ -15,6 +15,7 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import styles from "./styles";
+import { Link as RouterLink} from 'react-router-dom';
 
 export default function BottomNavBar() {
 	const pathname = window.location.pathname; // in case user visits the path directly. The BottomNavBar is able to follow suit.
@@ -61,18 +62,19 @@ export default function BottomNavBar() {
 				<BottomNavigation
 					value={value}
 					onChange={handleChange}
+					showLabels='true'
 				>
 					<BottomNavigationAction
-						component="a"
-						href="/signup-login"
+						component={ RouterLink }
+						to="/signup-login"
 						// Need to change this to saved listings
 						label="Saved Listings"
 						sx={{ ...styles.icons }}
 						icon={<FavoriteIcon />}
 					/>
 					<BottomNavigationAction
-						component="a"
-						href="/"
+						component= { RouterLink }
+						to="/"
 						label="Home"
 						icon={<MapOutlinedIcon />}
 						sx={{ ...styles.icons }}
@@ -92,7 +94,8 @@ export default function BottomNavBar() {
 						<Box p={2} width="250px" textAlign="center" role="presentation">
 							<List>
 								<MuiLink
-									href="/signup-login"
+									component={ RouterLink }
+									to="/signup-login"
 									color="inherit"
 									sx={{ textDecoration: "none" }}>
 									<ListItem button>
@@ -103,7 +106,8 @@ export default function BottomNavBar() {
 									</ListItem>
 								</MuiLink>
 								<MuiLink
-									href="/MyListings"
+									component={ RouterLink }
+									to="/MyListings"
 									color="inherit"
 									sx={{ textDecoration: "none" }}>
 									<ListItem button>
@@ -114,7 +118,8 @@ export default function BottomNavBar() {
 									</ListItem>
 								</MuiLink>
 								<MuiLink
-									href="/"
+									component={ RouterLink }
+									to="/"
 									// Need to fix this link to take you to all listings I think
 									color="inherit"
 									sx={{ textDecoration: "none" }}>
@@ -126,7 +131,8 @@ export default function BottomNavBar() {
 									</ListItem>
 								</MuiLink>
 								<MuiLink
-									href="/"
+									component={ RouterLink }
+									to="/"
 									color="inherit"
 									sx={{ textDecoration: "none" }}>
 									<ListItem button>
@@ -137,7 +143,8 @@ export default function BottomNavBar() {
 									</ListItem>
 								</MuiLink>
 								<MuiLink
-									href="/"
+									component={ RouterLink }
+									to="/"
 									// Need to fix this to take you to account settings
 									color="inherit"
 									sx={{ textDecoration: "none" }}>
@@ -149,7 +156,8 @@ export default function BottomNavBar() {
 									</ListItem>
 								</MuiLink>
 								<MuiLink
-									href="/"
+									component={ RouterLink }
+									to="/"
 									color="inherit"
 									sx={{ textDecoration: "none" }}>
 									<ListItem button>
