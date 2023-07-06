@@ -1,14 +1,18 @@
 const styles = {
   mainContainer: {
-    display: "flex",
-    justifyContent: "center",
-    width:"100%"
+    width: "100%",
+    "@media (min-width: 768px)": {
+      display: "flex",
+      justifyContent: "center",
+    },
   },
   map: {
-    width: "50%",
+    width: "100%",
+    "@media (min-width: 768px)": {},
   },
   listings: {
-    width: "50%",
+    width: "100%",
+    "@media (min-width: 768px)": {},
   },
 };
 
