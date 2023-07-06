@@ -58,15 +58,15 @@ export default function BottomNavBar() {
 
 	return (
 		<>
-			<Box className="navMobile" sx={{ width: "inherit", ...styles.icons }}>
+			<Box className="navMobile" sx={{ width: "inherit", ...styles.icons, ...styles.navMobile }}>
 				<BottomNavigation
 					value={value}
 					onChange={handleChange}
-					showLabels='true'
+					// showLabels='true'
 				>
 					<BottomNavigationAction
 						component={ RouterLink }
-						to="/signup-login"
+						to="/SavedListings"
 						// Need to change this to saved listings
 						label="Saved Listings"
 						sx={{ ...styles.icons }}
