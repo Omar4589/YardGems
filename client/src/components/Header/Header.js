@@ -26,15 +26,15 @@ const Header = () => {
 
   return (
     <Box sx={{ ...styles.mainContainer }}>
-      <Link href="/MyListings" sx={{ ...styles.myListingsLink }}>
+      <Link to="/MyListings" sx={{ ...styles.myListingsLink }}>
         My Listings
       </Link>
-      <Link href="/SavedListings" sx={{ ...styles.savedListingLink }}>
+      <Link to="/SavedListings" sx={{ ...styles.savedListingLink }}>
         Saved Listings
       </Link>
 
       <Box sx={{ ...styles.appLogo }}>
-        <Link href="/" sx={{ ...styles.logoLink }} color={"inherit"}>
+        <Link to="/" sx={{ ...styles.logoLink }} color={"inherit"}>
           <img src={appName} width="100%" height="100%" alt="green_gem" />
         </Link>
       </Box>
@@ -70,22 +70,22 @@ const Header = () => {
         )}
       </Box>
 
-      <Link href="/" sx={{ ...styles.homeLink }}>
+      <Link to="/" sx={{ ...styles.homeLink }}>
         Home
       </Link>
 
       {AuthService.loggedIn() ? (
         <>
-          <Link href="/MyAccount" sx={{ ...styles.myAccountLink }}>
+          <Link to="/MyAccount" sx={{ ...styles.myAccountLink }}>
             My Account
           </Link>
-          <Link href="/" onClick={handleLogout} sx={{ ...styles.logoutLink }}>
+          <Link to="/" onClick={handleLogout} sx={{ ...styles.logoutLink }}>
             Logout
           </Link>
         </>
       ) : (
         <>
-          <Link href="/signup-login" sx={{ ...styles.signUpLoginLink }}>
+          <Link to="/signup-login" sx={{ ...styles.signUpLoginLink }}>
             SignUp/Login
           </Link>
         </>
