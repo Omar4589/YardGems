@@ -78,7 +78,7 @@ const deletePostSubmit = async (_id) => {
                                         Date Of Event: {post.dateOfSale}
                                     </Typography>
                                     <Typography component="div" variant="body2" color="text.secondary">
-                                        {post.description}
+                                        {post.postDescription}
                                     <Typography component="div" variant="body2" color="text.secondary">
                                         Address: {post.address}
                                     </Typography>

@@ -8,16 +8,18 @@ query userMe {
       email
       savedPost {
         _id
-       description
+       postDescription
        address
        dateOfSale
        image
        postName
+       lat
+       lng
        createdAt
       }
       savedFavorites {
         _id
-        description
+        postDescription
         address
         dateOfSale
         image
@@ -32,12 +34,14 @@ export const QUERY_POSTS = gql`
   query getPosts {
     allPost {
       _id
-      description
+      postDescription
       address
       dateOfSale
       image
       postAuthor
       postName
+      lat
+      lng
       createdAt
     }
   }
@@ -46,12 +50,14 @@ export const QUERY_SINGLE_POST= gql`
   query getSinglePost($listingId: ID!) {
     post(listingId: $listingId) {
       _id
-      description
+      postDescription
       address
       dateOfSale
       image
       postAuthor
       postName
+      lat
+      lng
       createdAt
     }
   }

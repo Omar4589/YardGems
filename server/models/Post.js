@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const postSchema = new Schema({
-  description: {
+  postDescription: {
     type: String,
     required: 'You need to leave a description!',
     minlength: 1,
@@ -28,6 +28,12 @@ const postSchema = new Schema({
   },
   postName: {
     type: String,
+  },
+  lat: {
+    type: Number, // maybe  aflloat
+  },
+  lng: {
+    type: Number,
   },
 
   // date of when the user create a sale post

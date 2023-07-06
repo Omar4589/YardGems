@@ -1,4 +1,6 @@
-import { useState, useEffect} from "react";
+import React, { useState, useEffect} from "react";
+import {useQuery} from '@apollo/client';
+import {QUERY_POSTS} from '../../utils/queries';
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
@@ -24,7 +26,7 @@ function Map() {
 const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 })
 const [selected, setSelected] = useState(null);
 
- return (
+  return (
   <div>
     <div className='places-container'>
     {/* will render out a placed based on the selection */}
@@ -37,22 +39,31 @@ const [selected, setSelected] = useState(null);
      center={ center } // displays location
      mapContainerClassName='map-container' // styling 
     >
+      {/* {markers.map((marker, index) => (
+        <MarkerF key={index} position={marker} />
+      ))} */}
     {/* below the selected state for the marker to render on the map */}
     { selected && <MarkerF position={selected} />}
+    
     </GoogleMap>
   </div>
  );
 };
 
+
+
+
 // this handles the autoComplete Box
 const PlacesAutocomplete = ({ setSelected, setCenter }) => { 
-    const {ready, value, setValue , suggestions: {status, data}, clearSuggestions} = usePlacesAutocomplete(); // will give us some data back from the UI, ready is based on is the google script is ready to go, value / setValue is what the user has typed in, suggestions is that status of the result, data (all the attributes), clearSuggestions is what the user has clearly chose 
+   
+  
+  const {ready, value, setValue , suggestions: {status, data}, clearSuggestions} = usePlacesAutocomplete(); // will give us some data back from the UI, ready is based on is the google script is ready to go, value / setValue is what the user has typed in, suggestions is that status of the result, data (all the attributes), clearSuggestions is what the user has clearly chose 
     // handleSelect will be a async function bc we will be converting the value selected to a lat and long 
     // val will be passsed as a string from the value selected 
     const handleSelect = async (address) => {
         setValue(address, false); // setting to false to not fetch any other data 
         clearSuggestions(); // this will clear the autofill suggestions / function from google map api (i did not create)
-
+      console.log(address)
         // results is equal to the value the user chose
         const results = await getGeocode({address});
         // now converting results to lat and long
