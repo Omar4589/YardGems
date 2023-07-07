@@ -18,6 +18,7 @@ import styles from "./styles";
 import { Link as RouterLink } from "react-router-dom";
 import AuthService from "../../utils/auth";
 import Switch from "@mui/material/Switch";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 export default function BottomNavBar({ handleThemeChange, darkMode }) {
   const pathname = window.location.pathname; // in case user visits the path directly. The BottomNavBar is able to follow suit.
@@ -64,148 +65,148 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   }
 
   return (
-    <>
-      <Box
-        className="navMobile"
-        sx={{ width: "inherit", ...styles.icons, ...styles.navMobile }}
+    <BottomNavigation
+      value={value}
+      onChange={handleChange}
+      showLabels="true"
+      sx={{ ...styles.mainContainer }}
+    >
+      <BottomNavigationAction
+        component={RouterLink}
+        to="/MyListings"
+        label="My Listings"
+        sx={{ ...styles.icons }}
+        icon={<DashboardIcon />}
+      />
+
+      <BottomNavigationAction
+        component={RouterLink}
+        to="/SavedListings"
+        label="Saved Listings"
+        sx={{ ...styles.icons }}
+        icon={<FavoriteIcon />}
+      />
+
+      <BottomNavigationAction
+        component={RouterLink}
+        to="/"
+        label="Home"
+        icon={<MapOutlinedIcon />}
+        sx={{ ...styles.icons }}
+      />
+
+      <BottomNavigationAction
+        label="Menu"
+        icon={<MenuIcon />}
+        onClick={() => setIsDrawerOpen(true)}
+      />
+
+      <Drawer
+        anchor="right"
+        open={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
       >
-        <BottomNavigation
-          value={value}
-          onChange={handleChange}
-          showLabels="true"
-        >
-          <BottomNavigationAction
-            component={RouterLink}
-            to="/SavedListings"
-            // Need to change this to saved listings
-            label="Saved Listings"
-            sx={{ ...styles.icons }}
-            icon={<FavoriteIcon />}
-          />
-          <BottomNavigationAction
-            component={RouterLink}
-            to="/"
-            label="Home"
-            icon={<MapOutlinedIcon />}
-            sx={{ ...styles.icons }}
-          />
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="logo"
-            onClick={() => setIsDrawerOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Drawer
-            anchor="right"
-            open={isDrawerOpen}
-            onClose={() => setIsDrawerOpen(false)}
-          >
-            <Box p={2} width="250px" textAlign="center" role="presentation">
-              <List>
+        <Box p={2} width="250px" textAlign="center" role="presentation">
+          <List>
+            <MuiLink
+              component={RouterLink}
+              to="/AboutUs"
+              color="inherit"
+              sx={{ textDecoration: "none" }}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText primary="About Us" />
+              </ListItem>
+            </MuiLink>
+
+            <MuiLink
+              component={RouterLink}
+              to="/ContactUs"
+              color="inherit"
+              sx={{ textDecoration: "none" }}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <ContactPageIcon />
+                </ListItemIcon>
+                <ListItemText primary="Contact Us" />
+              </ListItem>
+            </MuiLink>
+
+            <MuiLink
+              component={RouterLink}
+              to="/FAQ"
+              color="inherit"
+              sx={{ textDecoration: "none" }}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <ContactSupportIcon />
+                </ListItemIcon>
+                <ListItemText primary="FAQ" />
+              </ListItem>
+            </MuiLink>
+
+            <ListItem button>
+              <ListItemIcon>
+                <Switch checked={darkMode} onChange={handleThemeChange} />
+              </ListItemIcon>
+              <ListItemText primary="Theme Switcher" />
+            </ListItem>
+
+            {AuthService.loggedIn() ? (
+              <>
                 <MuiLink
                   component={RouterLink}
-                  to="/AboutUs"
+                  to="/"
                   color="inherit"
                   sx={{ textDecoration: "none" }}
                 >
                   <ListItem button>
                     <ListItemIcon>
-                      <InfoIcon />
+                      <SettingsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="About Us" />
+                    <ListItemText primary="My Account" />
                   </ListItem>
                 </MuiLink>
-
                 <MuiLink
                   component={RouterLink}
-                  to="/ContactUs"
+                  to="/"
+                  color="inherit"
+                  sx={{ textDecoration: "none" }}
+                  onClick={handleLogout}
+                >
+                  <ListItem button>
+                    <ListItemIcon>
+                      <LoginIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </ListItem>
+                </MuiLink>
+              </>
+            ) : (
+              <>
+                <MuiLink
+                  component={RouterLink}
+                  to="/signup-login"
                   color="inherit"
                   sx={{ textDecoration: "none" }}
                 >
                   <ListItem button>
                     <ListItemIcon>
-                      <ContactPageIcon />
+                      <LoginIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Contact Us" />
+                    <ListItemText primary="Login" />
                   </ListItem>
                 </MuiLink>
-
-                <MuiLink
-                  component={RouterLink}
-                  to="/FAQ"
-                  color="inherit"
-                  sx={{ textDecoration: "none" }}
-                >
-                  <ListItem button>
-                    <ListItemIcon>
-                      <ContactSupportIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="FAQ" />
-                  </ListItem>
-                </MuiLink>
-
-                <ListItem button>
-                  <ListItemIcon>
-                    <Switch checked={darkMode} onChange={handleThemeChange} />
-                  </ListItemIcon>
-                  <ListItemText primary="Theme Switcher" />
-                </ListItem>
-
-                {AuthService.loggedIn() ? (
-                  <>
-                    <MuiLink
-                      component={RouterLink}
-                      to="/"
-                      color="inherit"
-                      sx={{ textDecoration: "none" }}
-                    >
-                      <ListItem button>
-                        <ListItemIcon>
-                          <SettingsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="My Account" />
-                      </ListItem>
-                    </MuiLink>
-                    <MuiLink
-                      component={RouterLink}
-                      to="/"
-                      color="inherit"
-                      sx={{ textDecoration: "none" }}
-                      onClick={handleLogout}
-                    >
-                      <ListItem button>
-                        <ListItemIcon>
-                          <LoginIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Logout" />
-                      </ListItem>
-                    </MuiLink>
-                  </>
-                ) : (
-                  <>
-                    <MuiLink
-                      component={RouterLink}
-                      to="/signup-login"
-                      color="inherit"
-                      sx={{ textDecoration: "none" }}
-                    >
-                      <ListItem button>
-                        <ListItemIcon>
-                          <LoginIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Login" />
-                      </ListItem>
-                    </MuiLink>
-                  </>
-                )}
-              </List>
-            </Box>
-          </Drawer>
-        </BottomNavigation>
-      </Box>
-    </>
+              </>
+            )}
+          </List>
+        </Box>
+      </Drawer>
+    </BottomNavigation>
   );
 }
