@@ -47,10 +47,10 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addPost: async (parent, { description, address, dateOfSale, image, postAuthor, postName}, context) => {
+    addPost: async (parent, { postDescription, address, dateOfSale, image, postAuthor, postName, lat, lng}, context) => {
       if (context.user) {
         const newPost = await Post.create({
-          description, address, dateOfSale, image, postAuthor: context.user.username, postName
+          postDescription, address, dateOfSale, image, postAuthor: context.user.username, postName,lat, lng
         });
 
         await User.findOneAndUpdate(
@@ -79,10 +79,10 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    editPost: async (parent, {id, description, address, dateOfSale, image, postName}, context) => {
+    editPost: async (parent, {id, postDescription, address, dateOfSale, image, postName, lat, lng}, context) => {
       if (context.user) {
         const updatePost = await Post.findOneAndUpdate(
-          { _id: id }, {description, address, dateOfSale, image, postName}, {new:true}
+          { _id: id }, {postDescription, address, dateOfSale, image, postName,lat, lng}, {new:true}
         );
 
         return updatePost;
