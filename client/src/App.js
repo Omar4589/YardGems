@@ -16,6 +16,7 @@ import AboutUs from "./pages/AboutUs";
 import SinglePost from "./pages/SinglePost";
 import BottomNavBar from "./components/Nav/nav";
 import Home from "./pages/Home/Home";
+import SavedListings from "./pages/SavedListings";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -50,6 +51,7 @@ function App() {
           <Route path="/signup-login" element={<SignUpLoginPage />} />
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/listings/:listingId" element={<SinglePost />} />
+          <Route path="/SavedListings" element={<SavedListings />} />
         </Routes>
         <BottomNavBar />
         <Footer />

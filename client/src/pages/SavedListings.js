@@ -9,7 +9,7 @@ import image from '../assets/yardsale.jpg'  // hard coding for now
 import Auth from '../utils/auth'
 import { Link } from 'react-router-dom';
 
-const UserDashboard = () => {
+const SavedListings = () => {
     const { loading, data } = useQuery(USER_QUERY); 
     const userData = data?.me || []; 
     const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -49,8 +49,8 @@ const deletePostSubmit = async (_id) => {
         <Container maxWidth="xl" >
         <Container maxWidth='md'>
             <Typography component='div' variant="h2" align='center' color='textPrimary' gutterBottom style={{fontSize: '3rem'}}>
-                {userData.savedPost.length
-                ? `You have ${userData.savedPost.length} garage sale ${userData.savedPost.length === 1 ? 'listing' : 'listings'}:`
+                {userData.savedFavorites.length
+                ? `Viewing ${userData.savedFavorites.length} saved ${userData.savedFavorites.length === 1 ? 'listing' : 'listings'}:`
                 : 'You have no saved listings!'}
             </Typography> 
             {/* button is the create new listing button to open modal, passing a prop that handles a function */}
@@ -60,7 +60,7 @@ const deletePostSubmit = async (_id) => {
         </Container>
         <Container>
             <Grid container spacing={4}>
-                {userData.savedPost.map((post) => {
+                {userData.savedFavorites.map((post) => {
                     return (
                         <Grid key={post._id} item xs = {12} sm = {6} md = {4}>
                             <Card component='div'sx={{ maxWidth: 345 }}>
@@ -78,7 +78,7 @@ const deletePostSubmit = async (_id) => {
                                         Date Of Event: {post.dateOfSale}
                                     </Typography>
                                     <Typography component="div" variant="body2" color="text.secondary">
-                                        {post.postDescription}
+                                        {post.description}
                                     <Typography component="div" variant="body2" color="text.secondary">
                                         Address: {post.address}
                                     </Typography>
@@ -108,4 +108,4 @@ const deletePostSubmit = async (_id) => {
 )
 };
 
-export default UserDashboard;
+export default SavedListings;
