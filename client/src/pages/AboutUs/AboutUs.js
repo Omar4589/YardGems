@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 const AboutUs = () => {
   return (
-    <Box sx={{ mx: "auto", px: 10, py: 7 }}>
+    <Box sx={{ mx: "auto", px: 10, py: 7, backgroundColor: "#e8f5e9" }}>
       <Typography sx={{ mb: 5, fontSize: 30 }}>About Us</Typography>
       <Typography sx={{ mb: 4 }}>
         Welcome to YardGems, the ultimate online platform for yard and garage
