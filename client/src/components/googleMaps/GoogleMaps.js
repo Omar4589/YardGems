@@ -10,9 +10,6 @@ import './google.css';
 
 
 export default function GoogleMaps() {
-
-
-
 // isLoaded is gives us access to the apiKey
  const { isLoaded } = useLoadScript({ 
   googleMapsApiKey: 'AIzaSyDvK10cezc3bexO_QfHK7MPRVCY2IIGVt4',
