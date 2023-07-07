@@ -1,6 +1,10 @@
 const styles = {
   mainContainer: {
+<<<<<<< HEAD
     width: "100vw",
+=======
+    width: "100%",
+>>>>>>> main
     display: "flex",
     justifyContent: "space-between",
     position: "fixed",

@@ -12,7 +12,16 @@ const styles = {
       padding: "0px 50px 0px 50px",
     },
   },
+<<<<<<< HEAD
   appLogo: { width: "40%" },
+=======
+  appLogo: {
+    width: "40%",
+    "@media (min-width: 768px)": {
+      width: "25%",
+    },
+  },
+>>>>>>> main
   logoLink: {
     textDecoration: "none",
     display: "flex",
