@@ -1,6 +1,6 @@
 const styles = {
   mainContainer: {
-    width: "100vw",
+    width: "100%",
     display: "flex",
     justifyContent: "space-between",
     position: "fixed",

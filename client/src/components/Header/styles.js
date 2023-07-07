@@ -1,7 +1,6 @@
 const styles = {
   mainContainer: {
     display: "flex",
-    width:"100%",
     justifyContent: "space-between",
     alignItems: "center",
     background: "white",
@@ -12,7 +11,12 @@ const styles = {
       padding: "0px 50px 0px 50px",
     },
   },
-  appLogo: { width: "40%" },
+  appLogo: {
+    width: "40%",
+    "@media (min-width: 768px)": {
+      width: "25%",
+    },
+  },
   logoLink: {
     textDecoration: "none",
     display: "flex",
