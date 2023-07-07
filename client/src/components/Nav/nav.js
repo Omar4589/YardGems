@@ -18,43 +18,43 @@ import styles from "./styles";
 import { Link as RouterLink} from 'react-router-dom';
 
 export default function BottomNavBar() {
-	const pathname = window.location.pathname; // in case user visits the path directly. The BottomNavBar is able to follow suit.
-	const [value, setValue] = React.useState(pathname);
-	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-	};
+  const pathname = window.location.pathname; // in case user visits the path directly. The BottomNavBar is able to follow suit.
+  const [value, setValue] = React.useState(pathname);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-	const [showBottomNav, setShowBottomNav] = useState(true);
+  const [showBottomNav, setShowBottomNav] = useState(true);
 
-	// The `useEffect` hook is used to add event listeners and perform side effects.
-	useEffect(() => {
-		//This function updates the value of showBottomNav based on the window width.
-		const handleResize = () => {
-			//Here we are setting the value by passing in the value of the expression
-			//'is my window's innerWidth less than 768 right now? true or false
-			setShowBottomNav(window.innerWidth < 768);
-		};
+  // The `useEffect` hook is used to add event listeners and perform side effects.
+  useEffect(() => {
+    //This function updates the value of showBottomNav based on the window width.
+    const handleResize = () => {
+      //Here we are setting the value by passing in the value of the expression
+      //'is my window's innerWidth less than 768 right now? true or false
+      setShowBottomNav(window.innerWidth < 768);
+    };
 
-		//Here we create an event listener for the window's resize event, and pass `handleResize` as the event handler.
-		window.addEventListener("resize", handleResize);
+    //Here we create an event listener for the window's resize event, and pass `handleResize` as the event handler.
+    window.addEventListener("resize", handleResize);
 
-		//Here we call `handleResize` on the initial mount to set the initial value of `showBottomNav`.
-		handleResize();
+    //Here we call `handleResize` on the initial mount to set the initial value of `showBottomNav`.
+    handleResize();
 
-		//Here we define a 'cleanup' function that removes the resize event listener
-		const cleanup = () => {
-			window.removeEventListener("resize", handleResize);
-		};
+    //Here we define a 'cleanup' function that removes the resize event listener
+    const cleanup = () => {
+      window.removeEventListener("resize", handleResize);
+    };
 
-		// Clean up the event listener by removing it when the component is unmounted.
-		return cleanup;
-	}, []);
+    // Clean up the event listener by removing it when the component is unmounted.
+    return cleanup;
+  }, []);
 
-	// If `showBottomNav` is false, the component returns `null`, indicating that the footer should not be rendered.
-	if (!showBottomNav) {
-		return null;
-	}
+  // If `showBottomNav` is false, the component returns `null`, indicating that the footer should not be rendered.
+  if (!showBottomNav) {
+    return null;
+  }
 
 	return (
 		<>
@@ -62,7 +62,7 @@ export default function BottomNavBar() {
 				<BottomNavigation
 					value={value}
 					onChange={handleChange}
-					// showLabels='true'
+					showLabels='true'
 				>
 					<BottomNavigationAction
 						component={ RouterLink }
