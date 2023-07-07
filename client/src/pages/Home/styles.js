@@ -11,8 +11,10 @@ const styles = {
     "@media (min-width: 768px)": {},
   },
   listings: {
-    width: "100%",
-    "@media (min-width: 768px)": {},
+    width: "80%",
+    'padding': '5px',
+    "@media (min-width: 768px)": {
+    },
   },
 };
 
