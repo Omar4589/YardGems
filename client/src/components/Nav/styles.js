@@ -2,14 +2,15 @@ const styles = {
     icons: {
         '&:focus': {color: 'green'},
         '&:active': {color: 'green'},
-        '&:hover': {color: 'green'}  
+        '&:hover': {color: 'green'}, 
     },
-    // navMobile: {
-    //     '@media screen and (max-width: 768px)': {
-    //         .card {
-    //           width: 100%;
-    //         }
-    // }
+    navMobile: {
+        'position': 'fixed',
+        'bottom': '0',
+        'width': '100%',
+        'margin': 'auto',
+        'float': 'center',
+    }
 }
 
 
