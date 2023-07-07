@@ -4,20 +4,20 @@ export const lightTheme = createTheme({
   palette: {
     type: "light",
     primary: {
-      main: "#4A90E2",
+      main: "#2a2a35f2",
     },
     secondary: {
-      main: "#AEDFF7",
+      main: "#66bb6a",
     },
     background: {
-      default: "#F9FAFB",
+      default: "black",
     },
     text: {
-      primary: "#003371",
+      primary: "#2a2a35f2",
     },
   },
   typography: {
-    fontFamily: "Bebas Neue",
+    fontFamily: "Roboto",
   },
 });
 
@@ -38,6 +38,6 @@ export const darkTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Bebas Neue",
+    fontFamily: "Roboto",
   },
 });

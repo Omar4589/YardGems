@@ -8,6 +8,7 @@ import AuthService from "../../utils/auth";
 import { Link as RouterLink } from "react-router-dom";
 
 const Header = () => {
+  
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   const toggleSearch = () => {
