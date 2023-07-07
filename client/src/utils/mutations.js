@@ -23,29 +23,33 @@ export const LOGIN_USER = gql`
   }
 `;
 export const ADD_POST = gql`
-  mutation addPost($description: String!,  $address: String!, $dateOfSale: String!, $image: String, $postName: String!) {
-    addPost(description: $description, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName) {
+  mutation addPost($postDescription: String,  $address: String, $dateOfSale: String, $image: String, $postName: String, $lat: Float, $lng: Float) {
+    addPost(postDescription: $postDescription, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName, lat: $lat, lng: $lng) {
       _id
-      description
+      postDescription
       address
       dateOfSale
       image
       postAuthor
       postName
+      lat
+      lng
       createdAt
     }
   }
 `;
 export const EDIT_POST = gql`
-mutation editPost($id: ID, $description: String,  $address: String, $dateOfSale: String, $image: String, $postName: String) {
-  editPost(id: $id, description: $description, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName) {
+mutation editPost($id: ID, $postDescription: String,  $address: String, $dateOfSale: String, $image: String, $postName: String, $lat: Float, $lng: Float) {
+  editPost(id: $id, postDescription: $postDescription, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName,lat: $Int, lng: $Int) {
     _id
-    description
+    postDescription
     address
     dateOfSale
     image
     postAuthor
     postName
+    lat
+    lng
     createdAt
   }
 }
@@ -54,12 +58,14 @@ export const REMOVE_POST = gql`
   mutation removePost($postId: ID!) {
     removePost(postId: $postId) {
       _id
-      description
+      postDescription
       address
       dateOfSale
       image
       postAuthor
       postName
+      lat
+      lng
       createdAt
     }
   }
