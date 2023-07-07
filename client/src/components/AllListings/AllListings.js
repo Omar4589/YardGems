@@ -1,4 +1,4 @@
-// import React, {useState} from "react";
+import React, {useState} from "react";
 import { useQuery } from '@apollo/client';
 import {QUERY_POSTS} from "../../utils/queries";
 import { Container, Card, CardMedia, Typography, CardContent, CardHeader, Grid} from '@mui/material';
@@ -10,6 +10,15 @@ import image from '../../assets/yardsale.jpg'  // hard coding for now
 const AllListings = () => {
     const { data } = useQuery(QUERY_POSTS); 
     const AllListingsData = data?.allPost || []; 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+      };
+      const handleCloseModal = () => {
+        setIsModalOpen(false);
+        window.location.reload(); // refresh the page after a new listing is made
+      };
 
 
     return (
