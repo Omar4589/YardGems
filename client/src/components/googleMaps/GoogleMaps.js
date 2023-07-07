@@ -10,6 +10,9 @@ import './google.css';
 
 
 export default function GoogleMaps() {
+
+
+
     // isLoaded is gives us access to the apiKey
  const { isLoaded } = useLoadScript({ 
   googleMapsApiKey: 'AIzaSyDvK10cezc3bexO_QfHK7MPRVCY2IIGVt4',
@@ -20,13 +23,29 @@ export default function GoogleMaps() {
  return <Map />; // from below function Map
 }
 
+
 // this returns the map with a marker taken from the PlacesAutoComplete
 function Map() {
 // center is used to redirect to the selected city
 // selected is for value selected from user to place pin 
 const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 })
 const [selected, setSelected] = useState(null);
+const { loading, data } = useQuery(QUERY_POSTS); 
+const allPost = data?.allPost || []; 
+// console.log(allPost[21].lat)
 
+useEffect(() => { // everytime the map component laods, it maps through all the post and parse the floats
+  if (allPost.length > 0) {
+    const markerData = allPost.map(({ lat, lng }) => ({
+      lat: parseFloat(lat),
+      lng: parseFloat(lng)
+       
+    }));
+    setSelected(markerData[0]);
+  }
+ }, []);
+ 
+ 
   return (
   <div>
     <div className='places-container'>
@@ -40,12 +59,13 @@ const [selected, setSelected] = useState(null);
      center={ center } // displays location
      mapContainerClassName='map-container' // styling 
     >
-      {/* {markers.map((marker, index) => (
-        <MarkerF key={index} position={marker} />
-      ))} */}
-    {/* below the selected state for the marker to render on the map */}
-    { selected && <MarkerF position={selected} />}
-    
+      {allPost.map(({lat, lng}, index) => {
+        return ( 
+        <MarkerF key={index} 
+        position={{ lat: parseFloat(lat), lng: parseFloat(lng)}} />
+        );
+      })}
+      { selected && <MarkerF position={selected} />}
     </GoogleMap>
   </div>
  );

@@ -17,7 +17,7 @@ import '@reach/combobox/styles.css';
 //------------------Create Listing Modal--------------\\
 export const FormModal = ({handleClose, handleOpen}) => {
     const [selectedLocation, setSelectedLocation] = useState(null);
-
+   
 
     const [addPost, { error }] = useMutation(ADD_POST);
     const [formState, setFormState] = useState({ 
