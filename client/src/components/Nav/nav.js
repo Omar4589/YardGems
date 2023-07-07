@@ -14,12 +14,12 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
 import LoginIcon from "@mui/icons-material/Login";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
 import styles from "./styles";
 import { Link as RouterLink } from "react-router-dom";
 import AuthService from "../../utils/auth";
+import Switch from "@mui/material/Switch";
 
-export default function BottomNavBar() {
+export default function BottomNavBar({ handleThemeChange, darkMode }) {
   const pathname = window.location.pathname; // in case user visits the path directly. The BottomNavBar is able to follow suit.
   const [value, setValue] = React.useState(pathname);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -147,19 +147,12 @@ export default function BottomNavBar() {
                   </ListItem>
                 </MuiLink>
 
-                <MuiLink
-                  component={RouterLink}
-                  to="/"
-                  color="inherit"
-                  sx={{ textDecoration: "none" }}
-                >
-                  <ListItem button>
-                    <ListItemIcon>
-                      <DarkModeIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Theme Switcher" />
-                  </ListItem>
-                </MuiLink>
+                <ListItem button>
+                  <ListItemIcon>
+                    <Switch checked={darkMode} onChange={handleThemeChange} />
+                  </ListItemIcon>
+                  <ListItemText primary="Theme Switcher" />
+                </ListItem>
 
                 {AuthService.loggedIn() ? (
                   <>
