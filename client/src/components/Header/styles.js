@@ -5,14 +5,14 @@ const styles = {
     alignItems: "center",
     background: "white",
     color: "#24CF6B",
-    padding: "0px 5px 0px 5px",
+    padding: "10px 5px 10px 5px",
     "@media (min-width: 768px)": {
       justifyContent: "space-between",
       padding: "0px 50px 0px 50px",
     },
   },
   appLogo: {
-    width: "40%",
+    width: "45%",
     "@media (min-width: 768px)": {
       width: "25%",
     },
@@ -24,11 +24,13 @@ const styles = {
     alignItems: "center",
   },
   searchIcon: {
+    fontSize:30,
     "@media (min-width: 768px)": {
       display: "none",
     },
   },
   messagesIcon: {
+    fontSize:30,
     ml: 1,
     "@media (min-width: 768px)": {
       display: "none",
