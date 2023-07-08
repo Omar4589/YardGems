@@ -61,7 +61,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ ...styles.mainContainer }}>
+    <Container sx={{ ...styles.mainContainer }}>
       <Box
         sx={{
           ...styles.signupContainer,

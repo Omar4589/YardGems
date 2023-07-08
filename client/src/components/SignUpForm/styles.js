@@ -12,6 +12,7 @@ const styles = {
     mx: 3,
     px: 4,
     borderRadius: 2,
+    "@media (min-width: 768px)": { maxWidth: "50%" },
   },
   appName: { py: 2, px: 2 },
   heading: { fontWeight: "bold", fontSize: 25, mb: 1 },

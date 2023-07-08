@@ -46,7 +46,7 @@ export default function SignIn() {
   };
 
   return (
-    <Container sx={{ ...styles.mainContainer }} maxWidth="sm">
+    <Container sx={{ ...styles.mainContainer }}>
       <Box
         sx={{
           ...styles.loginContainer,
