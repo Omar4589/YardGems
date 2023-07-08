@@ -10,26 +10,48 @@ import {
 	CardHeader,
 	Grid,
 	CardActionArea,
-	Button,
+	Modal,
+	Box,
+	IconButton,
+	Icon,
 } from "@mui/material";
 // import {FormModal} from '../DashboardModal/DashboardModal'
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 // import Auth from '../utils/auth'
 // import { Link } from 'react-router-dom';
+import styles from "./styles";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const AllListings = () => {
 	const { data } = useQuery(QUERY_POSTS);
 	const AllListingsData = data?.allPost || [];
 
+	const [open, setOpen] = React.useState(false);
+	// const handleOpen = () => setOpen(true);
+	// const handleClose = () => setOpen(false);
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const handleOpenModal = () => {
+		setIsModalOpen(true);
+	};
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
+		window.location.reload(); // refresh the page after a new listing is made
+	};
+
 	return (
 		<>
-			<Container style={{ maxHeight: "100vh", overflow: "auto" }}>
+			<Container sx={{ maxHeight: "100vh", overflow: "auto" }}>
 				<Grid container spacing={2}>
 					{AllListingsData.map((post) => {
 						return (
 							<Grid key={post._id} item xs={12} sm={10} md={6}>
-								<CardActionArea onClick={() => console.log("click")}>
-									<Card component="div" sx={{ maxWidth: 345 }}>
+								<Card component="div" sx={{ maxWidth: 345 }}>
+									<IconButton sx={{ ...styles.favoriteButton }}>
+										<FavoriteIcon />
+									</IconButton>
+									<CardActionArea onClick={handleOpenModal}>
 										<CardHeader title={post.postName} />
 										<CardMedia
 											sx={{ height: 140, paddingTop: "56.2%" }}
@@ -53,10 +75,53 @@ const AllListings = () => {
 													{post.address}
 												</Typography>
 											</Typography>
-                                            <Button> View Listing </ Button>
 										</CardContent>
-									</Card>
-								</CardActionArea>
+										{/* <Button onClick={handleOpen}>View Listing</Button> */}
+										<Modal
+											open={isModalOpen}
+											onClose={handleCloseModal}
+											componentsProps={{
+												backdrop: { style: { backgroundColor: "transparent" } },
+											}}
+											aria-labelledby="modal-modal-title"
+											aria-describedby="modal-modal-description">
+											<Box sx={{ ...styles.modalPopUp }}>
+												<CardHeader
+													title={post.postName}
+													subheader={post.createdAt}
+												/>
+												<IconButton sx={{ ...styles.favoriteButton }}>
+													<FavoriteIcon />
+												</IconButton>
+												<CardMedia
+													sx={{ height: 140, paddingTop: "56.2%" }}
+													image={image}
+													title="green iguana"
+												/>
+												<CardContent component="div">
+													<Typography
+														component="span"
+														gutterBottom
+														variant="h5">
+														Date Of Event: {post.dateOfSale}
+													</Typography>
+													<Typography
+														component="div"
+														variant="body2"
+														color="text.secondary">
+														{post.postDescription}
+														<Typography
+															component="div"
+															variant="body2"
+															color="text.secondary">
+															Address: {post.address}
+														</Typography>
+													</Typography>
+												</CardContent>
+											</Box>
+										</Modal>
+									</CardActionArea>
+								</Card>
 							</Grid>
 						);
 					})}
