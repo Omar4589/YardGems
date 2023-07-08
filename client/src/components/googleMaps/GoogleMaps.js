@@ -12,7 +12,7 @@ import './google.css';
 export default function GoogleMaps() {
 // isLoaded is gives us access to the apiKey
  const { isLoaded } = useLoadScript({ 
-  googleMapsApiKey: 'AIzaSyDvK10cezc3bexO_QfHK7MPRVCY2IIGVt4',
+  googleMapsApiKey: process.env.REACT_APP_API_KEY,
   libraries: ['places'],
 });
 // is we don't have access return loading, if we do return the Map
