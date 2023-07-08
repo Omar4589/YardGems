@@ -15,7 +15,7 @@ const styles = {
     width: "100%",
     py: 2,
     borderRadius: 2,
-    backgroundColor: "",
+    backgroundColor: "#66bb6a",
   },
 };
 
