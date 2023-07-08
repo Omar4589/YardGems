@@ -1,11 +1,12 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import styles from "./styles";
 
 const AboutUs = () => {
   return (
-    <Box sx={{ mx: "auto", px: 3, py: 5, backgroundColor: "#e8f5e9" }}>
-      <Typography sx={{ mb: 3, fontSize: 30 }}>About Us</Typography>
-      <Typography sx={{ mb: 4, fontSize:20  }}>
+    <Box sx={{ ...styles.mainContainer }}>
+      <Typography sx={{ ...styles.heading }}>About Us</Typography>
+      <Typography sx={{ ...styles.statement }}>
         Welcome to YardGems, the ultimate online platform for yard and garage
         sale enthusiasts. Our mission is to revolutionize the way people
         discover and explore nearby sales, making the process simple, exciting,
@@ -14,7 +15,7 @@ const AboutUs = () => {
         accessible to all.{" "}
       </Typography>
 
-      <Typography sx={{ mb: 4 }}>
+      <Typography sx={{ ...styles.statement }}>
         At YardGems, we understand the joy of stumbling upon that one-of-a-kind
         item and the excitement of connecting with sellers in your community. We
         aim to bring people together, creating a vibrant marketplace where
@@ -22,14 +23,14 @@ const AboutUs = () => {
         hidden gems.{" "}
       </Typography>
 
-      <Typography sx={{ mb: 4 }}>
+      <Typography sx={{ ...styles.statement }}>
         Our dedicated team is committed to providing a seamless and
         user-friendly experience. We continuously strive to improve our platform
         based on valuable feedback from our growing community of users. Your
         satisfaction and enjoyment are at the heart of everything we do.{" "}
       </Typography>
 
-      <Typography sx={{ mb: 4 }}>
+      <Typography sx={{ ...styles.statement }}>
         {" "}
         We believe that yard and garage sales offer more than just an
         opportunity to buy and sell goods. They foster a sense of community,
@@ -39,7 +40,7 @@ const AboutUs = () => {
         exchange stories, and embark on exciting sale adventures.{" "}
       </Typography>
 
-      <Typography sx={{ mb: 4 }}>
+      <Typography sx={{ ...styles.statement }}>
         {" "}
         By making it easier than ever to discover nearby sales, save your
         favorite finds, and connect with sellers, YardGems empowers you to
@@ -49,7 +50,7 @@ const AboutUs = () => {
         sustainable lifestyle.{" "}
       </Typography>
 
-      <Typography sx={{ mb: 12 }}>
+      <Typography sx={{ ...styles.lastStatment }}>
         {" "}
         Thank you for choosing YardGems and becoming part of our growing
         community. Together, let's unlock the hidden treasures waiting to be

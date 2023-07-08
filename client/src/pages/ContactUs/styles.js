@@ -6,7 +6,7 @@ const styles = {
     paddingBottom: 15,
     backgroundColor: "#e8f5e9",
   },
-  heading: { mb: 2, fontSize: 30, fontWeight: "semi-bold" },
+  heading: { mb: 2, fontSize: 35, fontWeight: "semi-bold" },
   statement: { mb: 2, fontSize: 20 },
   fieldContainers: { mb: 2 },
   labels: { fontSize: 20 },
