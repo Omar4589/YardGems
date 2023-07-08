@@ -7,26 +7,20 @@ const styles = {
     alignItems: "center",
     paddingBottom: 10,
   },
-  signupContainer: {
-    background: "white",
-    mx: 3,
-    px: 4,
-    borderRadius: 2,
-  },
+  loginContainer: { background: "white", mx: 3, px: 4, borderRadius: 2 },
   appName: { py: 2, px: 2 },
+  labels: { fontWeight: "semibold", mb: 1, display: "block" },
+
   heading: { fontWeight: "bold", fontSize: 25, mb: 1 },
   form: {},
-  inputBoxes: { py: 1 },
-  labels: { fontWeight: "semibold", mb: 1, display: "block" },
+  email: {mb:2},
   button: { bgcolor: "#66bb6a", color: "white", fontWeight: "semibold", py: 1 },
-  login: { my: 3, textAlign: "center" },
-  loginButton: {
-    color: "#66bb6a",
-    margin: 10,
-    p: 1,
-    "&:hover": {
-      color: "#66bb6a",
-    },
+  happyHunting: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    py: 3,
   },
 };
 

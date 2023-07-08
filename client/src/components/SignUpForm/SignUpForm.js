@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Typography, Box, TextField, Button, Link } from "@mui/material/";
+import {
+  Typography,
+  Box,
+  TextField,
+  Button,
+  Link,
+  Container,
+} from "@mui/material/";
 import { Link as RouterLink } from "react-router-dom";
 import { CREATE_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";
@@ -54,7 +61,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
   };
 
   return (
-    <Box sx={{ ...styles.mainContainer }}>
+    <Container maxWidth="sm" sx={{ ...styles.mainContainer }}>
       <Box
         sx={{
           ...styles.signupContainer,
@@ -82,6 +89,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
         >
           Sign Up
         </Typography>
+
         <form id="signup-form" onSubmit={handleFormSubmit}>
           <Box sx={{ ...styles.inputBoxes }}>
             <Typography component="label" sx={{ ...styles.labels }}>
@@ -174,7 +182,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
           </Typography>
         </Box>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
