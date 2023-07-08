@@ -58,7 +58,7 @@ const ContactUs = () => {
 
       <form id="ContactUs-form" onSubmit={handleFormSubmit}>
         <Box sx={{ ...styles.fieldContainers }}>
-          <Typography component="label">Full Name</Typography>
+          <Typography component="label" sx={{...styles.labels}}>Full Name</Typography>
           <TextField
             fullWidth
             sx={{ ...styles.inputFields }}
@@ -69,7 +69,7 @@ const ContactUs = () => {
           />
         </Box>
         <Box sx={{ ...styles.fieldContainers }}>
-          <Typography component="label">Email</Typography>
+          <Typography component="label" sx={{...styles.labels}}>Email</Typography>
           <TextField
             type="email"
             name="email"
@@ -80,7 +80,7 @@ const ContactUs = () => {
           />
         </Box>
         <Box sx={{ ...styles.fieldContainers }}>
-          <Typography component="label">Message</Typography>
+          <Typography component="label" sx={{...styles.labels}}>Message</Typography>
           <TextField
             type="text"
             name="message"

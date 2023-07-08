@@ -5,7 +5,7 @@ const AboutUs = () => {
   return (
     <Box sx={{ mx: "auto", px: 3, py: 5, backgroundColor: "#e8f5e9" }}>
       <Typography sx={{ mb: 3, fontSize: 30 }}>About Us</Typography>
-      <Typography sx={{ mb: 4 }}>
+      <Typography sx={{ mb: 4, fontSize:20  }}>
         Welcome to YardGems, the ultimate online platform for yard and garage
         sale enthusiasts. Our mission is to revolutionize the way people
         discover and explore nearby sales, making the process simple, exciting,

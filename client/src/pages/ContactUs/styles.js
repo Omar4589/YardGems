@@ -1,9 +1,15 @@
 const styles = {
-  mainContainer: { mx: "auto", px: 2, py: 6, backgroundColor: "#e8f5e9" },
-  heading: { mb: 2, fontSize: 25, fontWeight: "semi-bold" },
-  statement: { mb: 2, fontSize: 15 },
+  mainContainer: {
+    mx: "auto",
+    px: 3,
+    paddingTop: 5,
+    paddingBottom: 15,
+    backgroundColor: "#e8f5e9",
+  },
+  heading: { mb: 2, fontSize: 30, fontWeight: "semi-bold" },
+  statement: { mb: 2, fontSize: 20 },
   fieldContainers: { mb: 2 },
-  labels: {},
+  labels: { fontSize: 20 },
   inputFields: { backgroundColor: "white" },
   button: {
     width: "100%",
