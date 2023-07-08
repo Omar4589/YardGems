@@ -65,6 +65,7 @@ const ContactUs = () => {
             type="text"
             name="name"
             required
+            size="small"
             onChange={handleInputChange}
           />
         </Box>
@@ -74,6 +75,7 @@ const ContactUs = () => {
             type="email"
             name="email"
             fullWidth
+            size="small"
             sx={{ ...styles.inputFields }}
             required
             onChange={handleInputChange}
@@ -85,6 +87,7 @@ const ContactUs = () => {
             type="text"
             name="message"
             fullWidth
+            
             multiline={true}
             rows={"6"}
             sx={{ ...styles.inputFields }}
