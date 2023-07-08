@@ -46,7 +46,7 @@ const deletePostSubmit = async (_id) => {
     return (
     <>
     {Auth.loggedIn() ? (
-        <Container maxWidth="xl" >
+        <Container maxWidth="xl" sx={{ backgroundColor: '#e8f5e9'}}>
         <Container maxWidth='md'>
             <Typography component='div' variant="h2" align='center' color='textPrimary' gutterBottom style={{fontSize: '3rem'}}>
                 {userData.savedPost.length
@@ -63,7 +63,7 @@ const deletePostSubmit = async (_id) => {
                 {userData.savedPost.map((post) => {
                     return (
                         <Grid key={post._id} item xs = {12} sm = {6} md = {4}>
-                            <Card component='div'sx={{ maxWidth: 345 }}>
+                            <Card component='div'sx={{ maxWidth: 345, marginBottom:'1em' }}>
                                 <CardHeader
                                     title={post.postName}
                                     subheader={post.createdAt}
@@ -80,7 +80,7 @@ const deletePostSubmit = async (_id) => {
                                     <Typography component="div" variant="body2" color="text.secondary">
                                         {post.postDescription}
                                     <Typography component="div" variant="body2" color="text.secondary">
-                                        Address: {post.address}
+                                        {post.address}
                                     </Typography>
                                     
                                     </Typography>

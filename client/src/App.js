@@ -12,7 +12,7 @@ import SignUpLoginPage from "./pages/SignUpLogin";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import AboutUs from "./pages/AboutUs/AboutUs";
-import SinglePost from "./pages/SinglePost";
+import SinglePost from "./pages/SinglePost/SinglePost";
 import BottomNavBar from "./components/Nav/nav";
 import Home from "./pages/Home/Home";
 import ContactUs from "./pages/ContactUs/ContactUs";

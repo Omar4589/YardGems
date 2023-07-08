@@ -40,7 +40,7 @@ export const ADD_POST = gql`
 `;
 export const EDIT_POST = gql`
 mutation editPost($id: ID, $postDescription: String,  $address: String, $dateOfSale: String, $image: String, $postName: String, $lat: Float, $lng: Float) {
-  editPost(id: $id, postDescription: $postDescription, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName,lat: $Int, lng: $Int) {
+  editPost(id: $id, postDescription: $postDescription, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName,lat: $lat, lng: $lng) {
     _id
     postDescription
     address

@@ -55,8 +55,7 @@ export const FormModal = ({handleClose, handleOpen}) => {
     // allows user to create a new Post
     const newPostSubmit = async (e) => {
         e.preventDefault()
-        const user = Auth.getProfile().data.username
-        console.log(user)
+      
         try {
           const { data } = await addPost({
             variables: {
@@ -118,7 +117,7 @@ export const FormModal = ({handleClose, handleOpen}) => {
               </div>
 
                 <TextField
-                    helperText="Please enter a name for you item or event"
+                style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
                     label="Name"
                     name= 'postName'
                     required
@@ -127,16 +126,17 @@ export const FormModal = ({handleClose, handleOpen}) => {
                     value={formState.postName}
                 />
                 <TextField
-                    helperText="Please enter a description about your listing"
+                    style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
                     label="Description"
                     name='postDescription'
                     required
+                    multiline
                     onChange={handleInputChange}
                     placeholder={formState.description}
                     value={formState.description}
                 />
                 <TextField
-                    helperText="Please enter a date to hold your yard sale"
+                    style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
                     label="Date of the Sale"
                     name='dateOfSale'
                     required
@@ -145,7 +145,7 @@ export const FormModal = ({handleClose, handleOpen}) => {
                     value={formState.dateOfSale}
                 />
                 <TextField
-                    helperText="add an image"
+                    style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
                     label="Image"
                     name='image'
                     onChange={handleInputChange}
