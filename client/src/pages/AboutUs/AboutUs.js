@@ -3,8 +3,8 @@ import { Box, Typography } from "@mui/material";
 
 const AboutUs = () => {
   return (
-    <Box sx={{ mx: "auto", px: 10, py: 7, backgroundColor: "#e8f5e9" }}>
-      <Typography sx={{ mb: 5, fontSize: 30 }}>About Us</Typography>
+    <Box sx={{ mx: "auto", px: 3, py: 5, backgroundColor: "#e8f5e9" }}>
+      <Typography sx={{ mb: 3, fontSize: 30 }}>About Us</Typography>
       <Typography sx={{ mb: 4 }}>
         Welcome to YardGems, the ultimate online platform for yard and garage
         sale enthusiasts. Our mission is to revolutionize the way people
@@ -49,7 +49,7 @@ const AboutUs = () => {
         sustainable lifestyle.{" "}
       </Typography>
 
-      <Typography sx={{ mb: 4 }}>
+      <Typography sx={{ mb: 12 }}>
         {" "}
         Thank you for choosing YardGems and becoming part of our growing
         community. Together, let's unlock the hidden treasures waiting to be
