@@ -12,23 +12,14 @@ import {
 	CardActionArea,
 	Modal,
 	Box,
-	IconButton,
-	Icon,
 } from "@mui/material";
-// import {FormModal} from '../DashboardModal/DashboardModal'
 import image from "../../assets/yardsale.jpg"; // hard coding for now
-// import Auth from '../utils/auth'
-// import { Link } from 'react-router-dom';
 import styles from "./styles";
 // import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const AllListings = () => {
 	const { data } = useQuery(QUERY_POSTS);
 	const AllListingsData = data?.allPost || [];
-
-	const [open, setOpen] = React.useState(false);
-	// const handleOpen = () => setOpen(true);
-	// const handleClose = () => setOpen(false);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -73,7 +64,6 @@ const AllListings = () => {
 												</Typography>
 											</Typography>
 										</CardContent>
-										{/* <Button onClick={handleOpen}>View Listing</Button> */}
 										<Modal
 											open={isModalOpen}
 											onClose={handleCloseModal}
