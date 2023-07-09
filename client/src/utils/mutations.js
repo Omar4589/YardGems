@@ -40,7 +40,7 @@ export const ADD_POST = gql`
 `;
 export const EDIT_POST = gql`
 mutation editPost($id: ID, $postDescription: String,  $address: String, $dateOfSale: String, $image: String, $postName: String, $lat: Float, $lng: Float) {
-  editPost(id: $id, postDescription: $postDescription, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName,lat: $Int, lng: $Int) {
+  editPost(id: $id, postDescription: $postDescription, address: $address, dateOfSale: $dateOfSale, image: $image, postName: $postName,lat: $lat, lng: $lng) {
     _id
     postDescription
     address
@@ -57,6 +57,39 @@ mutation editPost($id: ID, $postDescription: String,  $address: String, $dateOfS
 export const REMOVE_POST = gql`
   mutation removePost($postId: ID!) {
     removePost(postId: $postId) {
+      _id
+      postDescription
+      address
+      dateOfSale
+      image
+      postAuthor
+      postName
+      lat
+      lng
+      createdAt
+    }
+  }
+`;
+
+export const ADD_FAVORITES = gql`
+  mutation addFavorites($postId: ID!) {
+    addFavorites(postId: $postId) {
+      _id
+      postDescription
+      address
+      dateOfSale
+      image
+      postAuthor
+      postName
+      lat
+      lng
+      createdAt
+    }
+  }
+`;
+export const REMOVE_FAVORITES = gql`
+  mutation removeFavorites($postId: ID!) {
+    removeFavorites(postId: $postId) {
       _id
       postDescription
       address

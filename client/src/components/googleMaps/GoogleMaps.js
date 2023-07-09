@@ -1,21 +1,19 @@
 import React, { useState, useEffect} from "react";
 import {useQuery} from '@apollo/client';
 import {QUERY_POSTS} from '../../utils/queries';
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, MarkerF, InfoWindow, scale } from "@react-google-maps/api";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import './google.css';
+import gem from '../../assets/images/greenGem.png'
 
 
 
 export default function GoogleMaps() {
-
-
-
-    // isLoaded is gives us access to the apiKey
+// isLoaded is gives us access to the apiKey
  const { isLoaded } = useLoadScript({ 
-  googleMapsApiKey: 'AIzaSyDvK10cezc3bexO_QfHK7MPRVCY2IIGVt4',
+  googleMapsApiKey: process.env.REACT_APP_API_KEY,
   libraries: ['places'],
 });
 // is we don't have access return loading, if we do return the Map
@@ -32,22 +30,18 @@ const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 })
 const [selected, setSelected] = useState(null);
 const { loading, data } = useQuery(QUERY_POSTS); 
 const allPost = data?.allPost || []; 
-// console.log(allPost[21].lat)
 
-useEffect(() => { // everytime the map component laods, it maps through all the post and parse the floats
-  if (allPost.length > 0) {
-    const markerData = allPost.map(({ lat, lng }) => ({
-      lat: parseFloat(lat),
-      lng: parseFloat(lng)
-       
-    }));
-    setSelected(markerData[0]);
-  }
- }, []);
+const [activeMarker, setActiveMarker] = useState(null); // for window popups 
+  const handleActiveMarker = (markerF) => {
+    if (markerF === activeMarker) {
+      return;
+    }
+    setActiveMarker(markerF);
+  };
  
- 
+
   return (
-  <div>
+  <div sx={{ backgroundColor: '#e8f5e9'}}>
     <div className='places-container'>
     {/* will render out a placed based on the selection */}
         <PlacesAutocomplete setSelected={setSelected} setCenter={setCenter}/> 
@@ -55,15 +49,33 @@ useEffect(() => { // everytime the map component laods, it maps through all the 
 
     {/* below renders the google map */}
     <GoogleMap
+    sx={{marginLeft:'20%'}}
      zoom={10} //how far you want the map to be zoomed in
      center={ center } // displays location
-     mapContainerClassName='map-container' // styling 
+     mapContainerClassName='map-container' // styling
+     onClick={() => setActiveMarker(null)}
+
     >
-      {allPost.map(({lat, lng}, index) => {
+      {allPost.map(({_id, lat, lng, postName, postDescription, address, dateOfSale }, index) => {
         return ( 
-        <MarkerF key={index} 
-        position={{ lat: parseFloat(lat), lng: parseFloat(lng)}} />
-        );
+        <MarkerF key={_id} 
+        position={{ lat: parseFloat(lat), lng: parseFloat(lng)}}
+        onClick={() => handleActiveMarker(_id)}
+        icon ={{
+          url: gem
+        }}          
+        >
+          {activeMarker === _id ? ( 
+            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+              <div>
+                <h3>{postName}</h3>
+                <h5>{postDescription}</h5>
+                <p>{address}</p>
+                <p>Date of event: {dateOfSale}</p>
+              </div>
+            </InfoWindow>
+          ) : null}
+        </MarkerF>)
       })}
       { selected && <MarkerF position={selected} />}
     </GoogleMap>
@@ -72,14 +84,33 @@ useEffect(() => { // everytime the map component laods, it maps through all the 
 };
 
 
-
-
 // this handles the autoComplete Box
 const PlacesAutocomplete = ({ setSelected, setCenter }) => { 
-   
-  
+
   const {ready, value, setValue , suggestions: {status, data}, clearSuggestions} = usePlacesAutocomplete(); // will give us some data back from the UI, ready is based on is the google script is ready to go, value / setValue is what the user has typed in, suggestions is that status of the result, data (all the attributes), clearSuggestions is what the user has clearly chose 
-    // handleSelect will be a async function bc we will be converting the value selected to a lat and long 
+    // will render once when the page loads, a window will pop up asking to share location info with google
+    // if user clicks yes, then will cache, and automatically render the map to user's current location
+    useEffect(() => {
+      const getCurrentLocation = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              setCenter({ lat: latitude, lng: longitude });
+            },
+            (error) => {
+              console.error("Error getting current location:", error);
+            }
+          );
+        } else {
+          console.error("Geolocation is not supported by this browser.");
+        }
+      };
+      getCurrentLocation();
+    }, []);
+  
+
+  // handleSelect will be a async function bc we will be converting the value selected to a lat and long 
     // val will be passsed as a string from the value selected 
     const handleSelect = async (address) => {
         setValue(address, false); // setting to false to not fetch any other data 
@@ -95,34 +126,13 @@ const PlacesAutocomplete = ({ setSelected, setCenter }) => {
         
     }
     
-    // will render once when the page loads, a window will pop up asking to share location info with google
-    // if user clicks yes, then will cache, and automatically render the map to user's current location
-    useEffect(() => {
-        const getCurrentLocation = () => {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                const { latitude, longitude } = position.coords;
-                setCenter({ lat: latitude, lng: longitude });
-              },
-              (error) => {
-                console.error("Error getting current location:", error);
-              }
-            );
-          } else {
-            console.error("Geolocation is not supported by this browser.");
-          }
-        };
-        getCurrentLocation();
-      }, []);
-
     return (
     // combobox is a container basically with capturing the value selected 
-    <Combobox onSelect={handleSelect}>
+    <Combobox onSelect={handleSelect}  >
         {/* create input box */}
         {/* onChange is caputring value from the input box and setting new value */}
         {/* disable means dont render if not ready (connected to googlemap) */}
-        <ComboboxInput value={value} onChange={(e) => setValue(e.target.value)} disabled={!ready} className='comboBox-input' placeholder='Search Box'/> 
+        <ComboboxInput  value={value} onChange={(e) => setValue(e.target.value)} disabled={!ready} className='comboBox-input' placeholder='Search Box'/> 
         {/* popover shows the results */}
         <ComboboxPopover>
             {/* comboBoxList shows all the suggestions */}
