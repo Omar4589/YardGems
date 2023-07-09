@@ -1,11 +1,12 @@
 import React, { useState, useEffect} from "react";
 import {useQuery} from '@apollo/client';
 import {QUERY_POSTS} from '../../utils/queries';
-import { GoogleMap, useLoadScript, MarkerF, InfoWindow } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, MarkerF, InfoWindow, scale } from "@react-google-maps/api";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import './google.css';
+import gem from '../../assets/images/greenGem.png'
 
 
 
@@ -60,6 +61,9 @@ const [activeMarker, setActiveMarker] = useState(null); // for window popups
         <MarkerF key={_id} 
         position={{ lat: parseFloat(lat), lng: parseFloat(lng)}}
         onClick={() => handleActiveMarker(_id)}
+        icon ={{
+          url: gem
+        }}          
         >
           {activeMarker === _id ? ( 
             <InfoWindow onCloseClick={() => setActiveMarker(null)}>
@@ -78,8 +82,6 @@ const [activeMarker, setActiveMarker] = useState(null); // for window popups
   </div>
  );
 };
-
-
 
 
 // this handles the autoComplete Box
@@ -126,11 +128,11 @@ const PlacesAutocomplete = ({ setSelected, setCenter }) => {
     
     return (
     // combobox is a container basically with capturing the value selected 
-    <Combobox onSelect={handleSelect} >
+    <Combobox onSelect={handleSelect}  >
         {/* create input box */}
         {/* onChange is caputring value from the input box and setting new value */}
         {/* disable means dont render if not ready (connected to googlemap) */}
-        <ComboboxInput value={value} onChange={(e) => setValue(e.target.value)} disabled={!ready} className='comboBox-input' placeholder='Search Box'/> 
+        <ComboboxInput  value={value} onChange={(e) => setValue(e.target.value)} disabled={!ready} className='comboBox-input' placeholder='Search Box'/> 
         {/* popover shows the results */}
         <ComboboxPopover>
             {/* comboBoxList shows all the suggestions */}

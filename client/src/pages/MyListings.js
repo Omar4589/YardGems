@@ -26,20 +26,21 @@ const UserDashboard = () => {
 
 //----------functions to handle the DELETE listing ---------\\
    
-const deletePostSubmit = async (_id) => {
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-   
-    if (!token) {
-      return false;
-    }
-    try {
-      const { data } = await removePost({variables: {postId: _id}});
-    } 
-    catch (err) {
-      console.error(err);
-    }
-     window.location.reload();
-};
+    const deletePostSubmit = async (_id) => {
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+    
+        if (!token) {
+        return false;
+        }
+        try {
+        const { data } = await removePost({variables: {postId: _id}});
+        } 
+        catch (err) {
+        console.error(err);
+        }
+        window.location.reload();
+    };
+
     if (loading) {
         return <h2>LOADING...</h2>;
     }

@@ -70,3 +70,36 @@ export const REMOVE_POST = gql`
     }
   }
 `;
+
+export const ADD_FAVORITES = gql`
+  mutation addFavorites($postId: ID!) {
+    addFavorites(postId: $postId) {
+      _id
+      postDescription
+      address
+      dateOfSale
+      image
+      postAuthor
+      postName
+      lat
+      lng
+      createdAt
+    }
+  }
+`;
+export const REMOVE_FAVORITES = gql`
+  mutation removeFavorites($postId: ID!) {
+    removeFavorites(postId: $postId) {
+      _id
+      postDescription
+      address
+      dateOfSale
+      image
+      postAuthor
+      postName
+      lat
+      lng
+      createdAt
+    }
+  }
+`;

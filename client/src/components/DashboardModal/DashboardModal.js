@@ -8,16 +8,16 @@ import Typography from '@mui/material/Typography';
 import { ADD_POST,  } from '../../utils/mutations';
 import { TextField, Container} from '@mui/material';
 import {useMutation, } from '@apollo/client';
-import Auth from '../../utils/auth';
 import style from './modalStyles';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
 import '@reach/combobox/styles.css';
+// import ImgUpload from '../ImgUpload/ImgUpload';
 
 //------------------Create Listing Modal--------------\\
 export const FormModal = ({handleClose, handleOpen}) => {
-    const [selectedLocation, setSelectedLocation] = useState(null);
-   
+    const [selectedLocation, setSelectedLocation] = useState(null); 
+
 
     const [addPost, { error }] = useMutation(ADD_POST);
     const [formState, setFormState] = useState({ 
@@ -27,6 +27,14 @@ export const FormModal = ({handleClose, handleOpen}) => {
         postName:''
       });
       const {ready,value,suggestions: { status, data },setValue,clearSuggestions} = usePlacesAutocomplete();
+     
+      // // grab dataUrl from ImgUpload component; must be above newPostSubmit so that dataUrl is defined 
+      // const [dataUrl, setDataUrl] = useState('');
+
+      // const handleDataUrlChange = (file) => {
+      //   setDataUrl(file);
+      //   console.log(file.name);
+      // };
 
       // for other field data
       const handleInputChange = (event) => {
@@ -56,6 +64,7 @@ export const FormModal = ({handleClose, handleOpen}) => {
     const newPostSubmit = async (e) => {
         e.preventDefault()
       
+        // removed image temporarily from list
         try {
           const { data } = await addPost({
             variables: {
@@ -66,13 +75,15 @@ export const FormModal = ({handleClose, handleOpen}) => {
             postDescription: '',
             dateOfSale: '',
             image: '',
-            postName:''
+            postName:'',
           });
           handleClose(); // closing the modal 
         } catch (err) {
           console.error(err);
         }
       };
+
+
   return (
     <Container>
       <Modal
@@ -152,6 +163,7 @@ export const FormModal = ({handleClose, handleOpen}) => {
                     placeholder={formState.image}
                     value={formState.image}
                 />
+                {/* <ImgUpload handleDataUrlChange={handleDataUrlChange} /> */}
                 <br></br>
                 <Button type="submit" variant="contained">Add</Button>
             </Box>
