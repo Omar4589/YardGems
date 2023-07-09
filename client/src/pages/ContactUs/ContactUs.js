@@ -58,33 +58,36 @@ const ContactUs = () => {
 
       <form id="ContactUs-form" onSubmit={handleFormSubmit}>
         <Box sx={{ ...styles.fieldContainers }}>
-          <Typography component="label">Full Name</Typography>
+          <Typography component="label" sx={{...styles.labels}}>Full Name</Typography>
           <TextField
             fullWidth
             sx={{ ...styles.inputFields }}
             type="text"
             name="name"
             required
+            size="small"
             onChange={handleInputChange}
           />
         </Box>
         <Box sx={{ ...styles.fieldContainers }}>
-          <Typography component="label">Email</Typography>
+          <Typography component="label" sx={{...styles.labels}}>Email</Typography>
           <TextField
             type="email"
             name="email"
             fullWidth
+            size="small"
             sx={{ ...styles.inputFields }}
             required
             onChange={handleInputChange}
           />
         </Box>
         <Box sx={{ ...styles.fieldContainers }}>
-          <Typography component="label">Message</Typography>
+          <Typography component="label" sx={{...styles.labels}}>Message</Typography>
           <TextField
             type="text"
             name="message"
             fullWidth
+            
             multiline={true}
             rows={"6"}
             sx={{ ...styles.inputFields }}
