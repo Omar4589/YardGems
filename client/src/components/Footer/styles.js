@@ -6,6 +6,8 @@ const styles = {
     paddingTop: "3%",
     paddingBottom: "3%",
     textAlign: "center",
+    padding: "20px 5px 20px 5px",
+    fontFamily: "'Roboto', sans-serif", // Add this line to set the font
     "@media (min-width: 768px)": {
       display: "none",
     },

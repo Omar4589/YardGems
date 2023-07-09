@@ -6,9 +6,11 @@ const styles = {
     background: "white",
     color: "#24CF6B",
     padding: "10px 5px 10px 5px",
+    fontFamily: "'Roboto', sans-serif", // Add this line to set the font
+
     "@media (min-width: 768px)": {
       justifyContent: "space-between",
-      padding: "0px 50px 0px 50px",
+      padding: "15px 50px 15px 50px",
     },
   },
   appLogo: {
@@ -24,13 +26,13 @@ const styles = {
     alignItems: "center",
   },
   searchIcon: {
-    fontSize:30,
+    fontSize: 30,
     "@media (min-width: 768px)": {
       display: "none",
     },
   },
   messagesIcon: {
-    fontSize:30,
+    fontSize: 30,
     ml: 1,
     "@media (min-width: 768px)": {
       display: "none",
