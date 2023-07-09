@@ -113,6 +113,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
               to="/AboutUs"
               color="inherit"
               sx={{ textDecoration: "none" }}
+              onClick={() => setIsDrawerOpen(false)}
             >
               <ListItem button>
                 <ListItemIcon>
@@ -127,6 +128,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
               to="/ContactUs"
               color="inherit"
               sx={{ textDecoration: "none" }}
+              onClick={() => setIsDrawerOpen(false)}
             >
               <ListItem button>
                 <ListItemIcon>
@@ -141,6 +143,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
               to="/FAQ"
               color="inherit"
               sx={{ textDecoration: "none" }}
+              onClick={() => setIsDrawerOpen(false)}
             >
               <ListItem button>
                 <ListItemIcon>
@@ -164,6 +167,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
                   to="/"
                   color="inherit"
                   sx={{ textDecoration: "none" }}
+                  onClick={() => setIsDrawerOpen(false)}
                 >
                   <ListItem button>
                     <ListItemIcon>
@@ -194,6 +198,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
                   to="/signup-login"
                   color="inherit"
                   sx={{ textDecoration: "none" }}
+                  onClick={() => setIsDrawerOpen(false)}
                 >
                   <ListItem button>
                     <ListItemIcon>

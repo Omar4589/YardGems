@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import { useQuery, useMutation } from '@apollo/client';
-import {USER_QUERY} from "../utils/queries";
-import {REMOVE_POST} from '../utils/mutations'
+import {USER_QUERY} from "../../utils/queries";
+import {REMOVE_POST} from '../../utils/mutations'
 import { Container, Card, CardMedia, Typography, CardContent, CardActions, CardHeader, Grid,Button } from '@mui/material';
-import {ButtonComponent } from '../components/DashboardModal/Button';
-import {FormModal} from '../components/DashboardModal/DashboardModal'
-import image from '../assets/yardsale.jpg'  // hard coding for now
-import Auth from '../utils/auth'
+import {ButtonComponent } from '../../components/DashboardModal/Button';
+import {FormModal} from '../../components/DashboardModal/DashboardModal'
+import image from '../../assets/yardsale.jpg'  // hard coding for now
+import Auth from '../../utils/auth'
 import { Link } from 'react-router-dom';
 
 const UserDashboard = () => {
