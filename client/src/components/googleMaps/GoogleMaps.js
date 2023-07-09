@@ -6,14 +6,15 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocom
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption, } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import './google.css';
-import gem from '../../assets/images/greenGem.png'
+import gem from '../../assets/images/greenGem.png';
+
 
 
 
 export default function GoogleMaps() {
 // isLoaded is gives us access to the apiKey
  const { isLoaded } = useLoadScript({ 
-  googleMapsApiKey: process.env.REACT_APP_API_KEY,
+  googleMapsApiKey: "AIzaSyDvK10cezc3bexO_QfHK7MPRVCY2IIGVt4",
   libraries: ['places'],
 });
 // is we don't have access return loading, if we do return the Map

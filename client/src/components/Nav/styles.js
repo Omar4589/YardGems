@@ -6,7 +6,7 @@ const styles = {
     position: "fixed",
     bottom: "0",
     textAlign: "center",
-    padding:"5px 0px 5px 0px",
+    padding:"5px 0px 15px 0px",
   },
   icons: {
     "&:focus": { color: "green" },
