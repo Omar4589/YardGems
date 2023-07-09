@@ -12,14 +12,15 @@ import SignUpLoginPage from "./pages/SignUpLogin";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import AboutUs from "./pages/AboutUs/AboutUs";
-import SinglePost from "./pages/SinglePost";
+import SinglePost from "./pages/SinglePost/SinglePost";
 import BottomNavBar from "./components/Nav/nav";
 import Home from "./pages/Home/Home";
 import ContactUs from "./pages/ContactUs/ContactUs";
-import SavedListings from "./pages/SavedListings";
+import SavedListings from "./pages/SavedListings/SavedListings";
 import { ThemeProvider } from "@mui/material/styles";
 
 import { lightTheme, darkTheme } from "./assets/theme"; // path to your theme.js file
+import UserHomePage from "./pages/UserHomePage/UserHomePage";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -68,7 +69,7 @@ function App() {
           <Routes>
             <Route path="/MyListings" element={<MyListings />} />
             <Route path="/" element={<Home />} />
-
+            <Route path="/UserHomePage" element={<UserHomePage />} />
             <Route path="/signup-login" element={<SignUpLoginPage />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />

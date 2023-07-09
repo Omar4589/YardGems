@@ -41,7 +41,8 @@ const typeDefs = gql`
     addPost(postDescription: String, address: String, dateOfSale: String, image: String, postName: String, lat: Float, lng: Float): Post
     editPost(id: ID, postDescription: String, address: String, dateOfSale: String, image: String, postName: String, lat: Float, lng: Float): Post
     removePost(postId: ID!): Post
-
+    addFavorites(postId: ID!): Post
+    removeFavorites(postId: ID!): Post
   }
 `;
 

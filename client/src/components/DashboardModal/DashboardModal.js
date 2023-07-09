@@ -8,16 +8,16 @@ import Typography from '@mui/material/Typography';
 import { ADD_POST,  } from '../../utils/mutations';
 import { TextField, Container} from '@mui/material';
 import {useMutation, } from '@apollo/client';
-import Auth from '../../utils/auth';
 import style from './modalStyles';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
 import '@reach/combobox/styles.css';
+// import ImgUpload from '../ImgUpload/ImgUpload';
 
 //------------------Create Listing Modal--------------\\
 export const FormModal = ({handleClose, handleOpen}) => {
-    const [selectedLocation, setSelectedLocation] = useState(null);
-   
+    const [selectedLocation, setSelectedLocation] = useState(null); 
+
 
     const [addPost, { error }] = useMutation(ADD_POST);
     const [formState, setFormState] = useState({ 
@@ -27,6 +27,14 @@ export const FormModal = ({handleClose, handleOpen}) => {
         postName:''
       });
       const {ready,value,suggestions: { status, data },setValue,clearSuggestions} = usePlacesAutocomplete();
+     
+      // // grab dataUrl from ImgUpload component; must be above newPostSubmit so that dataUrl is defined 
+      // const [dataUrl, setDataUrl] = useState('');
+
+      // const handleDataUrlChange = (file) => {
+      //   setDataUrl(file);
+      //   console.log(file.name);
+      // };
 
       // for other field data
       const handleInputChange = (event) => {
@@ -55,8 +63,8 @@ export const FormModal = ({handleClose, handleOpen}) => {
     // allows user to create a new Post
     const newPostSubmit = async (e) => {
         e.preventDefault()
-        const user = Auth.getProfile().data.username
-        console.log(user)
+      
+        // removed image temporarily from list
         try {
           const { data } = await addPost({
             variables: {
@@ -67,13 +75,15 @@ export const FormModal = ({handleClose, handleOpen}) => {
             postDescription: '',
             dateOfSale: '',
             image: '',
-            postName:''
+            postName:'',
           });
           handleClose(); // closing the modal 
         } catch (err) {
           console.error(err);
         }
       };
+
+
   return (
     <Container>
       <Modal
@@ -118,7 +128,7 @@ export const FormModal = ({handleClose, handleOpen}) => {
               </div>
 
                 <TextField
-                    helperText="Please enter a name for you item or event"
+                style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
                     label="Name"
                     name= 'postName'
                     required
@@ -127,16 +137,17 @@ export const FormModal = ({handleClose, handleOpen}) => {
                     value={formState.postName}
                 />
                 <TextField
-                    helperText="Please enter a description about your listing"
+                    style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
                     label="Description"
                     name='postDescription'
                     required
+                    multiline
                     onChange={handleInputChange}
                     placeholder={formState.description}
                     value={formState.description}
                 />
                 <TextField
-                    helperText="Please enter a date to hold your yard sale"
+                    style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
                     label="Date of the Sale"
                     name='dateOfSale'
                     required
@@ -145,13 +156,14 @@ export const FormModal = ({handleClose, handleOpen}) => {
                     value={formState.dateOfSale}
                 />
                 <TextField
-                    helperText="add an image"
+                    style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
                     label="Image"
                     name='image'
                     onChange={handleInputChange}
                     placeholder={formState.image}
                     value={formState.image}
                 />
+                {/* <ImgUpload handleDataUrlChange={handleDataUrlChange} /> */}
                 <br></br>
                 <Button type="submit" variant="contained">Add</Button>
             </Box>
