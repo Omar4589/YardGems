@@ -1,24 +1,56 @@
 import React, {useState} from "react";
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import {QUERY_POSTS} from "../../utils/queries";
-import { Container, Card, CardMedia, Typography, CardContent, CardHeader, Grid} from '@mui/material';
+import {ADD_FAVORITES, REMOVE_FAVORITES} from '../../utils/mutations'
+import { Container, Card, CardMedia, Typography, CardContent, CardHeader, Grid, IconButton} from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import image from '../../assets/yardsale.jpg'  // hard coding for now
+import Auth from '../../utils/auth'
 
 
-const AllListings = () => {
+const UserHome = () => {
+    const [favorite, setFavorite] = useState(false); //the default value is no favorite item initially
     const { data } = useQuery(QUERY_POSTS); 
     const AllListingsData = data?.allPost || []; 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [addFavorites, { error }] = useMutation(ADD_FAVORITES);
+    const [removeFavorites, { err }] = useMutation(REMOVE_FAVORITES);
+    
+    const removeFromFavorites = async (_id) => {
+        console.log(_id)
+       
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+    
+        if (!token) {
+            return false;
+        }
+        try {
+            const { data } = await removeFavorites({variables: {postId: _id}});
+        } 
+        catch (err) {
+            console.error(err);
+        }
+       // window.location.reload();
+    };
 
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-      };
-      const handleCloseModal = () => {
-        setIsModalOpen(false);
-        window.location.reload(); // refresh the page after a new listing is made
-      };
 
+    const addToFavorites = async (_id) => {
+        console.log(_id)
+       
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+    
+        if (!token) {
+            return false;
+        }
+        try {
 
+            const { data } = await addFavorites({variables: {postId: _id}});
+        } 
+        catch (err) {
+            console.error(err);
+        }
+       // window.location.reload();
+    };
+    
     return (
     <>
         <Container style={{maxHeight: '100vh', overflow: 'auto', backgroundColor: '#e8f5e9'}}>
@@ -48,9 +80,9 @@ const AllListings = () => {
                                     </Typography>
                                     </Typography>
                                 </CardContent>
-                                <Typography sx={{marginLeft:'.5em'}}component="div" variant="body2" color="text.secondary">
-                                        
-                                </Typography>
+                                <IconButton onClick={() => {setFavorite(!favorite); addToFavorites(post._id)} }sx={{marginLeft:'80%'}} aria-label="favorite">
+                                {favorite ? <FavoriteIcon sx={{color:'red'}} /> : <FavoriteIcon  sx={{color:'grey'}} />}
+                                </IconButton>
                             </Card>
                         </Grid>
                     )
@@ -61,4 +93,4 @@ const AllListings = () => {
     </>
     )}
 
-export default AllListings;
+export default UserHome;

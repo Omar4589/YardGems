@@ -1,0 +1,20 @@
+.projectTitle  {
+    padding-right:70%;
+    letter-spacing:.1em;
+    color:black;
+    position: relative;
+    z-index: 0;
+    text-decoration: none;
+    font-size: 1.3em
+    }
+    
+.projectTitle:before {
+    background-color: #c8e6c9;
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 80%;
+    z-index: -50;
+    bottom: 0;
+    transform: translate(20px, 0px);
+}
