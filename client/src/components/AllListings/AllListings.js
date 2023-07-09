@@ -20,7 +20,7 @@ import image from "../../assets/yardsale.jpg"; // hard coding for now
 // import Auth from '../utils/auth'
 // import { Link } from 'react-router-dom';
 import styles from "./styles";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+// import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const AllListings = () => {
 	const { data } = useQuery(QUERY_POSTS);

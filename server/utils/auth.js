@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+// process.env.REACT_APP_SECRET_KEY
 
- const secret = 'aTtHeEndOfTherainboW'
+const secret = 'Testing123'
 const expiration = "5h";
 
 module.exports = {

@@ -5,7 +5,7 @@ const { signToken } = require("../utils/auth");
 const resolvers = {
   Query: {
     allUsers: async () => {
-      return User.find().populate('savedPost');
+      return User.find().populate('savedPost').populate('savedFavorites');
     },
     allPost: async () => {
       return Post.find();
@@ -16,7 +16,7 @@ const resolvers = {
      // By adding context to our query, we can retrieve the logged in user without specifically searching for them
      me: async (parent, args, context) => {
        if (context.user) {
-        const me = User.findOne({_id: context.user._id}).populate('savedPost');
+        const me = User.findOne({_id: context.user._id}).populate('savedPost').populate('savedFavorites');
         return me
        }
        throw new AuthenticationError('You need to be logged in!');
@@ -86,6 +86,38 @@ const resolvers = {
         );
 
         return updatePost;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addFavorites: async (parent, { postId }, context) => {
+      if (context.user) {
+        const addToFavorites = await Post.findOne({
+          _id: postId,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedFavorites: addToFavorites._id } },
+          {new:true}
+        );
+
+        return addToFavorites ;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeFavorites: async (parent, { postId }, context) => {
+      if (context.user) {
+        const removeFromFavorites = await Post.findOne({
+          _id: postId,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedFavorites: removeFromFavorites._id } },
+          {new:true}
+        );
+
+        return removeFromFavorites ;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
