@@ -10,9 +10,6 @@ const styles = {
     boxShadow: 24,
     p: 4,
     },
-    favoriteButton: {
-        
-    }
 };
 
 export default styles;

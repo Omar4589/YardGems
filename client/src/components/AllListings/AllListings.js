@@ -48,9 +48,6 @@ const AllListings = () => {
 						return (
 							<Grid key={post._id} item xs={12} sm={10} md={6}>
 								<Card component="div" sx={{ maxWidth: 345 }}>
-									<IconButton sx={{ ...styles.favoriteButton }}>
-										<FavoriteIcon />
-									</IconButton>
 									<CardActionArea onClick={handleOpenModal}>
 										<CardHeader title={post.postName} />
 										<CardMedia
@@ -81,7 +78,7 @@ const AllListings = () => {
 											open={isModalOpen}
 											onClose={handleCloseModal}
 											componentsProps={{
-												backdrop: { style: { backgroundColor: "transparent" } },
+												backdrop: { style: { backgroundColor: "transparent"} },
 											}}
 											aria-labelledby="modal-modal-title"
 											aria-describedby="modal-modal-description">
@@ -90,9 +87,6 @@ const AllListings = () => {
 													title={post.postName}
 													subheader={post.createdAt}
 												/>
-												<IconButton sx={{ ...styles.favoriteButton }}>
-													<FavoriteIcon />
-												</IconButton>
 												<CardMedia
 													sx={{ height: 140, paddingTop: "56.2%" }}
 													image={image}
@@ -114,7 +108,7 @@ const AllListings = () => {
 															component="div"
 															variant="body2"
 															color="text.secondary">
-															Address: {post.address}
+														 {post.address}
 														</Typography>
 													</Typography>
 												</CardContent>
