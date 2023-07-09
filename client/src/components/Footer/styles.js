@@ -3,8 +3,8 @@ const styles = {
     margin: "auto",
     color: "#2a2a35f2",
     background: "#ffffff",
-    paddingTop: "1%",
-    paddingBottom: "1%",
+    paddingTop: "3%",
+    paddingBottom: "3%",
     textAlign: "center",
     "@media (min-width: 768px)": {
       display: "none",
