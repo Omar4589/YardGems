@@ -16,12 +16,17 @@ const styles = {
     backgroundColor: "white",
   },
   button: {
-    width: "25%",
+    width: "100%",
     marginTop: 2,
-    marginLeft: "75%",
+
     py: 2,
     borderRadius: 2,
     backgroundColor: "#66bb6a",
+    "@media (min-width: 768px)": {
+      width: "25%",
+      marginTop: 2,
+      marginLeft: "75%",
+    },
   },
 };
 
