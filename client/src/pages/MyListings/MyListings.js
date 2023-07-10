@@ -18,7 +18,7 @@ import { FormModal } from "../../components/DashboardModal/DashboardModal";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
-import AdditionalFeatures from "../../components/AdditionalFeatures/AdditionalFeatures";
+import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 import styles from "./styles";
 import AddIcon from "@mui/icons-material/Add";
 
