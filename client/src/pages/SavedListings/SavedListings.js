@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from '@apollo/client';
 import {USER_QUERY} from "../../utils/queries";
 import {REMOVE_FAVORITES} from '../../utils/mutations'
 import { Container, Card, CardMedia, Typography, CardContent, CardActions, CardHeader, Grid,Button } from '@mui/material';
-
 import image from '../../assets/yardsale.jpg'  // hard coding for now
 import Auth from '../../utils/auth'
-import { Link } from 'react-router-dom';
+
 
 const SavedListings = () => {
     const { loading, data } = useQuery(USER_QUERY); 
@@ -37,7 +36,7 @@ const removeFromFavorites = async (_id) => {
     return (
     <>
     {Auth.loggedIn() ? (
-        <Container maxWidth="xl" >
+        <Container maxWidth="xl" sx={{backgroundColor: '#e8f5e9', paddingBottom: '1em'}} >
         <Container maxWidth='md'>
             <Typography component='div' variant="h2" align='center' color='textPrimary' gutterBottom style={{fontSize: '3rem'}}>
                 {userData.savedFavorites.length
@@ -50,10 +49,10 @@ const removeFromFavorites = async (_id) => {
                 {userData.savedFavorites.map((post) => {
                     return (
                         <Grid key={post._id} item xs = {12} sm = {6} md = {4}>
-                            <Card component='div'sx={{ maxWidth: 345 }}>
+                            <Card component='div'sx={{ maxWidth: 345, marginBottom:'1.5em' }}>
                                 <CardHeader
                                     title={post.postName}
-                                    
+                                    subheader={`Post By: ${post.postAuthor}`}
                                 />
                                 <CardMedia
                                     sx={{ height: 140, paddingTop:'56.2%' }}
@@ -65,7 +64,7 @@ const removeFromFavorites = async (_id) => {
                                         Date Of Event: {post.dateOfSale}
                                     </Typography>
                                     <Typography component="div" variant="body2" color="text.secondary">
-                                        {post.description}
+                                        {post.postDescription}
                                     <Typography component="div" variant="body2" color="text.secondary">
                                         Address: {post.address}
                                     </Typography>
@@ -74,7 +73,7 @@ const removeFromFavorites = async (_id) => {
                                 </CardContent>
                                 <CardActions>
                                     <Button onClick={() => removeFromFavorites(post._id)}  size="small" color='error' variant="outlined">
-                                        Remove from favorite
+                                        Remove favorite
                                     </Button>
                                 </CardActions>
                             </Card>

@@ -47,7 +47,7 @@ const UserDashboard = () => {
     return (
     <>
     {Auth.loggedIn() ? (
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{backgroundColor: '#e8f5e9'}}>
         <Container maxWidth='md'>
             <Typography component='div' variant="h2" align='center' color='textPrimary' gutterBottom style={{fontSize: '3rem'}}>
                 {userData.savedPost.length
