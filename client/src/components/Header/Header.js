@@ -44,7 +44,7 @@ const Header = () => {
         </Link>
       </Box>
 
-      <Box sx={{ ...styles.box }}>
+      <Box sx={{ ...styles.appLogobox }}>
         <Box sx={{ ...styles.appLogo }}>
           <Link
             component={RouterLink}
@@ -57,36 +57,33 @@ const Header = () => {
         </Box>
       </Box>
 
-      <Box sx={{}}>
-        {isSearchVisible ? (
-          <form onSubmit={handleSubmit}>
-            <InputBase
-              placeholder="Search..."
-              inputProps={{ "aria-label": "search" }}
-              sx={{}}
-            />
-          </form>
-        ) : (
-          <>
-            <IconButton
-              sx={{ color: "inherit" }}
-              aria-label="search"
-              onClick={toggleSearch}
-            >
-              <SearchIcon sx={{ ...styles.searchIcon }} />
-            </IconButton>
-            <IconButton
-              sx={{ color: "inherit", size: "small" }}
-              aria-label="message"
-              onClick={() => {
-                alert("You clicked the message button");
-              }}
-            >
-              <InboxIcon sx={{ ...styles.messagesIcon }} />
-            </IconButton>
-          </>
-        )}
-      </Box>
+      {isSearchVisible ? (
+        <form onSubmit={handleSubmit}>
+          <InputBase
+            placeholder="Search..."
+            inputProps={{ "aria-label": "search" }}
+          />
+        </form>
+      ) : (
+        <>
+          <IconButton
+            sx={{ color: "inherit" }}
+            aria-label="search"
+            onClick={toggleSearch}
+          >
+            <SearchIcon sx={{ ...styles.searchIcon }} />
+          </IconButton>
+          <IconButton
+            sx={{ color: "inherit", size: "small" }}
+            aria-label="message"
+            onClick={() => {
+              alert("You clicked the message button");
+            }}
+          >
+            <InboxIcon sx={{ ...styles.messagesIcon }} />
+          </IconButton>
+        </>
+      )}
 
       <Box sx={{ ...styles.box }}>
         <Link component={RouterLink} to="/" sx={{ ...styles.homeLink }}>

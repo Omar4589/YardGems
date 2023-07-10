@@ -13,8 +13,17 @@ const styles = {
       padding: "5px 50px 15px 50px",
     },
   },
-  appLogo: {
+  appLogobox: {
+    paddingRight:12,
     width: "45%",
+    "@media (min-width: 768px)": {
+      width: "33.33%",
+      display: "flex",
+      justifyContent: "space-around",
+    },
+  },
+  appLogo: {
+    width: "100%",
     "@media (min-width: 768px)": {
       width: "100%",
     },
@@ -25,6 +34,14 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
   },
+  box: {
+    "@media (min-width: 768px)": {
+      width: "33.33%",
+      display: "flex",
+      justifyContent: "space-around",
+    },
+  },
+
   searchIcon: {
     fontSize: 30,
     "@media (min-width: 768px)": {
@@ -122,7 +139,6 @@ const styles = {
       },
     },
   },
-  box: {width:"33.33%", display:"flex", justifyContent:"space-around"},
 };
 
 export default styles;
