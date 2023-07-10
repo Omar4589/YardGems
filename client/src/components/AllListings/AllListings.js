@@ -25,8 +25,13 @@ const AllListings = () => {
     const [popOver, setPopOver] = useState(false);
 	const { data } = useQuery(QUERY_POSTS);
 	const AllListingsData = data?.allPost || [];
+    
+    // to see if a card was selected
     const [selectedCardId, setSelectedCardId] = useState(null);
-
+    
+    const [addFavorites, { error }] = useMutation(ADD_FAVORITES);
+    //const [removeFavorites, { err }] = useMutation(REMOVE_FAVORITES);
+    
     // handles the modal to pop up when a certain card is selected
     const handleOpen = (post) => setSelectedCardId(post);
     const handleClose = () => setSelectedCardId(false);
@@ -34,11 +39,6 @@ const AllListings = () => {
     // handles the favorite button to close when screen is clicked on 
     const handleClosePop = () => setPopOver(false)
     
-    const [addFavorites, { error }] = useMutation(ADD_FAVORITES);
-    //const [removeFavorites, { err }] = useMutation(REMOVE_FAVORITES);
-	
-    
-
     // const removeFromFavorites = async (_id) => {
     //     console.log(_id)
     //     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -71,7 +71,6 @@ const AllListings = () => {
 			<Container sx={{ maxHeight: "100vh", overflow: "auto" }}>
 				<Grid container spacing={2}>
 					{AllListingsData.map((post) => {
-                        
 						return (
 							<Grid key={post._id} item xs={12} sm={10} md={6}>
 								<Card component="div" sx={{ maxWidth: 345 }}>
@@ -83,7 +82,6 @@ const AllListings = () => {
 										<CardMedia
 											sx={{ height: 140, paddingTop: "56.2%" }}
 											image={image}
-											
 										/>
 										<CardContent component="div">
 											<Typography component="span" gutterBottom variant="h5">
