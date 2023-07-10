@@ -12,14 +12,15 @@ import {
   CardHeader,
   Grid,
   Button,
+  Box,
 } from "@mui/material";
-import { ButtonComponent } from "../../components/DashboardModal/Button";
 import { FormModal } from "../../components/DashboardModal/DashboardModal";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import AdditionalFeatures from "../../components/AdditionalFeatures/AdditionalFeatures";
 import styles from "./styles";
+import AddIcon from "@mui/icons-material/Add";
 
 const UserDashboard = () => {
   const { loading, data } = useQuery(USER_QUERY);
@@ -58,24 +59,25 @@ const UserDashboard = () => {
   return (
     <>
       {Auth.loggedIn() ? (
-        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9" }}>
-          <Container maxWidth="md">
-            <Typography
-              component="div"
-              variant="h2"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-              style={{ fontSize: "3rem" }}
-            >
+        <Box sx={{ ...styles.mainContainer }}>
+          <Container sx={{ ...styles.topContainer }}>
+            <Typography sx={{ ...styles.heading }}>
               {userData.savedPost.length
-                ? `You have ${userData.savedPost.length} garage sale ${
+                ? `You have ${userData.savedPost.length} yard sale ${
                     userData.savedPost.length === 1 ? "listing" : "listings"
                   }:`
                 : "You have no saved listings!"}
             </Typography>
             {/* button is the create new listing button to open modal, passing a prop that handles a function */}
-            <ButtonComponent openModal={handleOpenModal} />
+
+            <Button
+              sx={{ ...styles.button }}
+              onClick={handleOpenModal}
+              variant="contained"
+              endIcon={<AddIcon />}
+            >
+              Create New Listing
+            </Button>
             {/* this is the modal to create a new listing, give is a state of false, pass the prop handleCloseModal and a state to open/close the modal */}
             <FormModal
               handleOpen={isModalOpen}
@@ -83,20 +85,17 @@ const UserDashboard = () => {
             />
           </Container>
           <Container>
-            <Grid container spacing={4}>
+            <Grid container spacing={3} sx={{}}>
               {userData.savedPost.map((post) => {
                 return (
                   <Grid key={post._id} item xs={12} sm={6} md={4}>
-                    <Card
-                      component="div"
-                      sx={{ maxWidth: 345, marginBottom: "1em" }}
-                    >
+                    <Card component="div" sx={{ ...styles.listingCard }}>
                       <CardHeader
                         title={post.postName}
                         subheader={post.createdAt}
                       />
                       <CardMedia
-                        sx={{ height: 140, paddingTop: "56.2%" }}
+                        sx={{ height: 140, paddingTop: "30%" }}
                         image={image}
                         title="green iguana"
                       />
@@ -145,7 +144,7 @@ const UserDashboard = () => {
               })}
             </Grid>
           </Container>
-        </Container>
+        </Box>
       ) : (
         <AdditionalFeatures />
       )}
