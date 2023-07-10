@@ -14,7 +14,7 @@ const styles = {
     },
   },
   appLogobox: {
-    paddingRight:12,
+    paddingRight: 12,
     width: "45%",
     "@media (min-width: 768px)": {
       width: "33.33%",
@@ -48,6 +48,7 @@ const styles = {
       display: "none",
     },
   },
+  searchField: {padding: "5% 0% 0% 0%"},
   messagesIcon: {
     fontSize: 30,
     ml: 1,

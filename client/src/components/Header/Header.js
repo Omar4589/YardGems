@@ -52,7 +52,7 @@ const Header = () => {
             sx={{ ...styles.logoLink }}
             color={"inherit"}
           >
-            <img src={appName} width="100%" height="100%" alt="green_gem" />
+            <img src={appName} width="80%" height="100%" alt="green_gem" />
           </Link>
         </Box>
       </Box>
@@ -62,6 +62,7 @@ const Header = () => {
           <InputBase
             placeholder="Search..."
             inputProps={{ "aria-label": "search" }}
+            sx={{ ...styles.searchField }}
           />
         </form>
       ) : (
