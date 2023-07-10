@@ -10,13 +10,13 @@ const styles = {
 
     "@media (min-width: 768px)": {
       justifyContent: "space-between",
-      padding: "15px 50px 15px 50px",
+      padding: "5px 50px 15px 50px",
     },
   },
   appLogo: {
     width: "45%",
     "@media (min-width: 768px)": {
-      width: "25%",
+      width: "100%",
     },
   },
   logoLink: {
@@ -122,6 +122,7 @@ const styles = {
       },
     },
   },
+  box: {width:"33.33%", display:"flex", justifyContent:"space-around"},
 };
 
 export default styles;

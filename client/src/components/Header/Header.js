@@ -8,7 +8,6 @@ import AuthService from "../../utils/auth";
 import { Link as RouterLink } from "react-router-dom";
 
 const Header = () => {
-  
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   const toggleSearch = () => {
@@ -28,33 +27,37 @@ const Header = () => {
 
   return (
     <Box sx={{ ...styles.mainContainer }}>
-      <Link
-        component={RouterLink}
-        to="/MyListings"
-        sx={{ ...styles.myListingsLink }}
-      >
-        My Listings
-      </Link>
-      <Link
-        component={RouterLink}
-        to="/SavedListings"
-        sx={{ ...styles.savedListingLink }}
-      >
-        Saved Listings
-      </Link>
-
-      <Box sx={{ ...styles.appLogo }}>
+      <Box sx={{ ...styles.box }}>
         <Link
           component={RouterLink}
-          to="/"
-          sx={{ ...styles.logoLink }}
-          color={"inherit"}
+          to="/MyListings"
+          sx={{ ...styles.myListingsLink }}
         >
-          <img src={appName} width="100%" height="100%" alt="green_gem" />
+          My Listings
+        </Link>
+        <Link
+          component={RouterLink}
+          to="/SavedListings"
+          sx={{ ...styles.savedListingLink }}
+        >
+          Saved Listings
         </Link>
       </Box>
 
-      <Box>
+      <Box sx={{ ...styles.box }}>
+        <Box sx={{ ...styles.appLogo }}>
+          <Link
+            component={RouterLink}
+            to="/"
+            sx={{ ...styles.logoLink }}
+            color={"inherit"}
+          >
+            <img src={appName} width="100%" height="100%" alt="green_gem" />
+          </Link>
+        </Box>
+      </Box>
+
+      <Box sx={{}}>
         {isSearchVisible ? (
           <form onSubmit={handleSubmit}>
             <InputBase
@@ -85,39 +88,41 @@ const Header = () => {
         )}
       </Box>
 
-      <Link component={RouterLink} to="/" sx={{ ...styles.homeLink }}>
-        Home
-      </Link>
+      <Box sx={{ ...styles.box }}>
+        <Link component={RouterLink} to="/" sx={{ ...styles.homeLink }}>
+          Home
+        </Link>
 
-      {AuthService.loggedIn() ? (
-        <>
-          <Link
-            component={RouterLink}
-            to="/MyAccount"
-            sx={{ ...styles.myAccountLink }}
-          >
-            My Account
-          </Link>
-          <Link
-            component={RouterLink}
-            to="/"
-            onClick={handleLogout}
-            sx={{ ...styles.logoutLink }}
-          >
-            Logout
-          </Link>
-        </>
-      ) : (
-        <>
-          <Link
-            component={RouterLink}
-            to="/signup-login"
-            sx={{ ...styles.signUpLoginLink }}
-          >
-            SignUp/Login
-          </Link>
-        </>
-      )}
+        {AuthService.loggedIn() ? (
+          <>
+            <Link
+              component={RouterLink}
+              to="/MyAccount"
+              sx={{ ...styles.myAccountLink }}
+            >
+              My Account
+            </Link>
+            <Link
+              component={RouterLink}
+              to="/"
+              onClick={handleLogout}
+              sx={{ ...styles.logoutLink }}
+            >
+              Logout
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              component={RouterLink}
+              to="/signup-login"
+              sx={{ ...styles.signUpLoginLink }}
+            >
+              SignUp/Login
+            </Link>
+          </>
+        )}
+      </Box>
     </Box>
   );
 };
