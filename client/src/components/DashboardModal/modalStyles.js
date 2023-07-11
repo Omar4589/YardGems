@@ -8,7 +8,15 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    
   };
+  const size = {
+    listings: {
+        width: "100%",
+        //'padding': '5x',
+        "@media (min-width: 768px)": {
+        },
+      },
+    }
 
-
-  module.exports = style;
+  module.exports = {style, size};
