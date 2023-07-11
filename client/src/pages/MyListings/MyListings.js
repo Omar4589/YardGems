@@ -47,7 +47,7 @@ const UserDashboard = () => {
     return (
     <>
     {Auth.loggedIn() ? (
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{backgroundColor: '#e8f5e9'}}>
         <Container maxWidth='md'>
             <Typography component='div' variant="h2" align='center' color='textPrimary' gutterBottom style={{fontSize: '3rem'}}>
                 {userData.savedPost.length
@@ -64,7 +64,7 @@ const UserDashboard = () => {
                 {userData.savedPost.map((post) => {
                     return (
                         <Grid key={post._id} item xs = {12} sm = {6} md = {4}>
-                            <Card component='div'sx={{ maxWidth: 345, marginBottom:'1em' }}>
+                            <Card component='div'sx={{ maxWidth: 500, marginBottom:'1em' }}>
                                 <CardHeader
                                     title={post.postName}
                                     subheader={post.createdAt}

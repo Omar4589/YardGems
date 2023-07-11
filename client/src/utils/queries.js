@@ -23,8 +23,8 @@ query userMe {
         address
         dateOfSale
         image
+        postAuthor
         postName
-        createdAt
       }
     }
   }
