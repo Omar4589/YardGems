@@ -11,8 +11,8 @@ const styles = {
     "@media (min-width: 768px)": {},
   },
   listings: {
-    width: "80%",
-    'padding': '5px',
+    width: "100%",
+    //'padding': '5x',
     "@media (min-width: 768px)": {
     },
   },
