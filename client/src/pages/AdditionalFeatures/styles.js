@@ -1,9 +1,8 @@
 const styles = {
   mainContainer: {
-    height: "100vh",
     backgroundColor: "#e8f5e9",
     textAlign: "center",
-    paddingBottom: 25,
+    paddingBottom: 15,
     fontFamily: "'Roboto', sans-serif",
     "@media (min-width: 768px)": {},
   },
