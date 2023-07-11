@@ -12,10 +12,12 @@ import {
 	CardActionArea,
 	Modal,
 	Box,
+	// IconButton,
 } from "@mui/material";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import styles from "./styles";
 // import FavoriteIcon from "@mui/icons-material/Favorite";
+// import CloseIcon from "@mui/icons-material/Close";
 
 const AllListings = () => {
 	const { data } = useQuery(QUERY_POSTS);
@@ -68,7 +70,7 @@ const AllListings = () => {
 											open={isModalOpen}
 											onClose={handleCloseModal}
 											componentsProps={{
-												backdrop: { style: { backgroundColor: "transparent"} },
+												backdrop: { style: { backgroundColor: "transparent" } },
 											}}
 											aria-labelledby="modal-modal-title"
 											aria-describedby="modal-modal-description">
@@ -98,9 +100,12 @@ const AllListings = () => {
 															component="div"
 															variant="body2"
 															color="text.secondary">
-														 {post.address}
+															{post.address}
 														</Typography>
 													</Typography>
+													{/* <IconButton aria-label="close" onClick={handleCloseModal}>
+														<CloseIcon />
+													</IconButton> */}
 												</CardContent>
 											</Box>
 										</Modal>
