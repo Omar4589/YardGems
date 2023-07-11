@@ -4,7 +4,19 @@
     
 }
 
+.comboBox-container {display: flex;
+justify-content: center;
+padding: 2% 0% 2% 0%;
+background-color: #e8f5e9;
+
+
+}
+
 .comboBox-input {
-  width: 15%;
-  padding: .05rem;
+  width: 50%;
+
+}
+
+.places-container {
+  width: 100%;
 }

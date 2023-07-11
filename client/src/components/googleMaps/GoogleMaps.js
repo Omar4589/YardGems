@@ -126,7 +126,7 @@ const PlacesAutocomplete = ({ setSelected, setCenter }) => {
     
     return (
     // combobox is a container basically with capturing the value selected 
-    <Combobox onSelect={handleSelect}  >
+    <Combobox onSelect={handleSelect} className="comboBox-container" >
         {/* create input box */}
         {/* onChange is caputring value from the input box and setting new value */}
         {/* disable means dont render if not ready (connected to googlemap) */}
