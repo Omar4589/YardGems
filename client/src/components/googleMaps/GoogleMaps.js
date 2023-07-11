@@ -7,8 +7,6 @@ import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption,
 import "@reach/combobox/styles.css";
 import './google.css';
 import gem from '../../assets/images/greenGem.png';
-import { ClickAwayListener } from "@mui/material";
-
 
 export default function GoogleMaps() {
 // isLoaded is gives us access to the apiKey
