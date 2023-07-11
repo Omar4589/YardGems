@@ -7,6 +7,8 @@ import image from '../../assets/yardsale.jpg'  // hard coding for now
 import Auth from '../../utils/auth'
 
 
+
+
 const SavedListings = () => {
     const { loading, data } = useQuery(USER_QUERY); 
     const userData = data?.me || []; 
@@ -49,15 +51,14 @@ const removeFromFavorites = async (_id) => {
                 {userData.savedFavorites.map((post) => {
                     return (
                         <Grid key={post._id} item xs = {12} sm = {6} md = {4}>
-                            <Card component='div'sx={{ maxWidth: 345, marginBottom:'1.5em' }}>
+                            <Card component='div'sx={{ maxWidth: 500, marginBottom:'1.5em' }}>
                                 <CardHeader
                                     title={post.postName}
                                     subheader={`Post By: ${post.postAuthor}`}
                                 />
                                 <CardMedia
                                     sx={{ height: 140, paddingTop:'56.2%' }}
-                                    image={image}
-                                    
+                                    image={image}   
                                 />
                                 <CardContent component="div">
                                     <Typography component="span" gutterBottom variant="h5">

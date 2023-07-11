@@ -64,7 +64,7 @@ const UserDashboard = () => {
                 {userData.savedPost.map((post) => {
                     return (
                         <Grid key={post._id} item xs = {12} sm = {6} md = {4}>
-                            <Card component='div'sx={{ maxWidth: 345, marginBottom:'1em' }}>
+                            <Card component='div'sx={{ maxWidth: 500, marginBottom:'1em' }}>
                                 <CardHeader
                                     title={post.postName}
                                     subheader={post.createdAt}

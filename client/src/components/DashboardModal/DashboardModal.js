@@ -13,6 +13,8 @@ import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption 
 import '@reach/combobox/styles.css';
 
 
+
+
 //------------------Create Listing Modal--------------\\
 export const FormModal = ({handleClose, handleOpen}) => {
     const [selectedLocation, setSelectedLocation] = useState(null); 
@@ -138,7 +140,8 @@ export const FormModal = ({handleClose, handleOpen}) => {
                     placeholder={formState.description}
                     value={formState.description}
                 />
-                <TextField
+                <input
+                    type='date'
                     style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
                     label="Date of the Sale"
                     name='dateOfSale'

@@ -68,12 +68,12 @@ const AllListings = () => {
 
 	return (
 		<>
-			<Container sx={{ maxHeight: "100vh", overflow: "auto" }}>
-				<Grid container spacing={2}>
+			<Container sx={{ maxHeight: "100vh", overflow: "auto", backgroundColor: '#e8f5e9',}}>
+				<Grid container spacing={2} sx={{paddingTop:'2em', paddingBottom:'5em'}}>
 					{AllListingsData.map((post) => {
 						return (
 							<Grid key={post._id} item xs={12} sm={10} md={6}>
-								<Card component="div" sx={{ maxWidth: 345 }}>
+								<Card component="div" sx={{ maxWidth: 500}}>
 									
 										<CardHeader 
                                         title={post.postName}
@@ -88,17 +88,11 @@ const AllListings = () => {
 												Date Of Event: {post.dateOfSale}
 											</Typography>
 											<Typography
-												component="div"
-												variant="body2"
-												color="text.secondary">
-												{post.description}
-												<Typography
 													component="div"
 													variant="body2"
 													color="text.secondary">
-													<br></br>
+													
 													{post.address}
-												</Typography>
 											</Typography>
 										</CardContent>
                                         <Button sx={{color:'black', marginLeft:'.6em'}} onClick={() => handleOpen(post)}>Preview</Button>
@@ -151,7 +145,7 @@ const AllListings = () => {
                             variant="body2"
                             color="text.secondary"
                         >
-                            {selectedCardId.description}
+                            {selectedCardId.postDescription}
                             <Typography
                             component="div"
                             variant="body2"
