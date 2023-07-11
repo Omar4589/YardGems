@@ -106,7 +106,7 @@ const SinglePost = () => {
                             disabled={!ready}
                             className='comboBox-input'
                             placeholder={post.address}
-                            style={{width: '96%', height: '3.6em',  paddingLeft: '1em', fontSize: '1em', borderRadius:'.5em', }}
+                            style={{width: '96%', height: '3.6em',  paddingLeft: '1em', fontSize: '1em', borderRadius:'.5em' }}
                           
                           />
                           <ComboboxPopover style={{ zIndex: '99999', width: '70%', fontSize: '1em', fontFamily: 'sans-serif'}}>
@@ -140,7 +140,8 @@ const SinglePost = () => {
                     </Grid>
                     <Grid item xs={8}>
                     <p className='projectTitle'>Date:</p>
-                        <TextField fullWidth label={post.dateOfSale} id="fullWidth" 
+                        <input type= 'date' fullWidth label={post.dateOfSale} id="fullWidth" 
+                         style={{width: '100%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em',}}
                         onChange={handleInputChange}
                         value={formState.dateOfSale}
                         name ='dateOfSale'
