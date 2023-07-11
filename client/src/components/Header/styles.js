@@ -31,7 +31,7 @@ const styles = {
   logoLink: {
     textDecoration: "none",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "start",
     alignItems: "center",
   },
   box: {
