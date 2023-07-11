@@ -8,9 +8,6 @@ import "@reach/combobox/styles.css";
 import './google.css';
 import gem from '../../assets/images/greenGem.png';
 
-
-
-
 export default function GoogleMaps() {
 // isLoaded is gives us access to the apiKey
  const { isLoaded } = useLoadScript({ 
@@ -39,7 +36,6 @@ const [activeMarker, setActiveMarker] = useState(null); // for window popups
     }
     setActiveMarker(markerF);
   };
- 
 
   return (
   <div sx={{ backgroundColor: '#e8f5e9'}}>
@@ -55,7 +51,8 @@ const [activeMarker, setActiveMarker] = useState(null); // for window popups
      center={ center } // displays location
      mapContainerClassName='map-container' // styling
      onClick={() => setActiveMarker(null)}
-
+    options={{  styles: [{ elementType: "labels", featureType: "poi.business", stylers: [{ visibility: "off", }], }],}}
+     
     >
       {allPost.map(({_id, lat, lng, postName, postDescription, address, dateOfSale }, index) => {
         return ( 

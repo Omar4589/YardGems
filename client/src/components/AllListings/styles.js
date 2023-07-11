@@ -7,9 +7,9 @@ const styles = {
     width: 400,
     bgcolor: 'transparent',
     border: '2px solid #000',
-    boxShadow: 24,
+    boxShadow: 2,
     p: 4,
-    padding: 0
+    padding: 0,
     },
     
 };

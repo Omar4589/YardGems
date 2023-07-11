@@ -5,6 +5,8 @@ import {REMOVE_FAVORITES} from '../../utils/mutations'
 import { Container, Card, CardMedia, Typography, CardContent, CardActions, CardHeader, Grid,Button } from '@mui/material';
 import image from '../../assets/yardsale.jpg'  // hard coding for now
 import Auth from '../../utils/auth'
+import AdditionalFeatures from '../AdditionalFeatures/AdditionalFeatures';
+
 
 
 
@@ -85,7 +87,7 @@ const removeFromFavorites = async (_id) => {
         </Container> 
     </Container>
     ) :(
-        <div>Opps... You need to be logged in</div>
+        <AdditionalFeatures />
     )}
       
     </>
