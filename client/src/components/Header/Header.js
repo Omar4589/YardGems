@@ -8,7 +8,6 @@ import AuthService from "../../utils/auth";
 import { Link as RouterLink } from "react-router-dom";
 
 const Header = () => {
-  
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   const toggleSearch = () => {
@@ -28,96 +27,100 @@ const Header = () => {
 
   return (
     <Box sx={{ ...styles.mainContainer }}>
-      <Link
-        component={RouterLink}
-        to="/MyListings"
-        sx={{ ...styles.myListingsLink }}
-      >
-        My Listings
-      </Link>
-      <Link
-        component={RouterLink}
-        to="/SavedListings"
-        sx={{ ...styles.savedListingLink }}
-      >
-        Saved Listings
-      </Link>
-
-      <Box sx={{ ...styles.appLogo }}>
+      <Box sx={{ ...styles.box }}>
         <Link
           component={RouterLink}
-          to="/"
-          sx={{ ...styles.logoLink }}
-          color={"inherit"}
+          to="/MyListings"
+          sx={{ ...styles.myListingsLink }}
         >
-          <img src={appName} width="100%" height="100%" alt="green_gem" />
+          My Listings
+        </Link>
+        <Link
+          component={RouterLink}
+          to="/SavedListings"
+          sx={{ ...styles.savedListingLink }}
+        >
+          Saved Listings
         </Link>
       </Box>
 
-      <Box>
-        {isSearchVisible ? (
-          <form onSubmit={handleSubmit}>
-            <InputBase
-              placeholder="Search..."
-              inputProps={{ "aria-label": "search" }}
-              sx={{}}
-            />
-          </form>
-        ) : (
-          <>
-            <IconButton
-              sx={{ color: "inherit" }}
-              aria-label="search"
-              onClick={toggleSearch}
-            >
-              <SearchIcon sx={{ ...styles.searchIcon }} />
-            </IconButton>
-            <IconButton
-              sx={{ color: "inherit", size: "small" }}
-              aria-label="message"
-              onClick={() => {
-                alert("You clicked the message button");
-              }}
-            >
-              <InboxIcon sx={{ ...styles.messagesIcon }} />
-            </IconButton>
-          </>
-        )}
-      </Box>
-
-      <Link component={RouterLink} to="/" sx={{ ...styles.homeLink }}>
-        Home
-      </Link>
-
-      {AuthService.loggedIn() ? (
-        <>
-          <Link
-            component={RouterLink}
-            to="/MyAccount"
-            sx={{ ...styles.myAccountLink }}
-          >
-            My Account
-          </Link>
+      <Box sx={{ ...styles.appLogobox }}>
+        <Box sx={{ ...styles.appLogo }}>
           <Link
             component={RouterLink}
             to="/"
-            onClick={handleLogout}
-            sx={{ ...styles.logoutLink }}
+            sx={{ ...styles.logoLink }}
+            color={"inherit"}
           >
-            Logout
+            <img src={appName} width="80%" height="100%" alt="green_gem" />
           </Link>
-        </>
+        </Box>
+      </Box>
+
+      {isSearchVisible ? (
+        <form onSubmit={handleSubmit}>
+          <InputBase
+            placeholder="Search..."
+            inputProps={{ "aria-label": "search" }}
+            sx={{ ...styles.searchField }}
+          />
+        </form>
       ) : (
         <>
-          <Link
-            component={RouterLink}
-            to="/signup-login"
-            sx={{ ...styles.signUpLoginLink }}
+          <IconButton
+            sx={{ color: "inherit" }}
+            aria-label="search"
+            onClick={toggleSearch}
           >
-            SignUp/Login
-          </Link>
+            <SearchIcon sx={{ ...styles.searchIcon }} />
+          </IconButton>
+          <IconButton
+            sx={{ color: "inherit", size: "small" }}
+            aria-label="message"
+            onClick={() => {
+              alert("You clicked the message button");
+            }}
+          >
+            <InboxIcon sx={{ ...styles.messagesIcon }} />
+          </IconButton>
         </>
       )}
+
+      <Box sx={{ ...styles.box }}>
+        <Link component={RouterLink} to="/" sx={{ ...styles.homeLink }}>
+          Home
+        </Link>
+
+        {AuthService.loggedIn() ? (
+          <>
+            <Link
+              component={RouterLink}
+              to="/MyAccount"
+              sx={{ ...styles.myAccountLink }}
+            >
+              My Account
+            </Link>
+            <Link
+              component={RouterLink}
+              to="/"
+              onClick={handleLogout}
+              sx={{ ...styles.logoutLink }}
+            >
+              Logout
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              component={RouterLink}
+              to="/signup-login"
+              sx={{ ...styles.signUpLoginLink }}
+            >
+              SignUp/Login
+            </Link>
+          </>
+        )}
+      </Box>
     </Box>
   );
 };

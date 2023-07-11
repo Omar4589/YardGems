@@ -8,6 +8,7 @@ import {FormModal} from '../../components/DashboardModal/DashboardModal'
 import image from '../../assets/yardsale.jpg'  // hard coding for now
 import Auth from '../../utils/auth'
 import { Link } from 'react-router-dom';
+import AdditionalFeatures from '../AdditionalFeatures/AdditionalFeatures';
 
 const UserDashboard = () => {
     const { loading, data } = useQuery(USER_QUERY); 
@@ -102,7 +103,7 @@ const UserDashboard = () => {
         </Container> 
     </Container>
     ) :(
-        <div>Opps... You need to be logged in</div>
+        <AdditionalFeatures />
     )}
       
     </>

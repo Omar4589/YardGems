@@ -10,13 +10,22 @@ const styles = {
 
     "@media (min-width: 768px)": {
       justifyContent: "space-between",
-      padding: "15px 50px 15px 50px",
+      padding: "5px 50px 15px 50px",
+    },
+  },
+  appLogobox: {
+    paddingRight: 12,
+    width: "45%",
+    "@media (min-width: 768px)": {
+      width: "33.33%",
+      display: "flex",
+      justifyContent: "space-around",
     },
   },
   appLogo: {
-    width: "45%",
+    width: "100%",
     "@media (min-width: 768px)": {
-      width: "25%",
+      width: "100%",
     },
   },
   logoLink: {
@@ -25,12 +34,21 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
   },
+  box: {
+    "@media (min-width: 768px)": {
+      width: "33.33%",
+      display: "flex",
+      justifyContent: "space-around",
+    },
+  },
+
   searchIcon: {
     fontSize: 30,
     "@media (min-width: 768px)": {
       display: "none",
     },
   },
+  searchField: { padding: "5% 0% 0% 0%" },
   messagesIcon: {
     fontSize: 30,
     ml: 1,
