@@ -18,8 +18,7 @@ const styles = {
     width: "45%",
     "@media (min-width: 768px)": {
       width: "33.33%",
-      display: "flex",
-      justifyContent: "space-around",
+      paddingRight: 0,
     },
   },
   appLogo: {
@@ -33,6 +32,11 @@ const styles = {
     display: "flex",
     justifyContent: "start",
     alignItems: "center",
+    "@media (min-width: 768px)": {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
   },
   box: {
     "@media (min-width: 768px)": {
