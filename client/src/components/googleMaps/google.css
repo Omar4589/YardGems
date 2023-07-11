@@ -8,3 +8,8 @@
   width: 15%;
   padding: .05rem;
 }
+
+.places-container {
+  justify-content: center;
+  align-items: center;
+}

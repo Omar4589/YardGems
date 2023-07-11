@@ -13,7 +13,8 @@ import {
 	Modal,
 	Box,
     IconButton,
-    Popover
+    Popover,
+	CardActionArea
 } from "@mui/material";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import styles from "./styles";
@@ -74,7 +75,7 @@ const AllListings = () => {
 						return (
 							<Grid key={post._id} item xs={12} sm={10} md={6}>
 								<Card component="div" sx={{ maxWidth: 500}}>
-									
+									<CardActionArea onClick={() => handleOpen(post)}>
 										<CardHeader 
                                         title={post.postName}
                                         subheader={`Post By: ${post.postAuthor}`}
@@ -95,7 +96,8 @@ const AllListings = () => {
 													{post.address}
 											</Typography>
 										</CardContent>
-                                        <Button sx={{color:'black', marginLeft:'.6em'}} onClick={() => handleOpen(post)}>Preview</Button>
+										</CardActionArea>
+                                        {/* <Button sx={{color:'black', marginLeft:'.6em'}} onClick={() => handleOpen(post)}>Preview</Button> */}
                                         {Auth.loggedIn() ? (
                                             <IconButton  onClick={() => addToFavorites(post._id)} sx={{marginLeft:'85%'}} aria-label="favorite">
                                                 <FavoriteIcon   />  
