@@ -145,7 +145,6 @@ const SinglePost = () => {
                         onChange={handleInputChange}
                         value={formState.dateOfSale}
                         name ='dateOfSale'
-                        required
                         sx={{backgroundColor:'white', borderRadius:'.5em'}}
                         />
                     </Grid>
