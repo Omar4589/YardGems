@@ -38,8 +38,14 @@ const SavedListings = () => {
     } catch (err) {
       console.error(err);
     }
+
     navigate("/", { replace: true });
     setRefresh(true);
+
+
+    window.location.assign("/");
+
+
   };
 
   useEffect(() => {
@@ -61,7 +67,7 @@ const SavedListings = () => {
       {Auth.loggedIn() ? (
         <Container
           maxWidth="xl"
-          sx={{ backgroundColor: "#e8f5e9", marginBottom: "4em" }}
+          sx={{ backgroundColor: "#e8f5e9", marginBottom: "4em", height:"100vh" }}
         >
           <Container maxWidth="md" sx={{ marginBottom: "2em" }}>
             <Typography
@@ -70,7 +76,7 @@ const SavedListings = () => {
               align="center"
               color="textPrimary"
               gutterBottom
-              style={{ fontSize: "3rem" }}
+              style={{ fontSize: "3rem", paddingTop:"3%" }}
             >
               {userData.savedFavorites.length
                 ? `Viewing ${userData.savedFavorites.length} saved ${
