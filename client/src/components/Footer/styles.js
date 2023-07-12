@@ -3,7 +3,7 @@ const styles = {
     margin: "auto",
     color: "#2a2a35f2",
     background: "#ffffff",
-    paddingTop: "3%",
+    paddingTop: "2%",
     paddingBottom: "3%",
     textAlign: "center",
     padding: "20px 5px 20px 5px",
