@@ -34,7 +34,7 @@ const SavedListings = () => {
     } catch (err) {
       console.error(err);
     }
-    window.location.reload();
+    window.location.assign("/");
   };
   if (loading) {
     return <h2>LOADING...</h2>;
