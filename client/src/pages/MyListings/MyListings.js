@@ -11,10 +11,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import AdditionalFeatures from '../AdditionalFeatures/AdditionalFeatures';
 
 const UserDashboard = () => {
-    const { loading, data } = useQuery(USER_QUERY); 
+    const { loading, data, refetch } = useQuery(USER_QUERY); 
     const userData = data?.me || []; 
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [removePost, { error }] = useMutation(REMOVE_POST);
+    const [refresh, setRefresh] = useState(false);
 
     const navigate = useNavigate(); 
 
@@ -34,7 +35,7 @@ const UserDashboard = () => {
     const handleCloseModal = () => {
 
         setIsModalOpen(false);
-        navigate("/MyListings", { replace: true }); // Navigate to the desired route after closing the modal
+        navigate("/", { replace: true }); // Navigate to the desired route after closing the modal
         window.location.href = window.location.href;
       //window.location.assign('/MyListing'); // refresh the page after a new listing is made
 
@@ -57,12 +58,21 @@ const UserDashboard = () => {
         catch (err) {
         console.error(err);
         }
-        window.location.reload();
+        setRefresh(true);
     };
+
+    useEffect(() => {
+        if (refresh) {
+          refetch();
+          setRefresh(false);
+        }
+      }, [refresh, refetch]);
 
     if (loading) {
         return <h2>LOADING...</h2>;
     }
+
+    const savedPost = userData.savedPost || []; // Null check for savedPost
     
     return (
     <>
@@ -81,7 +91,7 @@ const UserDashboard = () => {
         </Container>
         <Container sx={{marginBottom:'3em'}}>
             <Grid container spacing={4}>
-                {userData.savedPost.map((post) => {
+                {savedPost.length > 0 && savedPost.map((post) => {
                     return (
                         <Grid key={post._id} item xs = {12} sm = {6} md = {4}>
                             <Card component='div'sx={{ maxWidth: 500, marginBottom:'2em' }}>
