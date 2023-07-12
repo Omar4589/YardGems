@@ -8,7 +8,7 @@ const styles = {
     textAlign: "center",
     padding: "20px 5px 20px 5px",
     fontFamily: "'Roboto', sans-serif", // Add this line to set the font
-    "@media (min-width: 768px)": {
+    "@media (minWidth: 768px)": {
       display: "none",
     },
   },
