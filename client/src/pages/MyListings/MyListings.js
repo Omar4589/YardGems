@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect } from "react";
 import { useQuery, useMutation } from '@apollo/client';
 import {USER_QUERY} from "../../utils/queries";
 import {REMOVE_POST} from '../../utils/mutations'
@@ -7,7 +7,7 @@ import {ButtonComponent } from '../../components/DashboardModal/Button';
 import {FormModal} from '../../components/DashboardModal/DashboardModal'
 import image from '../../assets/yardsale.jpg'  // hard coding for now
 import Auth from '../../utils/auth'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AdditionalFeatures from '../AdditionalFeatures/AdditionalFeatures';
 
 const UserDashboard = () => {
@@ -16,13 +16,31 @@ const UserDashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [removePost, { error }] = useMutation(REMOVE_POST);
 
+    const navigate = useNavigate(); 
+
+    useEffect(() => {
+        // Check if `loading` is false and `userData.savedPost` is not empty
+        if (!loading && userData.savedPost && userData.savedPost.length > 0) {
+          // Perform the action you want when the state changes
+          // For example, console.log a message
+          console.log("State has changed:", userData.savedPost);
+        }
+      }, [loading, userData.savedPost]);
+
 //----------functions to handle the CREATE listing modal ---------\\
     const handleOpenModal = () => {
       setIsModalOpen(true);
     };
     const handleCloseModal = () => {
+
+        setIsModalOpen(false);
+        navigate("/MyListings", { replace: true }); // Navigate to the desired route after closing the modal
+        window.location.href = window.location.href;
+      //window.location.assign('/MyListing'); // refresh the page after a new listing is made
+
       setIsModalOpen(false);
     window.location.reload(); // refresh the page after a new listing is made
+
     };
 
 //----------functions to handle the DELETE listing ---------\\
@@ -45,6 +63,7 @@ const UserDashboard = () => {
     if (loading) {
         return <h2>LOADING...</h2>;
     }
+    
     return (
     <>
     {Auth.loggedIn() ? (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { USER_QUERY } from "../../utils/queries";
 import { REMOVE_FAVORITES } from "../../utils/mutations";
@@ -16,11 +16,14 @@ import {
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import Auth from "../../utils/auth";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
+import { useNavigate } from "react-router-dom";
 
 const SavedListings = () => {
   const { loading, data } = useQuery(USER_QUERY);
   const userData = data?.me || [];
   const [removeFavorites, { err }] = useMutation(REMOVE_FAVORITES);
+
+  const navigate = useNavigate();
 
   //----------functions to handle the DELETE listing ---------\\
   const removeFromFavorites = async (_id) => {
@@ -34,11 +37,13 @@ const SavedListings = () => {
     } catch (err) {
       console.error(err);
     }
-    window.location.reload();
+    navigate("/SavedListings", { replace: true });
+    window.location.href = window.location.href;
   };
   if (loading) {
     return <h2>LOADING...</h2>;
   }
+
   return (
     <>
       {Auth.loggedIn() ? (
@@ -46,7 +51,7 @@ const SavedListings = () => {
           maxWidth="xl"
           sx={{ backgroundColor: "#e8f5e9", marginBottom: "4em" }}
         >
-          <Container maxWidth="md" sx={{marginBottom:'2em'}}>
+          <Container maxWidth="md" sx={{ marginBottom: "2em" }}>
             <Typography
               component="div"
               variant="h2"
