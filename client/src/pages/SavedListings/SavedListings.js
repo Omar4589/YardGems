@@ -37,9 +37,8 @@ const SavedListings = () => {
     } catch (err) {
       console.error(err);
     }
-
-    window.location.assign("/");
-
+    navigate("/SavedListings", { replace: true });
+    window.location.href = window.location.href;
   };
   if (loading) {
     return <h2>LOADING...</h2>;
@@ -50,7 +49,7 @@ const SavedListings = () => {
       {Auth.loggedIn() ? (
         <Container
           maxWidth="xl"
-          sx={{ backgroundColor: "#e8f5e9", marginBottom: "4em", height:"100vh" }}
+          sx={{ backgroundColor: "#e8f5e9", marginBottom: "4em" }}
         >
           <Container maxWidth="md" sx={{ marginBottom: "2em" }}>
             <Typography
@@ -59,7 +58,7 @@ const SavedListings = () => {
               align="center"
               color="textPrimary"
               gutterBottom
-              style={{ fontSize: "3rem", paddingTop:"3%" }}
+              style={{ fontSize: "3rem" }}
             >
               {userData.savedFavorites.length
                 ? `Viewing ${userData.savedFavorites.length} saved ${

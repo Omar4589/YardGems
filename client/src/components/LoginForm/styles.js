@@ -6,9 +6,8 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: 10,
-    "@media (min-width: 768px)": { maxWidth: "100%" },
   },
-  loginContainer: { background: "white", mx: 3, px: 4, borderRadius: 2, "@media (min-width: 768px)": { maxWidth: "30%" }, },
+  loginContainer: { background: "white", mx: 3, px: 4, borderRadius: 2, "@media (min-width: 768px)": { maxWidth: "50%" }, },
   appName: { py: 2, px: 2 },
   labels: { fontWeight: "semibold", mb: 1, display: "block" },
 

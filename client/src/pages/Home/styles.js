@@ -14,6 +14,7 @@ const styles = {
   },
   listings: {
     width: "100%",
+    paddingBottom: '4.5em',
     "@media (min-width: 768px)": {
       marginBottom:'0em'
     },
