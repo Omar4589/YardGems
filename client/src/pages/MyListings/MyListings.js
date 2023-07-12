@@ -60,12 +60,12 @@ const UserDashboard = () => {
         {/* this is the modal to create a new listing, give is a state of false, pass the prop handleCloseModal and a state to open/close the modal */}
         <FormModal handleOpen={isModalOpen} handleClose={handleCloseModal} />
         </Container>
-        <Container>
+        <Container sx={{marginBottom:'3em'}}>
             <Grid container spacing={4}>
                 {userData.savedPost.map((post) => {
                     return (
                         <Grid key={post._id} item xs = {12} sm = {6} md = {4}>
-                            <Card component='div'sx={{ maxWidth: 500, marginBottom:'1em' }}>
+                            <Card component='div'sx={{ maxWidth: 500, marginBottom:'2em' }}>
                                 <CardHeader
                                     title={post.postName}
                                     subheader={post.createdAt}
@@ -84,7 +84,6 @@ const UserDashboard = () => {
                                     <Typography component="div" variant="body2" color="text.secondary">
                                         {post.address}
                                     </Typography>
-                                    
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
