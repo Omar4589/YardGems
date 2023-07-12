@@ -22,6 +22,7 @@ const styles = {
     alignItems: "center",
     textAlign: "center",
     py: 3,
+    
   },
 };
 

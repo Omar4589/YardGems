@@ -61,9 +61,7 @@ const AllListings = () => {
     }
     try {
       const { data } = await addFavorites({ variables: { postId: _id } });
-      navigate("/", { replace: true });
-      window.location.href = window.location.href;
-      refetch();
+      window.location.assign("/");
     } catch (err) {
       console.error(err);
     }
