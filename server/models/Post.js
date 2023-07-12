@@ -21,13 +21,15 @@ const postSchema = new Schema({
   },
   image: {
     type: String,
-    required: [true, 'Leave an image of the the sale or particular item']
+    
   }, 
   postAuthor: {
     type: String,
   },
   postName: {
     type: String,
+ 
+    
   },
   lat: {
     type: Number, // maybe  aflloat

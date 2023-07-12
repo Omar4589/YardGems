@@ -12,9 +12,6 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocom
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
 import '@reach/combobox/styles.css';
 
-
-
-
 //------------------Create Listing Modal--------------\\
 export const FormModal = ({handleClose, handleOpen}) => {
     const [selectedLocation, setSelectedLocation] = useState(null); 
