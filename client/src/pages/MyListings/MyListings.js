@@ -22,7 +22,7 @@ const UserDashboard = () => {
     };
     const handleCloseModal = () => {
       setIsModalOpen(false);
-      window.location.reload(); // refresh the page after a new listing is made
+      window.location.assign('/MyListing'); // refresh the page after a new listing is made
     };
 
 //----------functions to handle the DELETE listing ---------\\
