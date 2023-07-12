@@ -21,6 +21,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { ADD_FAVORITES } from "../../utils/mutations";
 
+
 const AllListings = () => {
   const [popOver, setPopOver] = useState(false);
   const { data } = useQuery(QUERY_POSTS);
@@ -35,6 +36,8 @@ const AllListings = () => {
       [postId]: true, // once heart is clicked, this new key value pair is added
     }));
   };
+
+
 
   // to see if a card was selected
   const [selectedCardId, setSelectedCardId] = useState(null);

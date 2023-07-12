@@ -18,9 +18,11 @@ import Auth from "../../utils/auth";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 
 const SavedListings = () => {
-  const { loading, data } = useQuery(USER_QUERY);
+  const { loading, data,  } = useQuery(USER_QUERY);
   const userData = data?.me || [];
   const [removeFavorites, { err }] = useMutation(REMOVE_FAVORITES);
+
+
 
   //----------functions to handle the DELETE listing ---------\\
   const removeFromFavorites = async (_id) => {
@@ -35,10 +37,16 @@ const SavedListings = () => {
       console.error(err);
     }
     window.location.assign("/");
+
   };
+
   if (loading) {
     return <h2>LOADING...</h2>;
   }
+
+    const savedFavorites = userData.savedFavorites || []; // Null check for savedFavorites
+  
+
   return (
     <>
       {Auth.loggedIn() ? (
@@ -46,7 +54,7 @@ const SavedListings = () => {
           maxWidth="xl"
           sx={{ backgroundColor: "#e8f5e9", marginBottom: "4em", height:"100vh" }}
         >
-          <Container maxWidth="md" sx={{marginBottom:'2em'}}>
+          <Container maxWidth="md" sx={{ marginBottom: "2em" }}>
             <Typography
               component="div"
               variant="h2"
@@ -66,7 +74,7 @@ const SavedListings = () => {
           </Container>
           <Container>
             <Grid container spacing={4}>
-              {userData.savedFavorites.map((post) => {
+              {savedFavorites.length > 0 && savedFavorites.map((post) => {
                 return (
                   <Grid key={post._id} item xs={12} sm={6} md={4}>
                     <Card
