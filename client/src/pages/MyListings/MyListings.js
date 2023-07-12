@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect } from "react";
 import { useQuery, useMutation } from '@apollo/client';
 import {USER_QUERY} from "../../utils/queries";
 import {REMOVE_POST} from '../../utils/mutations'
@@ -11,18 +11,38 @@ import { Link,  } from 'react-router-dom';
 import AdditionalFeatures from '../AdditionalFeatures/AdditionalFeatures';
 
 const UserDashboard = () => {
-    const { loading, data } = useQuery(USER_QUERY); 
+    const { loading, data, refetch } = useQuery(USER_QUERY); 
     const userData = data?.me || []; 
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const [removePost, { error }] = useMutation(REMOVE_POST);
+    const [refresh, setRefresh] = useState(false);
+
+    const navigate = useNavigate(); 
+
+    useEffect(() => {
+        // Check if `loading` is false and `userData.savedPost` is not empty
+        if (!loading && userData.savedPost && userData.savedPost.length > 0) {
+          // Perform the action you want when the state changes
+          // For example, console.log a message
+          console.log("State has changed:", userData.savedPost);
+        }
+      }, [loading, userData.savedPost]);
 
 //----------functions to handle the CREATE listing modal ---------\\
     const handleOpenModal = () => {
       setIsModalOpen(true);
     };
     const handleCloseModal = () => {
+
+        setIsModalOpen(false);
+        navigate("/", { replace: true }); // Navigate to the desired route after closing the modal
+        window.location.href = window.location.href;
+      //window.location.assign('/MyListing'); // refresh the page after a new listing is made
+
       setIsModalOpen(false);
-      window.location.assign("/"); // refresh the page after a new listing is made
+
+     window.location.assign("/"); // refresh the page after a new listing is made
+
     };
 
 //----------functions to handle the DELETE listing ---------\\
@@ -39,12 +59,26 @@ const UserDashboard = () => {
         catch (err) {
         console.error(err);
         }
+
+        setRefresh(true);
+
         window.location.assign("/");
+
     };
+
+    useEffect(() => {
+        if (refresh) {
+          refetch();
+          setRefresh(false);
+        }
+      }, [refresh, refetch]);
 
     if (loading) {
         return <h2>LOADING...</h2>;
     }
+
+    const savedPost = userData.savedPost || []; // Null check for savedPost
+    
     return (
     <>
     {Auth.loggedIn() ? (
@@ -62,7 +96,7 @@ const UserDashboard = () => {
         </Container>
         <Container sx={{marginBottom:'3em'}}>
             <Grid container spacing={4}>
-                {userData.savedPost.map((post) => {
+                {savedPost.length > 0 && savedPost.map((post) => {
                     return (
                         <Grid key={post._id} item xs = {12} sm = {6} md = {4}>
                             <Card component='div'sx={{ maxWidth: 500, marginBottom:'2em' }}>

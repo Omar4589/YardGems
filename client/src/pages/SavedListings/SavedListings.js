@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { USER_QUERY } from "../../utils/queries";
 import { REMOVE_FAVORITES } from "../../utils/mutations";
@@ -16,11 +16,15 @@ import {
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import Auth from "../../utils/auth";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
+import { useNavigate } from "react-router-dom";
 
 const SavedListings = () => {
-  const { loading, data } = useQuery(USER_QUERY);
+  const { loading, data, refetch } = useQuery(USER_QUERY);
   const userData = data?.me || [];
+  const [refresh, setRefresh] = useState(false);
   const [removeFavorites, { err }] = useMutation(REMOVE_FAVORITES);
+
+  const navigate = useNavigate();
 
   //----------functions to handle the DELETE listing ---------\\
   const removeFromFavorites = async (_id) => {
@@ -34,11 +38,30 @@ const SavedListings = () => {
     } catch (err) {
       console.error(err);
     }
+
+    navigate("/", { replace: true });
+    setRefresh(true);
+
+
     window.location.assign("/");
+
+
   };
+
+  useEffect(() => {
+    if (refresh) {
+      refetch();
+      setRefresh(false);
+    }
+  }, [refresh, refetch]);
+
   if (loading) {
     return <h2>LOADING...</h2>;
   }
+
+    const savedFavorites = userData.savedFavorites || []; // Null check for savedFavorites
+  
+
   return (
     <>
       {Auth.loggedIn() ? (
@@ -46,7 +69,7 @@ const SavedListings = () => {
           maxWidth="xl"
           sx={{ backgroundColor: "#e8f5e9", marginBottom: "4em", height:"100vh" }}
         >
-          <Container maxWidth="md" sx={{marginBottom:'2em'}}>
+          <Container maxWidth="md" sx={{ marginBottom: "2em" }}>
             <Typography
               component="div"
               variant="h2"
@@ -66,7 +89,7 @@ const SavedListings = () => {
           </Container>
           <Container>
             <Grid container spacing={4}>
-              {userData.savedFavorites.map((post) => {
+              {savedFavorites.length > 0 && savedFavorites.map((post) => {
                 return (
                   <Grid key={post._id} item xs={12} sm={6} md={4}>
                     <Card
