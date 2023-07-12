@@ -1,4 +1,6 @@
 import decode from "jwt-decode";
+import MyListings from '.././pages/MyListings/MyListings'
+
 
 class AuthService {
   getProfile() {
@@ -29,7 +31,7 @@ class AuthService {
 
   login(idToken) {
     localStorage.setItem("id_token", idToken);
-    window.location.assign("/MyListings");
+    window.location.assign(<MyListings />);
   }
 
   logout() {
