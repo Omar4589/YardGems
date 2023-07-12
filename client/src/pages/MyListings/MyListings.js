@@ -7,7 +7,7 @@ import {ButtonComponent } from '../../components/DashboardModal/Button';
 import {FormModal} from '../../components/DashboardModal/DashboardModal'
 import image from '../../assets/yardsale.jpg'  // hard coding for now
 import Auth from '../../utils/auth'
-import { Link } from 'react-router-dom';
+import { Link,  } from 'react-router-dom';
 import AdditionalFeatures from '../AdditionalFeatures/AdditionalFeatures';
 
 const UserDashboard = () => {
@@ -22,7 +22,7 @@ const UserDashboard = () => {
     };
     const handleCloseModal = () => {
       setIsModalOpen(false);
-    window.location.reload(); // refresh the page after a new listing is made
+      window.location.assign("/"); // refresh the page after a new listing is made
     };
 
 //----------functions to handle the DELETE listing ---------\\
@@ -39,7 +39,7 @@ const UserDashboard = () => {
         catch (err) {
         console.error(err);
         }
-        window.location.reload();
+        window.location.assign("/");
     };
 
     if (loading) {
