@@ -20,12 +20,11 @@ import { styles } from "./styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { ADD_FAVORITES } from "../../utils/mutations";
-import { useNavigate } from "react-router-dom";
 
 
 const AllListings = () => {
   const [popOver, setPopOver] = useState(false);
-  const { data, refetch } = useQuery(QUERY_POSTS);
+  const { data } = useQuery(QUERY_POSTS);
   const AllListingsData = data?.allPost || [];
 
   const [clickedHearts, setClickedHearts] = useState({}); // set the initial state of hearts (which is false since none have been clicked yet). it is an object because it holds the key values(the card id) of EACH cards and a boolean if they have been clicked or not
@@ -38,7 +37,7 @@ const AllListings = () => {
     }));
   };
 
-  const navigate = useNavigate();
+
 
   // to see if a card was selected
   const [selectedCardId, setSelectedCardId] = useState(null);
