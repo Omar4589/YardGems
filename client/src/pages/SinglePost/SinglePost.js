@@ -81,7 +81,6 @@ const SinglePost = () => {
             image: '',
             postName:''
           });
-          window.location.replace('/MyListings')
         } catch (err) {
           console.error(err);
         }
