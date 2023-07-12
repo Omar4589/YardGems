@@ -13,7 +13,6 @@ const addDateSuffix = (date) => {
     } else {
       dateStr = `${dateStr}th`;
     }
-  
     return dateStr;
   };
   

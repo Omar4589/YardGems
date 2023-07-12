@@ -29,7 +29,6 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-
     // login a user, sign a token, and send it back
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
@@ -37,13 +36,10 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError("No user with this information found!");
       }
-
       const correctPw = await user.isCorrectPassword(password);
-
       if (!correctPw) {
         throw new AuthenticationError("Incorrect password!");
       }
-
       const token = signToken(user);
       return { token, user };
     },
@@ -52,13 +48,11 @@ const resolvers = {
         const newPost = await Post.create({
           postDescription, address, dateOfSale, image, postAuthor: context.user.username, postName,lat, lng
         });
-
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $push: { savedPost: newPost._id } }, // or would it be push
+          { $push: { savedPost: newPost._id } }, 
           {new:true}
         );
-
         return newPost;
       }
       throw new AuthenticationError('You need to be logged in!');
@@ -68,13 +62,11 @@ const resolvers = {
         const removePost = await Post.findOneAndDelete({
           _id: postId,
         });
-
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { savedPost: removePost._id } },
           {new:true}
         );
-
         return removePost;
       }
       throw new AuthenticationError('You need to be logged in!');
@@ -84,7 +76,6 @@ const resolvers = {
         const updatePost = await Post.findOneAndUpdate(
           { _id: id }, {postDescription, address, dateOfSale, image, postName,lat, lng}, {new:true}
         );
-
         return updatePost;
       }
       throw new AuthenticationError('You need to be logged in!');
@@ -94,13 +85,11 @@ const resolvers = {
         const addToFavorites = await Post.findOne({
           _id: postId,
         });
-
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $push: { savedFavorites: addToFavorites._id } },
           {new:true}
         );
-
         return addToFavorites ;
       }
       throw new AuthenticationError('You need to be logged in!');
@@ -110,13 +99,11 @@ const resolvers = {
         const removeFromFavorites = await Post.findOne({
           _id: postId,
         });
-
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { savedFavorites: removeFromFavorites._id } },
           {new:true}
         );
-
         return removeFromFavorites ;
       }
       throw new AuthenticationError('You need to be logged in!');

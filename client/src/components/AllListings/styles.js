@@ -1,4 +1,4 @@
-const styles = {
+export const styles = {
    modalPopUp: {
     position: 'absolute',
     top: '50%',
@@ -10,9 +10,8 @@ const styles = {
     boxShadow: 2,
     p: 4,
     padding: 0,
-    },
-    
+    }
 };
 
 
-export default styles;
+

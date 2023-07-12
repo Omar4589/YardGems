@@ -3,17 +3,20 @@ const styles = {
     width: "100%",
     "@media (min-width: 768px)": {
       display: "flex",
-      justifyContent: "center",
+      justifyContent: "center"
     },
   },
   map: {
     width: "100%",
-    "@media (min-width: 768px)": {},
+    "@media (min-width: 768px)": {
+   
+    },
   },
   listings: {
     width: "100%",
-    //'padding': '5x',
+    paddingBottom: '4.5em',
     "@media (min-width: 768px)": {
+      marginBottom:'0em'
     },
   },
 };
