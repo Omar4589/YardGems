@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { USER_QUERY } from "../../utils/queries";
 import { REMOVE_FAVORITES } from "../../utils/mutations";
@@ -23,12 +23,9 @@ const SavedListings = () => {
   const [removeFavorites, { err }] = useMutation(REMOVE_FAVORITES);
 
   //----------functions to handle the DELETE listing ---------\\
-
   const removeFromFavorites = async (_id) => {
     console.log(_id);
-
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
     if (!token) {
       return false;
     }
@@ -47,9 +44,9 @@ const SavedListings = () => {
       {Auth.loggedIn() ? (
         <Container
           maxWidth="xl"
-          sx={{ backgroundColor: "#e8f5e9", paddingBottom: "1em" }}
+          sx={{ backgroundColor: "#e8f5e9", marginBottom: "4em" }}
         >
-          <Container maxWidth="md">
+          <Container maxWidth="md" sx={{marginBottom:'2em'}}>
             <Typography
               component="div"
               variant="h2"
