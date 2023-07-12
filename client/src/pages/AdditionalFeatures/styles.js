@@ -1,17 +1,20 @@
 const styles = {
   mainContainer: {
-    height: "100vh",
     backgroundColor: "#e8f5e9",
     textAlign: "center",
-    paddingBottom: 25,
+    paddingBottom: 15,
     fontFamily: "'Roboto', sans-serif",
     "@media (min-width: 768px)": {},
   },
-  heading: { mx: "auto", padding: "10% 0% 0% 0%", fontSize: 25 },
+  heading: { mx: "auto", padding: "10% 0% 0% 0%", fontSize: 25, "@media (min-width: 768px)": {padding: "4% 0% 0% 0%"}, },
 
-  featuresContainer: {},
+  featuresContainer: { "@media (min-width: 768px)": { 
+    display:"flex",
+
+    }},
   feature: {
     display: "flex",
+   
     flexDirection: "column",
     borderRadius: "5px",
     backgroundColor: "white",
@@ -21,6 +24,10 @@ const styles = {
     mx: "auto",
     width: "50%",
     my: 5,
+    "@media (min-width: 768px)": { 
+    width: "20%",
+  
+    },
   },
   img: { mx: "auto" },
   typography: { fontSize: 20, pt: 2 },

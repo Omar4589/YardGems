@@ -32,7 +32,6 @@ const ContactUs = () => {
     console.log(formData.message);
 
     try {
-      // Add logic here to handle form submission
     } catch (err) {
       console.error(err);
     }
@@ -58,7 +57,9 @@ const ContactUs = () => {
 
       <form id="ContactUs-form" onSubmit={handleFormSubmit}>
         <Box sx={{ ...styles.fieldContainers }}>
-          <Typography component="label" sx={{...styles.labels}}>Full Name</Typography>
+          <Typography component="label" sx={{ ...styles.labels }}>
+            Full Name
+          </Typography>
           <TextField
             fullWidth
             sx={{ ...styles.inputFields }}
@@ -70,7 +71,9 @@ const ContactUs = () => {
           />
         </Box>
         <Box sx={{ ...styles.fieldContainers }}>
-          <Typography component="label" sx={{...styles.labels}}>Email</Typography>
+          <Typography component="label" sx={{ ...styles.labels }}>
+            Email
+          </Typography>
           <TextField
             type="email"
             name="email"
@@ -82,12 +85,13 @@ const ContactUs = () => {
           />
         </Box>
         <Box sx={{ ...styles.fieldContainers }}>
-          <Typography component="label" sx={{...styles.labels}}>Message</Typography>
+          <Typography component="label" sx={{ ...styles.labels }}>
+            Message
+          </Typography>
           <TextField
             type="text"
             name="message"
             fullWidth
-            
             multiline={true}
             rows={"6"}
             sx={{ ...styles.inputFields }}

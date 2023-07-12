@@ -32,10 +32,15 @@ const UserDashboard = () => {
       setIsModalOpen(true);
     };
     const handleCloseModal = () => {
+
         setIsModalOpen(false);
         navigate("/MyListings", { replace: true }); // Navigate to the desired route after closing the modal
         window.location.href = window.location.href;
       //window.location.assign('/MyListing'); // refresh the page after a new listing is made
+
+      setIsModalOpen(false);
+    window.location.reload(); // refresh the page after a new listing is made
+
     };
 
 //----------functions to handle the DELETE listing ---------\\

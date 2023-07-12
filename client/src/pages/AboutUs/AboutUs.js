@@ -7,7 +7,7 @@ const AboutUs = () => {
     <Box sx={{ ...styles.mainContainer }}>
       <Typography sx={{ ...styles.heading }}>About Us</Typography>
       <Typography sx={{ ...styles.statement }}>
-        Welcome to YardGems, the ultimate online platform for yard and garage
+        Welcome to YardGems, the ultimate application for yard and garage
         sale enthusiasts. Our mission is to revolutionize the way people
         discover and explore nearby sales, making the process simple, exciting,
         and rewarding for everyone. We believe that the thrill of finding unique
