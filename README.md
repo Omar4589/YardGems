@@ -1,10 +1,29 @@
 # YardGems
 
+## Description 
+
+YardGems is a free, easy to use garage sale app that helps create and locate garage sales around you! Our mission is to revolutionize the way people discover and explore nearby sales, making the process simple, exciting, and rewarding for everyone. We believe that the thrill of finding unique treasures shouldn’t be limited to chance encounters but should be easily accessible to all. 
+
+## Table Of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Demo](#Demo)
+- [Questions](#questions)
+- [Technologies](#technologies)
+- [Collaborators](#collaborators)
+
+<br>
+<br>
+
 ## User Story
 
 As a user of YardGems, <br>
 I want to discover nearby yard/garage sales<br>
 So that I can easily find sales and explore different items.
+
+<br>
+<br>
 
 ## Acceptance Criteria:
 
@@ -62,3 +81,80 @@ Then I am presented with the sale page that displays the sale’s title, descrip
 When I click on the Logout button, <br>
 Then I am safely logged out of the YardGems platform, and the app brings me back to the initial map view, allowing me to continue exploring and discovering sales in my area.
 
+<br>
+<br>
+
+## Technologies <a id="technologies"></a>
+
+The following technologies were used to develop YardGems:
+<br>
+<br>
+
+<strong>Languages</strong>
+- JavaScript
+- Html
+- Css
+    
+<strong>Frameworks</strong> 
+- Express
+- GraphQL
+- Apollo Server Express 
+    
+<strong>Libraries</strong>
+- React
+- React Router Dom
+- Material UI Styling 
+- Bcrypt 
+
+<strong>Tool Url</strong>
+- Eslint 
+- Dotenv 
+
+    
+<strong>APIs</strong>
+
+- React Google Maps 
+
+<strong>Other</strong>
+
+- Node.js
+- Jwt decode 
+- Mongoose 
+
+<br>
+<br>
+
+## Demo <a id="Demo"></a>
+
+https://yardgems-15b0faee737f.herokuapp.com/
+
+
+<br>
+<br>
+
+## Usage <a id="usage"></a> 
+
+Once you reach the landing page you will see a Google Maps rendered with data as well as a list of garage sale postings. You will be able to click on the Google Map markers and the listing post to view more data about the post. For more functionality, you can click on signup button to create an account. Once you've created an account, and have logged in, you are able to post your own garage sale listings, as well as save garage sale listings to your favorite page. You also have the ability to delete and edit your post as well. 
+
+<br>
+<br>
+
+## Questions <a id="questions"></a>
+
+If you have any questions about this project, please contact the project owners by visiting their GitHub repository at https://github.com/Omar4589/YardGems.
+
+<br>
+<br>
+
+## Collaborators <a id="collaborators"></a>
+
+<br>
+
+Omar Zumaya <br>
+     https://github.com/Omar4589
+<br>
+Kristin De Salme<br>
+     https://github.com/KR1ISTIN
+<br>
+Taylor Aldridge <br>
+     https://github.com/Rolyat512
