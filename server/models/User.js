@@ -19,7 +19,7 @@ const userSchema = new Schema(
       required: true,
       minlength: [8, 'Please enter a password that contains 8 or more characters'],
     },
-    savedPost: [
+    userPosts: [
       { // referrances the Post table to the id
         type: Schema.Types.ObjectId,
         ref: 'Post',

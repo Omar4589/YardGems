@@ -5,7 +5,7 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    savedPost: [Post]
+    userPosts: [Post]
     savedFavorites: [Post]
   }
 

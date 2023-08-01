@@ -17,12 +17,14 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import dayjs from "dayjs";
+import { USER_QUERY } from "../../utils/queries";
 
 //------------------Create Listing Modal--------------\\
-export const FormModal = ({ handleClose, handleOpen }) => {
+export const FormModal = ({ handleClose, handleOpen,listings, setListings }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const [addPost, { error }] = useMutation(ADD_POST);
+
   const [formState, setFormState] = useState({
     postDescription: "",
     dateOfSale: "",
@@ -58,6 +60,7 @@ export const FormModal = ({ handleClose, handleOpen }) => {
   const handleNewInputChange = (e) => {
     setValue(e.target.value);
   };
+
   // for lat and lng
   const handleOptionSelect = async (address) => {
     setValue(address, false);
@@ -83,14 +86,40 @@ export const FormModal = ({ handleClose, handleOpen }) => {
           lat: selectedLocation.lat,
           lng: selectedLocation.lng,
         },
+        update: (cache, { data: { addPost } }) => {
+          // Read the existing cached data for the current user
+          const cachedData = cache.readQuery({ query: USER_QUERY });
+  
+          // Update the cached data with the new listing
+          cache.writeQuery({
+            query: USER_QUERY,
+            data: {
+              me: {
+                ...cachedData.me,
+                userPosts: [...cachedData.me.userPosts, addPost],
+              },
+            },
+          });
+        },
       });
       console.log(data);
+
+
+// Assuming the response contains the newly created post
+const newPost = data.addPost;
+
+// Update the list of posts in the parent component (MyListings)
+setListings([...listings, newPost]);
+
+
       setFormState({
         postDescription: "",
         dateOfSale: "",
         image: "",
         postName: "",
       });
+       // Reset the address input field to an empty string
+    setValue("");
       handleClose(); // closing the modal
     } catch (err) {
       console.error(err);

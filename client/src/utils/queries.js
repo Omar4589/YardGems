@@ -6,7 +6,7 @@ query userMe {
       _id
       username
       email
-      savedPost {
+      userPosts {
         _id
        postDescription
        address
