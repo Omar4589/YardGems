@@ -32,8 +32,9 @@ const MyListings = () => {
   //Here we create a state to track all listings being shown on the page
   const [listings, setListings] = useState(userData.userPosts || []);
 
-console.log(listings);
+  console.log(listings);
 
+  //this useEffect hook handles updating the listings state when the data from the query is updated
   useEffect(() => {
     if (data && data.me) {
       setListings(data.me.userPosts);
@@ -65,11 +66,32 @@ console.log(listings);
       return false;
     }
     try {
-      const { data } = await removePost({ variables: { postId: _id } });
+      const { removedPost } = await removePost({
+        variables: { postId: _id },
+        update: (cache, { data: { removePost } }) => {
+          // Read the existing cached data for the current user
+          const cachedData = cache.readQuery({ query: USER_QUERY });
+
+          // Filter out the deleted post from the cached userPosts
+          const updatedUserPosts = cachedData.me.userPosts.filter(
+            (post) => post._id !== _id
+          );
+
+          // Update the cached data without the deleted post
+          cache.writeQuery({
+            query: USER_QUERY,
+            data: {
+              me: {
+                ...cachedData.me,
+                userPosts: updatedUserPosts,
+              },
+            },
+          });
+        },
+      });
     } catch (err) {
       console.error(err);
     }
-    window.location.assign("/");
   };
 
   if (loading) {
@@ -102,7 +124,6 @@ console.log(listings);
               handleClose={handleCloseModal}
               listings={listings}
               setListings={setListings} // Pass the setPosts function to FormModal
-
             />
           </Container>
           <Container sx={{ marginBottom: "3em" }}>
