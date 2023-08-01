@@ -9,6 +9,7 @@ const Home = () => {
       <Box sx={{ ...styles.map }}>
         <GoogleMaps />
       </Box>
+      
       <Box sx={{ ...styles.listings }}>
         <AllListings />
         </Box>

@@ -82,15 +82,15 @@ const resolvers = {
     },
     addFavorites: async (parent, { postId }, context) => {
       if (context.user) {
-        const addToFavorites = await Post.findOne({
+        const favoritedPost = await Post.findOne({
           _id: postId,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $push: { savedFavorites: addToFavorites._id } },
+          { $push: { savedFavorites: favoritedPost._id } },
           {new:true}
         );
-        return addToFavorites ;
+        return favoritedPost ;
       }
       throw new AuthenticationError('You need to be logged in!');
     },

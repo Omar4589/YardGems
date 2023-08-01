@@ -8,36 +8,29 @@ import {
   Typography,
   CardContent,
   CardHeader,
-  Grid,
   Modal,
   Box,
   IconButton,
   Popover,
   CardActionArea,
 } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import { styles } from "./styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { ADD_FAVORITES } from "../../utils/mutations";
 
-
 const AllListings = () => {
+  //Here we create a state for the popOver that populates when a user clicks on a listing
+  //to favorite it, but theyre not logged in
   const [popOver, setPopOver] = useState(false);
+
+  //Here we query all listings so we can then display them on the page
   const { data } = useQuery(QUERY_POSTS);
+
+  //Variable that holds all listings
   const AllListingsData = data?.allPost || [];
-
-  const [clickedHearts, setClickedHearts] = useState({}); // set the initial state of hearts (which is false since none have been clicked yet). it is an object because it holds the key values(the card id) of EACH cards and a boolean if they have been clicked or not
-  const handleClick = (postId) => {
-    // grab the postID of the card that is being clicked
-    setClickedHearts((prevClickedHearts) => ({
-      // calls the  INITIAL state and CHECKS if the prevClickedHearts have been clicked (true or false)
-      ...prevClickedHearts, // prevClickedHearts equals useStatee({}) - it is the object of keys and true/false (example => postID: false -- this is the default state of all the posts)
-      [postId]: true, // once heart is clicked, this new key value pair is added
-    }));
-  };
-
-
 
   // to see if a card was selected
   const [selectedCardId, setSelectedCardId] = useState(null);
@@ -60,7 +53,6 @@ const AllListings = () => {
     }
     try {
       const { data } = await addFavorites({ variables: { postId: _id } });
-      window.location.assign("/");
     } catch (err) {
       console.error(err);
     }
@@ -75,78 +67,63 @@ const AllListings = () => {
           backgroundColor: "#e8f5e9",
         }}
       >
-        <Grid
-          container
-          spacing={2}
-          sx={{ paddingTop: "1.3em", paddingBottom: "1.3em" }}
-        >
+        <Grid spacing={6} sx={{ paddingTop: "5%", paddingBottom: "5%" }}>
           {AllListingsData.map((post) => {
-            const isClicked = clickedHearts[post._id] || false; // is it true or false for clicking on the heart, clickedHearts is an object of array with the key values from
             return (
-              <Grid key={post._id} item xs={12} sm={10} md={6}>
-                <Card component="div" sx={{ maxWidth: 500 }}>
-                  <CardActionArea onClick={() => handleOpen(post)}>
-                    <CardHeader
-                      title={post.postName}
-                      subheader={`Post By: ${post.postAuthor}`}
-                    />
-                    <CardMedia
-                      sx={{ height: 140, paddingTop: "56.2%" }}
-                      image={image}
-                    />
-                    <CardContent component="div">
-                      <Typography component="span" gutterBottom variant="h5">
-                        Date Of Event: {post.dateOfSale}
-                      </Typography>
-                      <Typography
-                        component="div"
-                        variant="body2"
-                        color="text.secondary"
-                      >
-                        {post.address}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  {Auth.loggedIn() ? (
-                    <IconButton
-                      onClick={() => {
-                        addToFavorites(post._id);
-                        handleClick(post._id);
-                      }}
-                      sx={{
-                        marginLeft: "85%",
-                        color: isClicked ? "red" : "grey",
-                      }}
-                      aria-label="favorite"
-                    >
-                      <FavoriteIcon />
-                    </IconButton>
-                  ) : (
-                    <IconButton
-                      onClick={() => setPopOver(true)}
-                      sx={{ marginLeft: "85%" }}
-                      aria-label="favorite"
-                    >
-                      <FavoriteIcon sx={{ color: "grey" }} />
-                    </IconButton>
-                  )}
-                  <Popover
-                    open={popOver}
-                    onClose={handleClosePop}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "left",
+              <Card component="div" sx={{}}>
+                <CardActionArea onClick={() => handleOpen(post)}>
+                  <CardHeader
+                    title={post.postName}
+                    subheader={`Listed by: ${post.postAuthor}`}
+                  />
+                  <CardMedia
+                    sx={{ height: 140, paddingTop: "56.2%" }}
+                    image={image}
+                  />
+                  <CardContent component="div">
+                    <Typography>Date Of Event: {post.dateOfSale}</Typography>
+                    <Typography>{post.address}</Typography>
+                  </CardContent>
+                </CardActionArea>
+                {Auth.loggedIn() ? (
+                  <IconButton
+                    onClick={() => {
+                      addToFavorites(post._id);
                     }}
+                    sx={{
+                      marginLeft: "75%",
+                      color: "grey",
+                    }}
+                    aria-label="favorite"
                   >
-                    <Typography sx={{ p: 2 }}>
-                      You need to be logged in to save this listing
-                    </Typography>
-                  </Popover>
-                </Card>
-              </Grid>
+                    <FavoriteIcon />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    onClick={() => setPopOver(true)}
+                    sx={{ marginLeft: "75%" }}
+                    aria-label="favorite"
+                  >
+                    <FavoriteIcon sx={{ color: "grey" }} />
+                  </IconButton>
+                )}
+                <Popover
+                  open={popOver}
+                  onClose={handleClosePop}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                >
+                  <Typography sx={{ p: 2 }}>
+                    You need to be logged in to save this listing
+                  </Typography>
+                </Popover>
+              </Card>
             );
           })}
         </Grid>
+        {/* below is the modal  */}
         {selectedCardId && (
           <Modal
             open={Boolean(selectedCardId)}

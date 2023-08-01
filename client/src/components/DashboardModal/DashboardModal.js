@@ -16,6 +16,7 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import dayjs from "dayjs";
 
 //------------------Create Listing Modal--------------\\
 export const FormModal = ({ handleClose, handleOpen }) => {
@@ -36,11 +37,23 @@ export const FormModal = ({ handleClose, handleOpen }) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
+  // Helper function to convert date from "MM/DD/YYYY" format to "yyyy-mm-dd" format
+  const formatDateToInputValue = (formattedDate) => {
+    return dayjs(formattedDate).format("YYYY-MM-DD");
+  };
+
   // for other field data
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormState({ ...formState, [name]: value });
+    // If the name of the input is "dateOfSale", format the date before setting it in the state.
+    if (name === "dateOfSale") {
+      const formattedDate = dayjs(value).format("MM/DD/YYYY");
+      setFormState({ ...formState, [name]: formattedDate });
+    } else {
+      setFormState({ ...formState, [name]: value });
+    }
   };
+
   // for address
   const handleNewInputChange = (e) => {
     setValue(e.target.value);
@@ -194,7 +207,7 @@ export const FormModal = ({ handleClose, handleOpen }) => {
                 required
                 onChange={handleInputChange}
                 placeholder={formState.dateOfSale}
-                value={formState.dateOfSale}
+                value={formatDateToInputValue(formState.dateOfSale)}
               />
               {/* <TextField
                     style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}

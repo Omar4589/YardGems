@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   ApolloClient,
   InMemoryCache,
@@ -17,8 +17,6 @@ import BottomNavBar from "./components/Nav/nav";
 import Home from "./pages/Home/Home";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import SavedListings from "./pages/SavedListings/SavedListings";
-import { ThemeProvider } from "@mui/material/styles";
-import { lightTheme, darkTheme } from "./assets/theme"; // path to your theme.js file
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -42,45 +40,21 @@ const client = new ApolloClient({
 });
 
 function App() {
-  // Initialize darkMode state with the value from local storage
-  const initialDarkMode = localStorage.getItem("darkMode") === "true";
-
-  const [darkMode, setDarkMode] = useState(initialDarkMode);
-
-  const handleThemeChange = () => {
-    console.log("Theme switch toggled");
-    setDarkMode(!darkMode);
-    // Store the user preference in local storage
-    localStorage.setItem("darkMode", darkMode);
-  };
-
-  // Save darkMode value to local storage whenever it changes
-  useEffect(() => {
-    localStorage.setItem("darkMode", darkMode);
-  }, [darkMode]);
-
   return (
     <ApolloProvider client={client}>
       <Router>
-        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-          <Header />
-          <Routes>
-            <Route path="/MyListings" element={<MyListings />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/signup-login" element={<SignUpLoginPage />} />
-            <Route path="/AboutUs" element={<AboutUs />} />
-            <Route path="/ContactUs" element={<ContactUs />} />
-            <Route path="/listings/:listingId" element={<SinglePost />} />
-            <Route path="/SavedListings" element={<SavedListings />} />
-          </Routes>
-          <BottomNavBar
-            lightTheme={lightTheme}
-            darkTheme={darkTheme}
-            handleThemeChange={handleThemeChange}
-            darkMode={darkMode}
-          />
-          <Footer />
-        </ThemeProvider>
+        <Header />
+        <Routes>
+          <Route path="/MyListings" element={<MyListings />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/signup-login" element={<SignUpLoginPage />} />
+          <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/ContactUs" element={<ContactUs />} />
+          <Route path="/listings/:listingId" element={<SinglePost />} />
+          <Route path="/SavedListings" element={<SavedListings />} />
+        </Routes>
+        <BottomNavBar />
+        <Footer />
       </Router>
     </ApolloProvider>
   );
