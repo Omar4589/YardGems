@@ -97,6 +97,13 @@ const MyListings = () => {
   if (loading) {
     return <h2>LOADING...</h2>;
   }
+
+  const sortedUserPosts = userData.userPosts.slice().sort((a, b) => {
+    // Compare the createdAt strings using localeCompare
+    return b.createdAt.localeCompare(a.createdAt);
+  });
+  
+  
   return (
     <>
       {Auth.loggedIn() ? (
@@ -128,7 +135,7 @@ const MyListings = () => {
           </Container>
           <Container sx={{ marginBottom: "3em" }}>
             <Grid container spacing={4}>
-              {userData.userPosts.map((post) => {
+              {sortedUserPosts.map((post) => {
                 return (
                   <Grid key={post._id} item xs={12} sm={6} md={4}>
                     <Card
