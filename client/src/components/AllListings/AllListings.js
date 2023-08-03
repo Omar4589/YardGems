@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_POSTS } from "../../utils/queries";
+import { QUERY_POSTS, USER_QUERY } from "../../utils/queries";
 import {
   Container,
   Card,
@@ -22,15 +22,39 @@ import Auth from "../../utils/auth";
 import { ADD_FAVORITES } from "../../utils/mutations";
 
 const AllListings = () => {
+  const [userFavorites, setUserFavorites] = useState([]);
+
   //Here we create a state for the popOver that populates when a user clicks on a listing
   //to favorite it, but theyre not logged in
   const [popOver, setPopOver] = useState(false);
 
   //Here we query all listings so we can then display them on the page
-  const { data } = useQuery(QUERY_POSTS);
+  const { data: allPostsData } = useQuery(QUERY_POSTS);
+  const { data: userData } = useQuery(USER_QUERY);
 
+  // console.log(userData.me)
   //Variable that holds all listings
-  const AllListingsData = data?.allPost || [];
+  const AllListingsData = allPostsData?.allPost || [];
+  // console.log(AllListingsData);
+
+  useEffect(() => {
+    if (userData?.me) {
+       // Extract the savedFavorites array from the user data
+       const userFavorites = userData.me.savedFavorites || [];
+       // Update the userFavorites state
+       setUserFavorites(userFavorites);
+    } else {
+      setUserFavorites([]);
+    }
+  }, [userData]);
+
+  const AllListingsDataWithFavorites = AllListingsData.map((post) => ({
+    ...post,
+    isFavorited: userFavorites.includes(post._id),
+  }));
+
+  console.log(AllListingsDataWithFavorites);
+
 
   // to see if a card was selected
   const [selectedCardId, setSelectedCardId] = useState(null);
@@ -53,10 +77,19 @@ const AllListings = () => {
     }
     try {
       const { data } = await addFavorites({ variables: { postId: _id } });
+      
+       // Toggle the favorite status by adding or removing the post ID
+       if (userFavorites.includes(_id)) {
+        setUserFavorites(userFavorites.filter((id) => id !== _id));
+      } else {
+        setUserFavorites([...userFavorites, _id]);
+      }
     } catch (err) {
       console.error(err);
     }
   };
+
+ 
 
   return (
     <>
@@ -67,8 +100,8 @@ const AllListings = () => {
           backgroundColor: "#e8f5e9",
         }}
       >
-        <Grid spacing={6} sx={{ paddingTop: "5%", paddingBottom: "5%" }}>
-          {AllListingsData.map((post) => {
+        <Grid spacing={6} sx={{ paddingTop: "5%", paddingBottom: "100%" }}>
+          {AllListingsDataWithFavorites.map((post) => {
             return (
               <Card component="div" sx={{}}>
                 <CardActionArea onClick={() => handleOpen(post)}>
@@ -85,6 +118,7 @@ const AllListings = () => {
                     <Typography>{post.address}</Typography>
                   </CardContent>
                 </CardActionArea>
+                 {/* Use the "isFavorited" property to set the color of the heart icon */}
                 {Auth.loggedIn() ? (
                   <IconButton
                     onClick={() => {
@@ -92,7 +126,7 @@ const AllListings = () => {
                     }}
                     sx={{
                       marginLeft: "75%",
-                      color: "grey",
+                      color: post.isFavorited ? "red" : "grey", // Set the color based on "isFavorited"
                     }}
                     aria-label="favorite"
                   >

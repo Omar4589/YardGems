@@ -68,7 +68,7 @@ export const FormModal = ({ handleClose, handleOpen,listings, setListings }) => 
       const results = await getGeocode({ address: address });
       const { lat, lng } = await getLatLng(results[0]);
       setSelectedLocation({ address, lat, lng });
-      console.log(results, lat, lng);
+      
       clearSuggestions();
     } catch (error) {
       console.error("Error:", error);

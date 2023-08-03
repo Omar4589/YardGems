@@ -87,6 +87,8 @@ const MyListings = () => {
               },
             },
           });
+            //   // Update the local state
+        setListings(updatedUserPosts);
         },
       });
     } catch (err) {
@@ -98,8 +100,10 @@ const MyListings = () => {
     return <h2>LOADING...</h2>;
   }
 
+  //sortedUserPosts contains all posts sorted from most recent to oldest
+  //the slice method returned a copy of an array, we use sort to sort the copied array
   const sortedUserPosts = userData.userPosts.slice().sort((a, b) => {
-    // Compare the createdAt strings using localeCompare
+    // Here we use the localeCompare method to compare both time strings first by date and then by time
     return b.createdAt.localeCompare(a.createdAt);
   });
   
@@ -107,7 +111,7 @@ const MyListings = () => {
   return (
     <>
       {Auth.loggedIn() ? (
-        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9" }}>
+        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9", }}>
           <Container maxWidth="md">
             <Typography
               component="div"
