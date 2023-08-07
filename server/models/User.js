@@ -22,13 +22,13 @@ const userSchema = new Schema(
     userPosts: [
       { // referrances the Post table to the id
         type: Schema.Types.ObjectId,
-        ref: 'Post',
+        ref: 'Listing',
       },
     ],
     savedFavorites: [
       { 
         type: Schema.Types.ObjectId,
-        ref: 'Post',
+        ref: 'Listing',
       },
     ],
   },
@@ -56,7 +56,7 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 // when we query a user, we'll also get another field called `postCount` with the number of saved post a user has created for holding a sell
-userSchema.virtual('postCount').get(function () {
+userSchema.virtual('listingCount').get(function () {
   return this.savedPost.length;
 });
 

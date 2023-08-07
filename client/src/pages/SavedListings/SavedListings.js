@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { USER_QUERY } from "../../utils/queries";
+import { ME_QUERY } from "../../utils/queries";
 import { REMOVE_FAVORITES } from "../../utils/mutations";
 import {
   Container,
@@ -18,7 +18,7 @@ import Auth from "../../utils/auth";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 
 const SavedListings = () => {
-  const { loading, data,  } = useQuery(USER_QUERY);
+  const { loading, data,  } = useQuery(ME_QUERY);
   const userData = data?.me || [];
   const [removeFavorites, { err }] = useMutation(REMOVE_FAVORITES);
 

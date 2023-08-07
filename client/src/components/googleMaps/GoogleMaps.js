@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { QUERY_POSTS } from "../../utils/queries";
+import { QUERY_LISTINGS } from "../../utils/queries";
 import {
   GoogleMap,
   useLoadScript,
@@ -40,7 +40,7 @@ function Map() {
   // selected is for value selected from user to place pin
   const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 });
   const [selected, setSelected] = useState(null);
-  const { loading, data } = useQuery(QUERY_POSTS);
+  const { loading, data } = useQuery(QUERY_LISTINGS);
   const allPost = data?.allPost || [];
 
   const [activeMarker, setActiveMarker] = useState(null); // for window popups

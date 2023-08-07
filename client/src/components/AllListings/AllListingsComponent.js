@@ -28,18 +28,18 @@ export default function AllListings() {
   return (
     <Container sx={styles.container}>
       <Grid spacing={6} sx={styles.grid}>
-        {listings.map((post) => {
+        {listings.map((listing) => {
           return (
             <Card component="div" sx={{}}>
               <CardActionArea>
                 <CardHeader
-                  title={post.postName}
-                  subheader={`Listed by: ${post.postAuthor}`}
+                  title={listing.title}
+                  subheader={`Listed by: ${listing.author}`}
                 />
                 <CardMedia sx={styles.cardMedia} image={image} />
                 <CardContent component="div">
-                  <Typography>Date Of Event: {post.dateOfSale}</Typography>
-                  <Typography>{post.address}</Typography>
+                  <Typography>Date Of Event: {listing.dateOfSale}</Typography>
+                  <Typography>{listing.address}</Typography>
                 </CardContent>
               </CardActionArea>
               {/* Use the "isFavorited" property to set the color of the heart icon */}
@@ -47,7 +47,7 @@ export default function AllListings() {
                 <IconButton
                   sx={
                     (styles.iconButton,
-                    { color: post.isFavorited ? "red" : "grey" }) // Set the color based on "isFavorited"
+                    { color: listing.isFavorited ? "red" : "grey" }) // Set the color based on "isFavorited"
                   }
                   aria-label="favorite"
                 >

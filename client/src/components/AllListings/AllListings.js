@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_POSTS, USER_QUERY } from "../../utils/queries";
+import { QUERY_LISTINGS, ME_QUERY } from "../../utils/queries";
 
 import {
   Container,
@@ -43,8 +43,8 @@ const AllListings = () => {
 
   //------QUERIES-----//
 
-  const { data: allListingsData } = useQuery(QUERY_POSTS);
-  const { loading, data: loggedInUserData } = useQuery(USER_QUERY);
+  const { data: allListingsData } = useQuery(QUERY_LISTINGS);
+  const { loading, data: loggedInUserData } = useQuery(ME_QUERY);
 
   //Variable that holds all listings, an array of objects containing listings props
   const allListings = allListingsData?.allPost || [];

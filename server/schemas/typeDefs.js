@@ -5,18 +5,18 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    userPosts: [Post]
-    savedFavorites: [Post]
+    userPosts: [Listing]
+    savedFavorites: [Listing]
   }
 
-  type Post {
+  type Listing {
     _id: ID
-    postDescription: String
+    description: String
     address: String
     dateOfSale: String
     image: String
-    postAuthor: String
-    postName: String
+    author: String
+    title: String
     lat: Float
     lng: Float
     createdAt: String
@@ -31,18 +31,18 @@ const typeDefs = gql`
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
     me: User
     allUsers: [User]
-    allPost: [Post]
-    post(listingId: ID!): Post
+    allListings: [Listing]
+    listing(listingId: ID!): Listing
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     createUser(username: String!, email: String!, password: String!): Auth
-    addPost(postDescription: String, address: String, dateOfSale: String, image: String, postName: String, lat: Float, lng: Float): Post
-    editPost(id: ID, postDescription: String, address: String, dateOfSale: String, image: String, postName: String, lat: Float, lng: Float): Post
-    removePost(postId: ID!): Post
-    addFavorites(postId: ID!): Post
-    removeFavorites(postId: ID!): Post
+    addListing(description: String, address: String, dateOfSale: String, image: String, title: String, lat: Float, lng: Float): Listing
+    editListing(id: ID, description: String, address: String, dateOfSale: String, image: String, title: String, lat: Float, lng: Float): Listing
+    removeListing(listingId: ID!): Listing
+    addFavorites(listingId: ID!): Listing
+    removeFavorites(listingId: ID!): Listing
   }
 `;
 

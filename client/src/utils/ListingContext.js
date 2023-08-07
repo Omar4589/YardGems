@@ -1,7 +1,7 @@
 //--------------------------------IMPORTS----------------------------------//
 import React, { useEffect, useState, useContext, createContext } from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_POSTS, USER_QUERY } from "./queries";
+import { useQuery } from "@apollo/client";
+import { QUERY_LISTINGS, ME_QUERY } from "./queries";
 
 //Here we create the context
 const ListingContext = createContext();
@@ -16,29 +16,27 @@ export const ListingProvider = ({ children }) => {
 
   //-----------------QUERIES-----------------//
 
-  const { data: allListingsData } = useQuery(QUERY_POSTS);
+  const { data: allListingsData } = useQuery(QUERY_LISTINGS);
 
-  const { loading, data: loggedInUserData } = useQuery(USER_QUERY);
+  const { data: loggedInUserData } = useQuery(ME_QUERY);
   //Here we set the user data to a variable
   const loggedInUser = loggedInUserData?.me || [];
 
   //-----------------HOOKS-------------------//
 
-  //This useEffect hook runs when component mounts and
-  //sets listings state to initial listings query
+  //This useEffect hook runs when component mounts and sets listings state to initial listings query
   useEffect(() => {
     // Variable that holds all listings, an array of objects containing listings props
-    const allListings = allListingsData?.allPost || [];
+    const allListings = allListingsData?.allListings || [];
 
     setListings(allListings);
   }, []);
 
   // This useEffect hook updates the listings state to render any
-  // new listings that are added, we set allListingsData as a dependency so that
-  //this hook runs when there is a change to allListingsData
+  // new listings that are added, we set allListingsData as a dependency so that this hook runs when there is a change to allListingsData
   useEffect(() => {
     // Variable that holds all listings, an array of objects containing listings props
-    const allListings = allListingsData?.allPost || [];
+    const allListings = allListingsData?.allListings || [];
 
     setListings(allListings);
   }, [allListingsData]);

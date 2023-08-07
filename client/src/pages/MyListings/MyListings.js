@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { USER_QUERY } from "../../utils/queries";
-import { REMOVE_POST } from "../../utils/mutations";
+import { ME_QUERY } from "../../utils/queries";
+import { REMOVE_LISTING } from "../../utils/mutations";
 import {
   Container,
   Card,
@@ -22,7 +22,7 @@ import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 
 const MyListings = () => {
   //Here we are use the user query that returns the logged in users data
-  const { loading, data } = useQuery(USER_QUERY);
+  const { loading, data } = useQuery(ME_QUERY);
 
   //Here we extract the data from the above query
   const userData = data?.me || [];
@@ -46,7 +46,7 @@ const MyListings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   //Here we are setting the mutation that deletes a post
-  const [removePost, { error }] = useMutation(REMOVE_POST);
+  const [removeListing, { error }] = useMutation(REMOVE_LISTING);
 
   //----------functions to handle the CREATE listing modal ---------\\
   const handleOpenModal = () => {
@@ -59,18 +59,18 @@ const MyListings = () => {
 
   //----------functions to handle the DELETE listing ---------\\
 
-  const deletePostSubmit = async (_id) => {
+  const deleteListing = async (_id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
       return false;
     }
     try {
-      const { removedPost } = await removePost({
-        variables: { postId: _id },
-        update: (cache, { data: { removePost } }) => {
+      const { removedListing } = await removeListing({
+        variables: { listingId: _id },
+        update: (cache, { data: { removeListing } }) => {
           // Read the existing cached data for the current user
-          const cachedData = cache.readQuery({ query: USER_QUERY });
+          const cachedData = cache.readQuery({ query: ME_QUERY });
 
           // Filter out the deleted post from the cached userPosts
           const updatedUserPosts = cachedData.me.userPosts.filter(
@@ -79,7 +79,7 @@ const MyListings = () => {
 
           // Update the cached data without the deleted post
           cache.writeQuery({
-            query: USER_QUERY,
+            query: ME_QUERY,
             data: {
               me: {
                 ...cachedData.me,
@@ -147,7 +147,7 @@ const MyListings = () => {
                       sx={{ maxWidth: 500, marginBottom: "2em" }}
                     >
                       <CardHeader
-                        title={post.postName}
+                        title={post.title}
                         subheader={post.createdAt}
                       />
                       <CardMedia
@@ -164,7 +164,7 @@ const MyListings = () => {
                           variant="body2"
                           color="text.secondary"
                         >
-                          {post.postDescription}
+                          {post.description}
                           <Typography
                             component="div"
                             variant="body2"
@@ -186,7 +186,7 @@ const MyListings = () => {
                           </Button>
                         </Link>
                         <Button
-                          onClick={() => deletePostSubmit(post._id)}
+                          onClick={() => deleteListing(post._id)}
                           size="small"
                           color="error"
                           variant="outlined"

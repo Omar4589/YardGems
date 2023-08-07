@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const USER_QUERY = gql`
+export const ME_QUERY = gql`
 query userMe {
     me {
       _id
@@ -8,54 +8,54 @@ query userMe {
       email
       userPosts {
         _id
-       postDescription
+       description
        address
        dateOfSale
        image
-       postName
+       title
        lat
        lng
        createdAt
       }
       savedFavorites {
         _id
-        postDescription
+        description
         address
         dateOfSale
         image
-        postAuthor
-        postName
+        author
+        title
       }
     }
   }
 `;
 
-export const QUERY_POSTS = gql`
-  query getPosts {
-    allPost {
+export const QUERY_LISTINGS = gql`
+  query getListings {
+    allListings {
       _id
-      postDescription
+      description
       address
       dateOfSale
       image
-      postAuthor
-      postName
+      author
+      title
       lat
       lng
       createdAt
     }
   }
 `;
-export const QUERY_SINGLE_POST= gql`
-  query getSinglePost($listingId: ID!) {
+export const QUERY_SINGLE_LISTING= gql`
+  query getSingleListing($listingId: ID!) {
     post(listingId: $listingId) {
       _id
-      postDescription
+      description
       address
       dateOfSale
       image
-      postAuthor
-      postName
+      author
+      title
       lat
       lng
       createdAt

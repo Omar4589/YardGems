@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_SINGLE_POST } from "../../utils/queries";
-import { EDIT_POST } from "../../utils/mutations";
+import { QUERY_SINGLE_LISTING } from "../../utils/queries";
+import { EDIT_LISTING } from "../../utils/mutations";
 import { Container, Box, Grid, TextField, Button } from "@mui/material/";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -22,10 +22,10 @@ const SinglePost = () => {
   // Use `useParams()` to retrieve value of the route parameter `:listingId`
   const { listingId } = useParams();
 
-  const [editPost, { error }] = useMutation(EDIT_POST);
+  const [editPost, { error }] = useMutation(EDIT_LISTING);
 
   //------------------useQuery for a single post -------\\
-   const { loading, data: queryData } = useQuery(QUERY_SINGLE_POST, {
+   const { loading, data: queryData } = useQuery(QUERY_SINGLE_LISTING, {
     variables: { listingId: listingId },  });
 
   // data from useQuery

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
-import { ADD_POST } from "../../utils/mutations";
+import { ADD_LISTING } from "../../utils/mutations";
 import { TextField, Container } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { style } from "./modalStyles";
@@ -17,7 +17,7 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import dayjs from "dayjs";
-import { USER_QUERY } from "../../utils/queries";
+import { ME_QUERY } from "../../utils/queries";
 
 //------------------Create Listing Modal--------------\\
 export const FormModal = ({
@@ -28,13 +28,13 @@ export const FormModal = ({
 }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-  const [addPost, { error }] = useMutation(ADD_POST);
+  const [addListing, { error }] = useMutation(ADD_LISTING);
 
   const [formState, setFormState] = useState({
-    postDescription: "",
+    description: "",
     dateOfSale: "",
     image: "",
-    postName: "",
+    author: "",
   });
   const {
     ready,
@@ -81,27 +81,27 @@ export const FormModal = ({
   };
 
   // allows user to create a new Post
-  const newPostSubmit = async (e) => {
+  const submitNewListing = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await addPost({
+      const { data } = await addListing({
         variables: {
           ...formState,
           address: selectedLocation.address,
           lat: selectedLocation.lat,
           lng: selectedLocation.lng,
         },
-        update: (cache, { data: { addPost } }) => {
+        update: (cache, { data: { addListing } }) => {
           // Read the existing cached data for the current user
-          const cachedData = cache.readQuery({ query: USER_QUERY });
+          const cachedData = cache.readQuery({ query: ME_QUERY });
 
           // Update the cached data with the new listing
           cache.writeQuery({
-            query: USER_QUERY,
+            query: ME_QUERY,
             data: {
               me: {
                 ...cachedData.me,
-                userPosts: [...cachedData.me.userPosts, addPost],
+                userPosts: [...cachedData.me.userPosts, addListing],
               },
             },
           });
@@ -109,16 +109,16 @@ export const FormModal = ({
       });
     
       // Assuming the response contains the newly created post
-      const newPost = data.addPost;
+      const newListing = data.addListing;
 
       // Update the list of posts in the parent component (MyListings)
-      setListings([...listings, newPost]);
+      setListings([...listings, newListing]);
 
       setFormState({
-        postDescription: "",
+        description: "",
         dateOfSale: "",
         image: "",
-        postName: "",
+        author: "",
       });
       // Reset the address input field to an empty string
       setValue("");
@@ -154,7 +154,7 @@ export const FormModal = ({
             </Typography>
             <Box
               component="form"
-              onSubmit={newPostSubmit}
+              onSubmit={submitNewListing}
               sx={{ marginLeft: "25%" }}
             >
               <div>
@@ -202,11 +202,11 @@ export const FormModal = ({
                   fontSize: "1em",
                 }}
                 label="Name"
-                name="postName"
+                name="author"
                 required
                 onChange={handleInputChange}
-                placeholder={formState.postName}
-                value={formState.postName}
+                placeholder={formState.author}
+                value={formState.author}
               />
               <TextField
                 style={{
@@ -217,7 +217,7 @@ export const FormModal = ({
                   fontSize: "1em",
                 }}
                 label="Description"
-                name="postDescription"
+                name="description"
                 required
                 multiline
                 onChange={handleInputChange}
