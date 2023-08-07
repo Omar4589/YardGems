@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_POSTS, USER_QUERY } from "../../utils/queries";
+
 import {
   Container,
   Card,
@@ -21,55 +22,44 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { ADD_FAVORITES } from "../../utils/mutations";
 
+//---------Start of component-----//
 const AllListings = () => {
+  //---------STATES--------//
+
+  //State for Listings
+  const [listings, setListings] = useState([]);
+
+  //console.log(listings)
+
+  //State for user favorites
   const [userFavorites, setUserFavorites] = useState([]);
 
-  //Here we create a state for the popOver that populates when a user clicks on a listing
-  //to favorite it, but theyre not logged in
+  //State for 'Please login' pop over
+  //populates when a user clicks on a listing to favorite it, but theyre not logged in
   const [popOver, setPopOver] = useState(false);
 
-  //Here we query all listings so we can then display them on the page
-  const { data: allPostsData } = useQuery(QUERY_POSTS);
-  const { data: userData } = useQuery(USER_QUERY);
-
-  // console.log(userData.me)
-  //Variable that holds all listings
-  const AllListingsData = allPostsData?.allPost || [];
-  // console.log(AllListingsData);
-
-  useEffect(() => {
-    if (userData?.me) {
-       // Extract the savedFavorites array from the user data
-       const userFavorites = userData.me.savedFavorites || [];
-       // Update the userFavorites state
-       setUserFavorites(userFavorites);
-    } else {
-      setUserFavorites([]);
-    }
-  }, [userData]);
-
-  const AllListingsDataWithFavorites = AllListingsData.map((post) => ({
-    ...post,
-    isFavorited: userFavorites.includes(post._id),
-  }));
-
-  console.log(AllListingsDataWithFavorites);
-
-
-  // to see if a card was selected
+  //State for card modal
   const [selectedCardId, setSelectedCardId] = useState(null);
 
+  //------QUERIES-----//
+
+  const { data: allListingsData } = useQuery(QUERY_POSTS);
+  const { loading, data: loggedInUserData } = useQuery(USER_QUERY);
+
+  //Variable that holds all listings, an array of objects containing listings props
+  const allListings = allListingsData?.allPost || [];
+  //console.log(allListings);
+
+  const loggedInUser = loggedInUserData?.me || [];
+  //console.log(loggedInUser)
+
+
+  //-----------MUTATIONS----------//
   const [addFavorites, { error }] = useMutation(ADD_FAVORITES);
 
-  // handles the modal to pop up when a certain card is selected
-  const handleOpen = (post) => setSelectedCardId(post);
-  const handleClose = () => setSelectedCardId(false);
-
-  // handles the favorite button to close when screen is clicked on
-  const handleClosePop = () => setPopOver(false);
-
+  //This function handles adding post to user's 'savedFavorites'
   const addToFavorites = async (_id) => {
-    console.log(_id);
+    //console.log(_id);
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -77,9 +67,9 @@ const AllListings = () => {
     }
     try {
       const { data } = await addFavorites({ variables: { postId: _id } });
-      
-       // Toggle the favorite status by adding or removing the post ID
-       if (userFavorites.includes(_id)) {
+
+      // Toggle the favorite status by adding or removing the post ID
+      if (userFavorites.includes(_id)) {
         setUserFavorites(userFavorites.filter((id) => id !== _id));
       } else {
         setUserFavorites([...userFavorites, _id]);
@@ -89,7 +79,26 @@ const AllListings = () => {
     }
   };
 
- 
+  //This useEffect hook updates the listings state to render any
+  //new listings that are added
+  useEffect(() => {
+    setListings(allListings);
+  }, []);
+
+  // const AllListingsDataWithFavorites = allListings.map((post) => ({
+  //   ...post,
+  //   isFavorited: userFavorites.includes(post._id),
+  // }));
+
+  //console.log(AllListingsDataWithFavorites);
+
+  //Opens modal when listings is clicked on
+  const openModal = (post) => setSelectedCardId(post);
+  //Closes modal when listings is clicked on
+  const closeModal = () => setSelectedCardId(false);
+
+  //Closes pop over message - 'Please log in'
+  const closePopOver = () => setPopOver(false);
 
   return (
     <>
@@ -101,10 +110,10 @@ const AllListings = () => {
         }}
       >
         <Grid spacing={6} sx={{ paddingTop: "5%", paddingBottom: "100%" }}>
-          {AllListingsDataWithFavorites.map((post) => {
+          {allListings.map((post) => {
             return (
               <Card component="div" sx={{}}>
-                <CardActionArea onClick={() => handleOpen(post)}>
+                <CardActionArea onClick={() => openModal(post)}>
                   <CardHeader
                     title={post.postName}
                     subheader={`Listed by: ${post.postAuthor}`}
@@ -118,7 +127,7 @@ const AllListings = () => {
                     <Typography>{post.address}</Typography>
                   </CardContent>
                 </CardActionArea>
-                 {/* Use the "isFavorited" property to set the color of the heart icon */}
+                {/* Use the "isFavorited" property to set the color of the heart icon */}
                 {Auth.loggedIn() ? (
                   <IconButton
                     onClick={() => {
@@ -143,7 +152,7 @@ const AllListings = () => {
                 )}
                 <Popover
                   open={popOver}
-                  onClose={handleClosePop}
+                  onClose={closePopOver}
                   anchorOrigin={{
                     vertical: "bottom",
                     horizontal: "left",
@@ -157,11 +166,11 @@ const AllListings = () => {
             );
           })}
         </Grid>
-        {/* below is the modal  */}
+        {/* MODAL BELOW */}
         {selectedCardId && (
           <Modal
             open={Boolean(selectedCardId)}
-            onClose={handleClose}
+            onClose={closeModal}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
@@ -199,6 +208,7 @@ const AllListings = () => {
             </Box>
           </Modal>
         )}
+        {/* END OF MODAL */}
       </Container>
     </>
   );

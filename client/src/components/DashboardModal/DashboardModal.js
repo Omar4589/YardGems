@@ -20,7 +20,12 @@ import dayjs from "dayjs";
 import { USER_QUERY } from "../../utils/queries";
 
 //------------------Create Listing Modal--------------\\
-export const FormModal = ({ handleClose, handleOpen,listings, setListings }) => {
+export const FormModal = ({
+  handleClose,
+  handleOpen,
+  listings,
+  setListings,
+}) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const [addPost, { error }] = useMutation(ADD_POST);
@@ -68,7 +73,7 @@ export const FormModal = ({ handleClose, handleOpen,listings, setListings }) => 
       const results = await getGeocode({ address: address });
       const { lat, lng } = await getLatLng(results[0]);
       setSelectedLocation({ address, lat, lng });
-      
+
       clearSuggestions();
     } catch (error) {
       console.error("Error:", error);
@@ -89,7 +94,7 @@ export const FormModal = ({ handleClose, handleOpen,listings, setListings }) => 
         update: (cache, { data: { addPost } }) => {
           // Read the existing cached data for the current user
           const cachedData = cache.readQuery({ query: USER_QUERY });
-  
+
           // Update the cached data with the new listing
           cache.writeQuery({
             query: USER_QUERY,
@@ -102,15 +107,12 @@ export const FormModal = ({ handleClose, handleOpen,listings, setListings }) => 
           });
         },
       });
-      console.log(data);
+    
+      // Assuming the response contains the newly created post
+      const newPost = data.addPost;
 
-
-// Assuming the response contains the newly created post
-const newPost = data.addPost;
-
-// Update the list of posts in the parent component (MyListings)
-setListings([...listings, newPost]);
-
+      // Update the list of posts in the parent component (MyListings)
+      setListings([...listings, newPost]);
 
       setFormState({
         postDescription: "",
@@ -118,8 +120,8 @@ setListings([...listings, newPost]);
         image: "",
         postName: "",
       });
-       // Reset the address input field to an empty string
-    setValue("");
+      // Reset the address input field to an empty string
+      setValue("");
       handleClose(); // closing the modal
     } catch (err) {
       console.error(err);
