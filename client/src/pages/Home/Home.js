@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import GoogleMaps from "../../components/googleMaps/GoogleMaps";
 import styles from "./styles";
-import AllListings from "../../components/AllListings/AllListings";
+import AllListingsComponent from "../../components/AllListings/AllListingsComponent";
 
 const Home = () => {
   return (
@@ -11,7 +11,7 @@ const Home = () => {
       </Box>
       
       <Box sx={{ ...styles.listings }}>
-        <AllListings />
+        <AllListingsComponent />
         </Box>
     </Box>
   );

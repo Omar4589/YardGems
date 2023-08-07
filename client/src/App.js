@@ -17,6 +17,7 @@ import BottomNavBar from "./components/Nav/nav";
 import Home from "./pages/Home/Home";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import SavedListings from "./pages/SavedListings/SavedListings";
+import { ListingProvider } from "./utils/ListingContext";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -42,20 +43,22 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/MyListings" element={<MyListings />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/signup-login" element={<SignUpLoginPage />} />
-          <Route path="/AboutUs" element={<AboutUs />} />
-          <Route path="/ContactUs" element={<ContactUs />} />
-          <Route path="/listings/:listingId" element={<SinglePost />} />
-          <Route path="/SavedListings" element={<SavedListings />} />
-        </Routes>
-        <BottomNavBar />
-        <Footer />
-      </Router>
+      <ListingProvider>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/MyListings" element={<MyListings />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/signup-login" element={<SignUpLoginPage />} />
+            <Route path="/AboutUs" element={<AboutUs />} />
+            <Route path="/ContactUs" element={<ContactUs />} />
+            <Route path="/listings/:listingId" element={<SinglePost />} />
+            <Route path="/SavedListings" element={<SavedListings />} />
+          </Routes>
+          <BottomNavBar />
+          <Footer />
+        </Router>
+      </ListingProvider>
     </ApolloProvider>
   );
 }
