@@ -1,3 +1,4 @@
+//---------------------------IMPORTS--------------------------------//
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -6,8 +7,6 @@ import {
   Typography,
   CardContent,
   CardHeader,
-  Modal,
-  Box,
   IconButton,
   Popover,
   CardActionArea,
@@ -17,36 +16,27 @@ import image from "../../assets/yardsale.jpg"; // hard coding for now
 import { styles } from "./styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
-
 import { useListingContext } from "../../utils/ListingContext";
 
+//---------------------------START OF COMPONENT----------------------//
 export default function AllListings() {
-  // Assign student related variables from our custom hook
+  // Here we destructure the context from useListingContext, in this case,
+  //it is the listings that we query using GraphQL and the loggedInUser's info.
   const { listings, loggedInUser } = useListingContext();
 
-  console.log(listings);
-
+  //---------------------------RETURN STATEMENT-------------------------//
   return (
-    <Container
-      sx={{
-        maxHeight: "100vh",
-        overflow: "auto",
-        backgroundColor: "#e8f5e9",
-      }}
-    >
-      <Grid spacing={6} sx={{ paddingTop: "5%", paddingBottom: "100%" }}>
+    <Container sx={styles.container}>
+      <Grid spacing={6} sx={styles.grid}>
         {listings.map((post) => {
           return (
             <Card component="div" sx={{}}>
-              <CardActionArea >
+              <CardActionArea>
                 <CardHeader
                   title={post.postName}
                   subheader={`Listed by: ${post.postAuthor}`}
                 />
-                <CardMedia
-                  sx={{ height: 140, paddingTop: "56.2%" }}
-                  image={image}
-                />
+                <CardMedia sx={styles.cardMedia} image={image} />
                 <CardContent component="div">
                   <Typography>Date Of Event: {post.dateOfSale}</Typography>
                   <Typography>{post.address}</Typography>
@@ -55,21 +45,16 @@ export default function AllListings() {
               {/* Use the "isFavorited" property to set the color of the heart icon */}
               {Auth.loggedIn() ? (
                 <IconButton
-                 
-                  sx={{
-                    marginLeft: "75%",
-                    color: post.isFavorited ? "red" : "grey", // Set the color based on "isFavorited"
-                  }}
+                  sx={
+                    (styles.iconButton,
+                    { color: post.isFavorited ? "red" : "grey" }) // Set the color based on "isFavorited"
+                  }
                   aria-label="favorite"
                 >
                   <FavoriteIcon />
                 </IconButton>
               ) : (
-                <IconButton
-                  
-                  sx={{ marginLeft: "75%" }}
-                  aria-label="favorite"
-                >
+                <IconButton sx={styles.iconButton} aria-label="favorite">
                   <FavoriteIcon sx={{ color: "grey" }} />
                 </IconButton>
               )}
