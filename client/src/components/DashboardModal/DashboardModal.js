@@ -31,6 +31,7 @@ export const FormModal = ({
   const [addListing, { error }] = useMutation(ADD_LISTING);
 
   const [formState, setFormState] = useState({
+    title:"",
     description: "",
     dateOfSale: "",
     image: "",
@@ -115,6 +116,7 @@ export const FormModal = ({
       setListings([...listings, newListing]);
 
       setFormState({
+        title:"",
         description: "",
         dateOfSale: "",
         image: "",
@@ -201,12 +203,12 @@ export const FormModal = ({
                   marginTop: "1em",
                   fontSize: "1em",
                 }}
-                label="Name"
-                name="author"
+                label="Listing Title"
+                name="title"
                 required
                 onChange={handleInputChange}
-                placeholder={formState.author}
-                value={formState.author}
+                placeholder={formState.title}
+                value={formState.title}
               />
               <TextField
                 style={{

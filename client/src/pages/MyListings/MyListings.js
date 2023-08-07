@@ -32,7 +32,7 @@ const MyListings = () => {
   //Here we create a state to track all listings being shown on the page
   const [listings, setListings] = useState(userData.userPosts || []);
 
-  //console.log(listings);
+  console.log(listings);
 
   //this useEffect hook handles updating the listings state when the data from the query is updated
   useEffect(() => {
