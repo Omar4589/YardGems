@@ -22,7 +22,7 @@ import { useListingContext } from "../../utils/ListingContext";
 export default function AllListings() {
   // Here we destructure the context from useListingContext, in this case,
   //it is the listings that we query using GraphQL and the loggedInUser's info.
-  const { listings } = useListingContext();
+  const { listings, setListings } = useListingContext();
 
   //---------------------------RETURN STATEMENT-------------------------//
   return (

@@ -44,7 +44,7 @@ export const ListingProvider = ({ children }) => {
   // The value prop expects an initial state object, in this case
   //the initial state is the listings state, we also pass in the loggedInUser's info
   return (
-    <ListingContext.Provider value={{ listings, loggedInUser }}>
+    <ListingContext.Provider value={{ listings, setListings, loggedInUser }}>
       {children}
     </ListingContext.Provider>
   );
