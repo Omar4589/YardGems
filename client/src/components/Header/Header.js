@@ -39,6 +39,7 @@ const Header = () => {
       <Box sx={{ ...styles.box }}>
         <Link
           component={RouterLink}
+          onClick={handleRefetch}
           to="/MyListings"
           sx={{ ...styles.myListingsLink }}
         >
@@ -46,6 +47,7 @@ const Header = () => {
         </Link>
         <Link
           component={RouterLink}
+          onClick={handleRefetch}
           to="/SavedListings"
           sx={{ ...styles.savedListingLink }}
         >
@@ -97,7 +99,12 @@ const Header = () => {
       )}
 
       <Box sx={{ ...styles.box }}>
-        <Link component={RouterLink} to="/" sx={{ ...styles.homeLink }}>
+        <Link
+          component={RouterLink}
+          to="/"
+          sx={{ ...styles.homeLink }}
+          onClick={handleRefetch}
+        >
           Home
         </Link>
 
