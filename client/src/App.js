@@ -47,13 +47,13 @@ function App() {
         <Router>
           <Header />
           <Routes>
-            <Route path="/MyListings" element={<MyListings />} />
-            <Route path="/" element={<Home />} />
             <Route path="/signup-login" element={<SignUpLoginPage />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/MyListings" element={<MyListings />} />
+            <Route path="/SavedListings" element={<SavedListings />} />
+            <Route path="/listings/:listingId" element={<SinglePost />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
-            <Route path="/listings/:listingId" element={<SinglePost />} />
-            <Route path="/SavedListings" element={<SavedListings />} />
           </Routes>
           <BottomNavBar />
           <Footer />
