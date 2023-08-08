@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import GoogleMapsComponent from "../../components/GoogleMaps/GoogleMaps";
+import GoogleMaps from "../../components/googleMaps/GoogleMaps";
 import styles from "./styles";
 import AllListingsComponent from "../../components/AllListings/AllListingsComponent";
 
@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <Box sx={{ ...styles.mainContainer }}>
       <Box sx={{ ...styles.map }}>
-        <GoogleMapsComponent />
+        <GoogleMaps />
       </Box>
 
       <Box sx={{ ...styles.listings }}>
