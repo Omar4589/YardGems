@@ -48,7 +48,7 @@ export const QUERY_LISTINGS = gql`
 `;
 export const QUERY_SINGLE_LISTING= gql`
   query getSingleListing($listingId: ID!) {
-    post(listingId: $listingId) {
+    listing(listingId: $listingId) {
       _id
       description
       address

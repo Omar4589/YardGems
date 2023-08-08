@@ -41,6 +41,9 @@ export const ListingProvider = ({ children }) => {
     setListings(allListings);
   }, [allListingsData]);
 
+
+//---------------RETURN STATEMENT-------------------//
+
   // The value prop expects an initial state object, in this case
   //the initial state is the listings state, we also pass in the loggedInUser's info
   return (
