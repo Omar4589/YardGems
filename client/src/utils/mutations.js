@@ -55,7 +55,7 @@ mutation editListing($id: ID, $description: String,  $address: String, $dateOfSa
 }
 `
 export const REMOVE_LISTING = gql`
-  mutation removeListing($listingtId: ID!) {
+  mutation removeListing($listingId: ID!) {
     removeListing(listingId: $listingId) {
       _id
       description

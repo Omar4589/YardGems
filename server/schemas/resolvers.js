@@ -71,10 +71,10 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    removeListing: async (parent, { ListingId }, context) => {
+    removeListing: async (parent, { listingId }, context) => {
       if (context.user) {
         const removeListing = await Listing.findOneAndDelete({
-          _id: ListingId,
+          _id: listingId,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -100,10 +100,10 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    addFavorites: async (parent, { ListingId }, context) => {
+    addFavorites: async (parent, { listingId }, context) => {
       if (context.user) {
         const favoritedListing = await Listing.findOne({
-          _id: ListingId,
+          _id: listingId,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -114,10 +114,10 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    removeFavorites: async (parent, { ListingId }, context) => {
+    removeFavorites: async (parent, { listingId }, context) => {
       if (context.user) {
         const removeFromFavorites = await Listing.findOne({
-          _id: ListingId,
+          _id: listingId,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },

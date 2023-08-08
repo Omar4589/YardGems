@@ -8,7 +8,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MyListings from "./pages/MyListings/MyListings";
-import SignUpLoginPage from "./pages/SignUpLogin";
+import SignUpLoginPage from "./pages/SignUpLogin/SignUpLogin";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import AboutUs from "./pages/AboutUs/AboutUs";
@@ -34,6 +34,9 @@ const authLink = setContext((_, { headers }) => {
     },
   };
 });
+
+
+
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),

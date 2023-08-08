@@ -1,3 +1,4 @@
+//-----------------IMPORTS-----------------------//
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { ME_QUERY } from "../../utils/queries";
@@ -20,44 +21,35 @@ import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 
+//-----------------START OF COMPONENT-----------------------//
 const MyListings = () => {
+  //-----------------STATE---------------//
+  //Here we create a state to track all listings being shown on the page
+  const [listings, setListings] = useState([]);
+
+  //Here we create a state for the modal , we set it to false because we start with it closed
+  //True means the modal is displayed on the page
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  //-----------------QUERIES--------------//
   //Here we are use the user query that returns the logged in users data
   const { loading, data } = useQuery(ME_QUERY);
 
   //Here we extract the data from the above query
   const userData = data?.me || [];
 
-  //console.log(userData);
-
-  //Here we create a state to track all listings being shown on the page
-  const [listings, setListings] = useState(userData.userPosts || []);
-
-  console.log(listings);
-
+  //-----------------HOOKS-----------------//
   //this useEffect hook handles updating the listings state when the data from the query is updated
   useEffect(() => {
-    if (data && data.me) {
-      setListings(data.me.userPosts);
-    }
-  }, [data]);
+    const userListings = userData?.userPosts || [];
 
-  //Here we create a state for the modal , we set it to false because we start with it closed
-  //True means the modal is displayed on the page
-  const [isModalOpen, setIsModalOpen] = useState(false);
+    setListings(userListings);
+  }, [userData.userPosts]);
+
+  //-----------------MUTATIONS------------//
 
   //Here we are setting the mutation that deletes a post
   const [removeListing, { error }] = useMutation(REMOVE_LISTING);
-
-  //----------functions to handle the CREATE listing modal ---------\\
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  //----------functions to handle the DELETE listing ---------\\
 
   const deleteListing = async (_id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -66,7 +58,7 @@ const MyListings = () => {
       return false;
     }
     try {
-      const { removedListing } = await removeListing({
+      const listing = await removeListing({
         variables: { listingId: _id },
         update: (cache, { data: { removeListing } }) => {
           // Read the existing cached data for the current user
@@ -74,7 +66,7 @@ const MyListings = () => {
 
           // Filter out the deleted post from the cached userPosts
           const updatedUserPosts = cachedData.me.userPosts.filter(
-            (post) => post._id !== _id
+            (listing) => listing._id !== _id
           );
 
           // Update the cached data without the deleted post
@@ -87,13 +79,22 @@ const MyListings = () => {
               },
             },
           });
-            //   // Update the local state
-        setListings(updatedUserPosts);
+          //   // Update the local state
+          setListings(updatedUserPosts);
         },
       });
     } catch (err) {
       console.error(err);
     }
+  };
+
+  //----------MODAL HANDLERS ---------\\
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   if (loading) {
@@ -102,16 +103,17 @@ const MyListings = () => {
 
   //sortedUserPosts contains all posts sorted from most recent to oldest
   //the slice method returned a copy of an array, we use sort to sort the copied array
-  const sortedUserPosts = userData.userPosts.slice().sort((a, b) => {
-    // Here we use the localeCompare method to compare both time strings first by date and then by time
-    return b.createdAt.localeCompare(a.createdAt);
-  });
-  
-  
+  const sortedUserPosts = listings
+    ? listings.slice().sort((a, b) => {
+        return b.createdAt.localeCompare(a.createdAt);
+      })
+    : [];
+
+    
   return (
     <>
       {Auth.loggedIn() ? (
-        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9", }}>
+        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9" }}>
           <Container maxWidth="md">
             <Typography
               component="div"
@@ -121,9 +123,9 @@ const MyListings = () => {
               gutterBottom
               style={{ fontSize: "3rem" }}
             >
-              {userData.userPosts.length
-                ? `You have ${userData.userPosts.length} garage sale ${
-                    userData.userPosts.length === 1 ? "listing" : "listings"
+              {listings.length
+                ? `You have ${listings.length} garage sale ${
+                    listings.length === 1 ? "listing" : "listings"
                   }:`
                 : "You have no saved listings!"}
             </Typography>

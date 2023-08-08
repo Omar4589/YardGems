@@ -1,5 +1,5 @@
 //---------------------------IMPORTS--------------------------------//
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Card,
@@ -10,8 +10,6 @@ import {
   IconButton,
   Popover,
   CardActionArea,
-  Modal,
-  Box,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
@@ -19,6 +17,7 @@ import { styles } from "./styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { useListingContext } from "../../utils/ListingContext";
+import ListingModalComponent from "../ListingModal/ListingModalComponent";
 
 //---------------------------START OF COMPONENT----------------------//
 export default function AllListings() {
@@ -100,49 +99,13 @@ export default function AllListings() {
         })}
       </Grid>
 
-      {/* MODAL BELOW */}
       {listingModal && (
-        <Modal
-          open={Boolean(listingModal)}
-          onClose={closeModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={styles.modalPopUp}>
-            <Card component="div" sx={{ maxWidth: "100%" }}>
-              <CardHeader
-                title={listingModal.title}
-                subheader={`Post By: ${listingModal.author}`}
-              />
-              <CardMedia
-                sx={{ height: 140, paddingTop: "56.2%" }}
-                image={image}
-              />
-              <CardContent component="div">
-                <Typography component="span" gutterBottom variant="h5">
-                  Date Of Event: {listingModal.dateOfSale}
-                </Typography>
-                <Typography
-                  component="div"
-                  variant="body2"
-                  color="text.secondary"
-                >
-                  {listingModal.description}
-                  <Typography
-                    component="div"
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    <br></br>
-                    {listingModal.address}
-                  </Typography>
-                </Typography>
-              </CardContent>
-            </Card>
-          </Box>
-        </Modal>
+        <ListingModalComponent
+          listingModal={listingModal}
+          closeModal={closeModal}
+          image={image}
+        />
       )}
-      {/* END OF MODAL */}
     </Container>
   );
 }

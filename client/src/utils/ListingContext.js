@@ -25,15 +25,9 @@ export const ListingProvider = ({ children }) => {
   //-----------------HOOKS-------------------//
 
   //This useEffect hook runs when component mounts and sets listings state to initial listings query
-  useEffect(() => {
-    // Variable that holds all listings, an array of objects containing listings props
-    const allListings = allListingsData?.allListings || [];
-
-    setListings(allListings);
-  }, []);
-
   // This useEffect hook updates the listings state to render any
   // new listings that are added, we set allListingsData as a dependency so that this hook runs when there is a change to allListingsData
+
   useEffect(() => {
     // Variable that holds all listings, an array of objects containing listings props
     const allListings = allListingsData?.allListings || [];
@@ -41,8 +35,7 @@ export const ListingProvider = ({ children }) => {
     setListings(allListings);
   }, [allListingsData]);
 
-
-//---------------RETURN STATEMENT-------------------//
+  //---------------RETURN STATEMENT-------------------//
 
   // The value prop expects an initial state object, in this case
   //the initial state is the listings state, we also pass in the loggedInUser's info
