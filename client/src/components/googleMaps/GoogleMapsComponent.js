@@ -23,7 +23,7 @@ import "@reach/combobox/styles.css";
 import "./google.css";
 import gem from "../../assets/images/greenGem.png";
 
-export default function GoogleMaps() {
+export default function GoogleMapsComponent() {
   // isLoaded is gives us access to the apiKey
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDvK10cezc3bexO_QfHK7MPRVCY2IIGVt4",
