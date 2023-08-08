@@ -109,7 +109,6 @@ const MyListings = () => {
       })
     : [];
 
-    
   return (
     <>
       {Auth.loggedIn() ? (

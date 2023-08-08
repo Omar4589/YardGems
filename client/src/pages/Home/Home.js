@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import GoogleMapsComponent from "../../components/GoogleMaps/GoogleMapsComponent";
+import GoogleMapsComponent from "../../components/GoogleMaps/GoogleMaps";
 import styles from "./styles";
 import AllListingsComponent from "../../components/AllListings/AllListingsComponent";
 
