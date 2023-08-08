@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
-import { ADD_POST } from "../../utils/mutations";
+import { ADD_LISTING } from "../../utils/mutations";
 import { TextField, Container } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { style } from "./modalStyles";
@@ -16,17 +16,26 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import dayjs from "dayjs";
+import { ME_QUERY } from "../../utils/queries";
 
 //------------------Create Listing Modal--------------\\
-export const FormModal = ({ handleClose, handleOpen }) => {
+export const FormModal = ({
+  handleClose,
+  handleOpen,
+  listings,
+  setListings,
+}) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-  const [addPost, { error }] = useMutation(ADD_POST);
+  const [addListing, { error }] = useMutation(ADD_LISTING);
+
   const [formState, setFormState] = useState({
-    postDescription: "",
+    title:"",
+    description: "",
     dateOfSale: "",
     image: "",
-    postName: "",
+    author: "",
   });
   const {
     ready,
@@ -36,15 +45,28 @@ export const FormModal = ({ handleClose, handleOpen }) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
+  // Helper function to convert date from "MM/DD/YYYY" format to "yyyy-mm-dd" format
+  const formatDateToInputValue = (formattedDate) => {
+    return dayjs(formattedDate).format("YYYY-MM-DD");
+  };
+
   // for other field data
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormState({ ...formState, [name]: value });
+    // If the name of the input is "dateOfSale", format the date before setting it in the state.
+    if (name === "dateOfSale") {
+      const formattedDate = dayjs(value).format("MM/DD/YYYY");
+      setFormState({ ...formState, [name]: formattedDate });
+    } else {
+      setFormState({ ...formState, [name]: value });
+    }
   };
+
   // for address
   const handleNewInputChange = (e) => {
     setValue(e.target.value);
   };
+
   // for lat and lng
   const handleOptionSelect = async (address) => {
     setValue(address, false);
@@ -52,7 +74,7 @@ export const FormModal = ({ handleClose, handleOpen }) => {
       const results = await getGeocode({ address: address });
       const { lat, lng } = await getLatLng(results[0]);
       setSelectedLocation({ address, lat, lng });
-      console.log(results, lat, lng);
+
       clearSuggestions();
     } catch (error) {
       console.error("Error:", error);
@@ -60,24 +82,48 @@ export const FormModal = ({ handleClose, handleOpen }) => {
   };
 
   // allows user to create a new Post
-  const newPostSubmit = async (e) => {
+  const submitNewListing = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await addPost({
+      const { data } = await addListing({
         variables: {
           ...formState,
           address: selectedLocation.address,
           lat: selectedLocation.lat,
           lng: selectedLocation.lng,
         },
+        update: (cache, { data: { addListing } }) => {
+          // Read the existing cached data for the current user
+          const cachedData = cache.readQuery({ query: ME_QUERY });
+
+          // Update the cached data with the new listing
+          cache.writeQuery({
+            query: ME_QUERY,
+            data: {
+              me: {
+                ...cachedData.me,
+                userPosts: [...cachedData.me.userPosts, addListing],
+              },
+            },
+          });
+        },
       });
-      console.log(data);
+    
+      // Assuming the response contains the newly created post
+      const newListing = data.addListing;
+
+      // Update the list of posts in the parent component (MyListings)
+      setListings([...listings, newListing]);
+
       setFormState({
-        postDescription: "",
+        title:"",
+        description: "",
         dateOfSale: "",
         image: "",
-        postName: "",
+        author: "",
       });
+      // Reset the address input field to an empty string
+      setValue("");
       handleClose(); // closing the modal
     } catch (err) {
       console.error(err);
@@ -110,7 +156,7 @@ export const FormModal = ({ handleClose, handleOpen }) => {
             </Typography>
             <Box
               component="form"
-              onSubmit={newPostSubmit}
+              onSubmit={submitNewListing}
               sx={{ marginLeft: "25%" }}
             >
               <div>
@@ -157,12 +203,12 @@ export const FormModal = ({ handleClose, handleOpen }) => {
                   marginTop: "1em",
                   fontSize: "1em",
                 }}
-                label="Name"
-                name="postName"
+                label="Listing Title"
+                name="title"
                 required
                 onChange={handleInputChange}
-                placeholder={formState.postName}
-                value={formState.postName}
+                placeholder={formState.title}
+                value={formState.title}
               />
               <TextField
                 style={{
@@ -173,7 +219,7 @@ export const FormModal = ({ handleClose, handleOpen }) => {
                   fontSize: "1em",
                 }}
                 label="Description"
-                name="postDescription"
+                name="description"
                 required
                 multiline
                 onChange={handleInputChange}
@@ -194,7 +240,7 @@ export const FormModal = ({ handleClose, handleOpen }) => {
                 required
                 onChange={handleInputChange}
                 placeholder={formState.dateOfSale}
-                value={formState.dateOfSale}
+                value={formatDateToInputValue(formState.dateOfSale)}
               />
               {/* <TextField
                     style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}

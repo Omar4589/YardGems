@@ -11,12 +11,5 @@ export const styles = {
     p: 4,
     padding: 0,
   },
-  container: {
-    maxHeight: "100vh",
-    overflow: "auto",
-    backgroundColor: "#e8f5e9",
-  },
-  grid: { paddingTop: "5%", paddingBottom: "100%" },
-  cardMedia: { height: 140, paddingTop: "56.2%" },
-  iconButton: { marginLeft: "75%" },
+
 };

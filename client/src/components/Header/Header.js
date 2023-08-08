@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { QUERY_LISTINGS } from "../../utils/queries";
 import { Box, IconButton, Link, InputBase } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import SearchIcon from "@mui/icons-material/Search";
@@ -25,11 +27,19 @@ const Header = () => {
     window.location.replace("/");
   };
 
+  const { refetch } = useQuery(QUERY_LISTINGS); // Import and provide your actual query here
+
+  // Function to manually refetch data
+  const handleRefetch = () => {
+    refetch();
+  };
+
   return (
     <Box sx={{ ...styles.mainContainer }}>
       <Box sx={{ ...styles.box }}>
         <Link
           component={RouterLink}
+          onClick={handleRefetch}
           to="/MyListings"
           sx={{ ...styles.myListingsLink }}
         >
@@ -37,6 +47,7 @@ const Header = () => {
         </Link>
         <Link
           component={RouterLink}
+          onClick={handleRefetch}
           to="/SavedListings"
           sx={{ ...styles.savedListingLink }}
         >
@@ -48,6 +59,7 @@ const Header = () => {
         <Box sx={{ ...styles.appLogo }}>
           <Link
             component={RouterLink}
+            onClick={handleRefetch}
             to="/"
             sx={{ ...styles.logoLink }}
             color={"inherit"}
@@ -87,7 +99,12 @@ const Header = () => {
       )}
 
       <Box sx={{ ...styles.box }}>
-        <Link component={RouterLink} to="/" sx={{ ...styles.homeLink }}>
+        <Link
+          component={RouterLink}
+          to="/"
+          sx={{ ...styles.homeLink }}
+          onClick={handleRefetch}
+        >
           Home
         </Link>
 

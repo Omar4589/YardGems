@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { QUERY_POSTS } from "../../utils/queries";
+import { QUERY_LISTINGS } from "../../utils/queries";
 import {
   GoogleMap,
   useLoadScript,
@@ -23,7 +23,7 @@ import "@reach/combobox/styles.css";
 import "./google.css";
 import gem from "../../assets/images/greenGem.png";
 
-export default function GoogleMaps() {
+export default function GoogleMapsComponent() {
   // isLoaded is gives us access to the apiKey
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDvK10cezc3bexO_QfHK7MPRVCY2IIGVt4",
@@ -40,8 +40,8 @@ function Map() {
   // selected is for value selected from user to place pin
   const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 });
   const [selected, setSelected] = useState(null);
-  const { loading, data } = useQuery(QUERY_POSTS);
-  const allPost = data?.allPost || [];
+  const { loading, data } = useQuery(QUERY_LISTINGS);
+  const allListings = data?.allListings || [];
 
   const [activeMarker, setActiveMarker] = useState(null); // for window popups
   const handleActiveMarker = (markerF) => {
@@ -50,6 +50,9 @@ function Map() {
     }
     setActiveMarker(markerF);
   };
+
+  console.log(allListings);
+
   return (
     <div sx={{ backgroundColor: "#e8f5e9" }}>
       {/* below renders the google map */}
@@ -73,11 +76,13 @@ function Map() {
           {/* will render out a placed based on the selection */}
           <PlacesAutocomplete setSelected={setSelected} setCenter={setCenter} />
         </div>
-        {allPost.map(
+        {allListings.map(
           (
-            { _id, lat, lng, postName, postDescription, address, dateOfSale },
+            { _id, lat, lng, title, description, address, dateOfSale },
             index
           ) => {
+            console.log(title);
+
             return (
               <MarkerF
                 key={_id}
@@ -90,8 +95,8 @@ function Map() {
                 {activeMarker === _id ? (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                     <div>
-                      <h3>{postName}</h3>
-                      <h5>{postDescription}</h5>
+                      <h3>{title}</h3>
+                      <h5>{description}</h5>
                       <p>{address}</p>
                       <p>Date of event: {dateOfSale}</p>
                     </div>

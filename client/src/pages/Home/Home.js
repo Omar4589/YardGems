@@ -1,17 +1,18 @@
 import { Box } from "@mui/material";
-import GoogleMaps from "../../components/googleMaps/GoogleMaps";
+import GoogleMapsComponent from "../../components/GoogleMaps/GoogleMapsComponent";
 import styles from "./styles";
-import AllListings from "../../components/AllListings/AllListings";
+import AllListingsComponent from "../../components/AllListings/AllListingsComponent";
 
 const Home = () => {
   return (
     <Box sx={{ ...styles.mainContainer }}>
       <Box sx={{ ...styles.map }}>
-        <GoogleMaps />
+        <GoogleMapsComponent />
       </Box>
+
       <Box sx={{ ...styles.listings }}>
-        <AllListings />
-        </Box>
+        <AllListingsComponent />
+      </Box>
     </Box>
   );
 };

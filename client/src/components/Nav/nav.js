@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { QUERY_LISTINGS } from "../../utils/queries";
 import { Link as MuiLink } from "@mui/material";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
@@ -31,6 +33,13 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   const handleLogout = () => {
     AuthService.logout();
     window.location.replace("/");
+  };
+
+  const { refetch } = useQuery(QUERY_LISTINGS); // Import and provide your actual query here
+
+  // Function to manually refetch data
+  const handleRefetch = () => {
+    refetch();
   };
 
   const [showBottomNav, setShowBottomNav] = useState(true);
@@ -90,6 +99,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
       <BottomNavigationAction
         component={RouterLink}
         to="/"
+        onClick={handleRefetch}
         label="Home"
         icon={<MapOutlinedIcon />}
         sx={{ ...styles.icons }}

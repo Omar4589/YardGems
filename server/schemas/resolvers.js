@@ -1,25 +1,28 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Post } = require("../models");
+
+const { User, Listing } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
     allUsers: async () => {
-      return User.find().populate('savedPost').populate('savedFavorites');
+      return await User.find().populate("userPosts").populate("savedFavorites");
     },
-    allPost: async () => {
-      return Post.find();
+    allListings: async () => {
+      return await Listing.find();
     },
-    post: async (parent, { listingId }) => {
-      return Post.findOne({ _id: listingId });
+    listing: async (parent, { listingId }) => {
+      return await Listing.findOne({ _id: listingId });
     },
-     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
-     me: async (parent, args, context) => {
-       if (context.user) {
-        const me = User.findOne({_id: context.user._id}).populate('savedPost').populate('savedFavorites');
-        return me
-       }
-       throw new AuthenticationError('You need to be logged in!');
+    // By adding context to our query, we can retrieve the logged in user without specifically searching for them
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const me = await User.findById({ _id: context.user._id })
+          .populate("userPosts")
+          .populate("savedFavorites");
+        return me;
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
   Mutation: {
@@ -43,70 +46,87 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addPost: async (parent, { postDescription, address, dateOfSale, image, postAuthor, postName, lat, lng}, context) => {
+    addListing: async (
+      parent,
+      { description, address, dateOfSale, image, author, title, lat, lng },
+      context
+    ) => {
       if (context.user) {
-        const newPost = await Post.create({
-          postDescription, address, dateOfSale, image, postAuthor: context.user.username, postName,lat, lng
+        const newListing = await Listing.create({
+          description,
+          address,
+          dateOfSale,
+          image,
+          author: context.user.username,
+          title,
+          lat,
+          lng,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $push: { savedPost: newPost._id } }, 
-          {new:true}
+          { $push: { userPosts: newListing._id } },
+          { new: true }
         );
-        return newPost;
+        return newListing;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
-    removePost: async (parent, { postId }, context) => {
+    removeListing: async (parent, { listingId }, context) => {
       if (context.user) {
-        const removePost = await Post.findOneAndDelete({
-          _id: postId,
+        const removeListing = await Listing.findOneAndDelete({
+          _id: listingId,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedPost: removePost._id } },
-          {new:true}
+          { $pull: { userPosts: removeListing._id } },
+          { new: true }
         );
-        return removePost;
+        return removeListing;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
-    editPost: async (parent, {id, postDescription, address, dateOfSale, image, postName, lat, lng}, context) => {
+    editListing: async (
+      parent,
+      { id, description, address, dateOfSale, image, title, lat, lng },
+      context
+    ) => {
       if (context.user) {
-        const updatePost = await Post.findOneAndUpdate(
-          { _id: id }, {postDescription, address, dateOfSale, image, postName,lat, lng}, {new:true}
+        const updateListing = await Listing.findOneAndUpdate(
+          { _id: id },
+          { description, address, dateOfSale, image, title, lat, lng },
+          { new: true }
         );
-        return updatePost;
+        return updateListing;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
-    addFavorites: async (parent, { postId }, context) => {
+    addFavorites: async (parent, { listingId }, context) => {
       if (context.user) {
-        const addToFavorites = await Post.findOne({
-          _id: postId,
+        const favoritedListing = await Listing.findOne({
+          _id: listingId,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $push: { savedFavorites: addToFavorites._id } },
-          {new:true}
+          { $push: { savedFavorites: favoritedListing._id } },
+          { new: true }
         );
-        return addToFavorites ;
+        return favoritedListing;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
-    removeFavorites: async (parent, { postId }, context) => {
+    removeFavorites: async (parent, { listingId }, context) => {
       if (context.user) {
-        const removeFromFavorites = await Post.findOne({
-          _id: postId,
+        const removeFromFavorites = await Listing.findOne({
+          _id: listingId,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { savedFavorites: removeFromFavorites._id } },
-          {new:true}
+          { new: true }
         );
-        return removeFromFavorites ;
+        return removeFromFavorites;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 };

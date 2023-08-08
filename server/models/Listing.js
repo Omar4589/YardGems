@@ -1,8 +1,8 @@
 const { Schema, model } = require("mongoose");
 const dateFormat = require("../utils/dateFormat");
 
-const postSchema = new Schema({
-  postDescription: {
+const listingSchema = new Schema({
+  description: {
     type: String,
     required: "You need to leave a description!",
     minlength: 1,
@@ -25,10 +25,10 @@ const postSchema = new Schema({
   image: {
     type: String,
   },
-  postAuthor: {
+  author: {
     type: String,
   },
-  postName: {
+  title: {
     type: String,
   },
   lat: {
@@ -46,6 +46,6 @@ const postSchema = new Schema({
   },
 });
 
-const Post = model("Post", postSchema);
+const Listing = model("Listing", listingSchema);
 
-module.exports = Post;
+module.exports = Listing;
