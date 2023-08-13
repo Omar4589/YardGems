@@ -22,15 +22,13 @@ import "./singlePost.css";
 //-----------------------START OF COMPONENT-----------------------//
 const SinglePost = () => {
   //-----------------STATE---------------//
-  //Here we create two states that hold an initial state that is equal to the data values that we retrieved from the
-  //QUERY above
+  //Below we create two states that hold an initial state
+  //that is equal to the data values that we retrieved from the query: QUERY_SINGLE_LISTING
 
-  //Here we create the first state 'listingAddress' and set the intial state to the address of the post we are editing
-  //These values come from the QUERY above 'QUERY_SINGLE_LISTING'
+  //First state: 'listingAddress' and set the intial state to empty object because we expect an object when setting the state
   const [listingAddress, setListingAddress] = useState({});
 
-  //Here we create the second state ' formState' and set the intial state to the rest of the prop values in 'post'
-  //These values come from the QUERY above 'QUERY_SINGLE_LISTING'
+  //Second state: 'formState' and set the intial state to an empty object
   const [formState, setFormState] = useState({});
 
   //-----------------HOOKS-----------------//
@@ -56,7 +54,7 @@ const SinglePost = () => {
     variables: { listingId: listingId },
   });
 
-  //This useEffect runs when the component mounts
+  //This useEffect runs once - when the component mounts.
   //it sets the initial formState and listingAddress state to the data retrieved by query
   useEffect(() => {
     if (!loading) {
@@ -105,7 +103,8 @@ const SinglePost = () => {
   };
 
   //This function is responsible for the modification of the post,
-  //it uses the 'editPost mutation which sends the editedPost to the database
+  //it uses the 'editPost mutation which sends the editedPost to the database and then
+  //it reassigns the window location to navigate user to /MyListings
   const editPostSubmit = async (e) => {
     e.preventDefault();
 
@@ -135,9 +134,6 @@ const SinglePost = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  console.log(listingAddress);
-  console.log(formState);
 
   return (
     <Container
