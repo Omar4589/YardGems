@@ -1,5 +1,5 @@
 //-----------------IMPORTS-----------------------//
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_SINGLE_LISTING } from "../../utils/queries";
@@ -21,6 +21,18 @@ import "./singlePost.css";
 
 //-----------------------START OF COMPONENT-----------------------//
 const SinglePost = () => {
+  //-----------------STATE---------------//
+  //Here we create two states that hold an initial state that is equal to the data values that we retrieved from the
+  //QUERY above
+
+  //Here we create the first state 'listingAddress' and set the intial state to the address of the post we are editing
+  //These values come from the QUERY above 'QUERY_SINGLE_LISTING'
+  const [listingAddress, setListingAddress] = useState({});
+
+  //Here we create the second state ' formState' and set the intial state to the rest of the prop values in 'post'
+  //These values come from the QUERY above 'QUERY_SINGLE_LISTING'
+  const [formState, setFormState] = useState({});
+
   //-----------------HOOKS-----------------//
   //Here we use the useParams hook to destructure the listingID param that we defined in App.js
   const { listingId } = useParams();
@@ -38,39 +50,31 @@ const SinglePost = () => {
     clearSuggestions, //a function provided by the hook that clears or resets the suggestions
   } = usePlacesAutocomplete();
 
-  //-----------------MUTATIONS------------//
-  //Here we set a mutation called 'editPost' that takes in the "EDIT_LISTING" mutation
-  //this mutation is responsible for the editing of an existing listing
-  const [editPost, { error }] = useMutation(EDIT_LISTING);
-
-  //-----------------QUERIES--------------//
   //Here we use the 'QUERY_SINGLE_LISTING' query to fetch the listing data we want to edit
   // based on the listingId we got from the url param
   const { loading, data: queryData } = useQuery(QUERY_SINGLE_LISTING, {
     variables: { listingId: listingId },
   });
 
-  //We assign the listingData to a variable named 'post'
-  const post = queryData?.listing || {};
+  //This useEffect runs when the component mounts
+  //it sets the initial formState and listingAddress state to the data retrieved by query
+  useEffect(() => {
+    if (!loading) {
+      const fetchedListing = queryData?.listing || {};
+      setFormState({
+        title: fetchedListing.title,
+        description: fetchedListing.description,
+        dateOfSale: fetchedListing.dateOfSale,
+        image: "",
+      });
+      setListingAddress(fetchedListing.address);
+    }
+  }, []);
 
-  //-----------------STATE---------------//
-  //Here we create two states that hold an initial state that is equal to the data values that we retrieved from the
-  //QUERY above
-
-  //Here we create the first state 'listingAddress' and set the intial state to the address of the post we are editing
-  //These values come from the QUERY above 'QUERY_SINGLE_LISTING'
-  const [listingAddress, setListingAddress] = useState({
-    address: post.address,
-  });
-
-  //Here we create the second state ' formState' and set the intial state to the rest of the prop values in 'post'
-  //These values come from the QUERY above 'QUERY_SINGLE_LISTING'
-  const [formState, setFormState] = useState({
-    title: post.title,
-    description: post.description,
-    dateOfSale: post.dateOfSale,
-    image: "",
-  });
+  //-----------------MUTATIONS------------//
+  //Here we set a mutation called 'editPost' that takes in the "EDIT_LISTING" mutation
+  //this mutation is responsible for the editing of an existing listing
+  const [editPost, { error }] = useMutation(EDIT_LISTING);
 
   //--------------FORM FIELD HANDLERES-----------//
   //The function below handles updating the 'formState'
@@ -109,7 +113,7 @@ const SinglePost = () => {
       const { updatedPost } = await editPost({
         variables: {
           ...formState,
-          id: post._id,
+          id: queryData.listing._id,
           address: listingAddress.address,
           lat: listingAddress.lat,
           lng: listingAddress.lng,
@@ -129,6 +133,9 @@ const SinglePost = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+
+  console.log(listingAddress);
+  console.log(formState);
 
   return (
     <Container
@@ -165,7 +172,7 @@ const SinglePost = () => {
                 onChange={handleAutoCompleteChange}
                 disabled={!ready}
                 className="comboBox-input"
-                placeholder={post.address}
+                placeholder={queryData.listing.address}
                 style={{
                   width: "96%",
                   height: "3.6em",
@@ -195,7 +202,7 @@ const SinglePost = () => {
             <p className="projectTitle">Title:</p>
             <TextField
               fullWidth
-              label={post.title}
+              label={queryData.listing.title}
               id="fullWidth"
               onChange={handleInputChange}
               value={formState.title}
@@ -208,7 +215,7 @@ const SinglePost = () => {
             <TextField
               multiline
               fullWidth
-              label={post.description}
+              label={queryData.listing.description}
               id="fullWidth"
               onChange={handleInputChange}
               value={formState.description}
@@ -221,7 +228,7 @@ const SinglePost = () => {
             <input
               type="date"
               fullWidth
-              label={post.dateOfSale}
+              label={queryData.listing.dateOfSale}
               id="fullWidth"
               style={{
                 width: "100%",
