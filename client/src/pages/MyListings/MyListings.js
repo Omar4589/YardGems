@@ -14,7 +14,7 @@ import {
   Grid,
   Button,
 } from "@mui/material";
-import { ButtonComponent } from "../../components/CreateListingModal/Button";
+import { CreateListingButton } from "../../components/CreateListingModal/CreateListingButton";
 import { CreateListingModal } from "../../components/CreateListingModal/ListingModal";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import Auth from "../../utils/auth";
@@ -105,7 +105,7 @@ const MyListings = () => {
     return <h2>LOADING...</h2>;
   }
 
-  //Below we define a variable that holds the user's listings sorted from latest to oldest called 'sortedUserPosts'
+  //Below we define a variable that holds the user's listings from latest to oldest called 'sortedUserPosts'
   //If listings is truthy (not null, undefined, or an empty array), it proceeds with the sorting process. 
   //If listings is falsy (null, undefined, or an empty array), it assigns an empty array [].
   //The slice method creates a shallow copy of the listings array. Sort() mutates the array it operates on, avoiding the modification of the original array.
@@ -138,7 +138,7 @@ const MyListings = () => {
                 : "You have no saved listings!"}
             </Typography>
             {/* button is the create new listing button to open modal, passing a prop that handles a function */}
-            <ButtonComponent openModal={handleOpenModal} />
+            <CreateListingButton openModal={handleOpenModal} />
             {/* this is the modal to create a new listing, give is a state of false, pass the prop handleCloseModal and a state to open/close the modal */}
             <CreateListingModal
               handleOpen={isModalOpen}

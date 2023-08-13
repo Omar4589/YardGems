@@ -1,3 +1,4 @@
+//-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
 import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
 import { ADD_LISTING } from "../../utils/mutations";
@@ -19,13 +20,14 @@ import "@reach/combobox/styles.css";
 import dayjs from "dayjs";
 import { ME_QUERY } from "../../utils/queries";
 
-//------------------Create Listing Modal--------------\\
+//-----------------------START OF COMPONENT-----------------------//
 export const CreateListingModal = ({
   handleClose,
   handleOpen,
   listings,
   setListings,
 }) => {
+  //-----------------STATE---------------//
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const [addListing, { error }] = useMutation(ADD_LISTING);
@@ -37,6 +39,7 @@ export const CreateListingModal = ({
     image: "",
     author: "",
   });
+  
   const {
     ready,
     value,
