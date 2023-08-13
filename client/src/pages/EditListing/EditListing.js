@@ -89,7 +89,7 @@ const SinglePost = () => {
 
   // This function is triggered when a user selects an address from the autocomplete suggestions.
   //It updates the state with the selected address and its coordinates
-  const handleOptionSelect = async (address) => {
+  const handleAddressSelection = async (address) => {
     setValue(address, false); // Set the selected address as the value in the autocomplete input; The second argument false indicates that the value should not be immediately focused after selection.
     try {
       const results = await getGeocode({ address: address }); // Retrieve geocode data for the selected address
@@ -163,7 +163,7 @@ const SinglePost = () => {
       >
         <Grid sx={{ justifyContent: "center" }} container spacing={2}>
           <Grid item xs={8}>
-            <Combobox onSelect={handleOptionSelect}>
+            <Combobox onSelect={handleAddressSelection}>
               <p className="projectTitle">Address:</p>
               <ComboboxInput
                 value={value}
