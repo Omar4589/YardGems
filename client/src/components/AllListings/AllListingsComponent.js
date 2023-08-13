@@ -17,22 +17,22 @@ import { styles } from "./styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { useListingContext } from "../../utils/ListingContext";
-import ListingModalComponent from "../ListingModal/ListingModalComponent";
+import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
 
 //---------------------------START OF COMPONENT----------------------//
 export default function AllListings() {
-  // Here we destructure the context from useListingContext, in this case,
-  //it is the listings that we query using GraphQL and the loggedInUser's info.
+  //Here we destructure the context from 'useListingContext',
+  //in this case, the context is the 'listings' that we query using GraphQL in 'ListingsContext.js'  *the loggedInUser's info is also available to be destructed*
   const { listings, setListings } = useListingContext();
 
   //---------STATES--------//
-
-  //State for 'Please login' pop over
-  //populates when a user clicks on a listing to favorite it, but theyre not logged in
+  //State for 'Please login' pop over; We set the initial state to false to hide the popOver
+  //this pop over populates when a user clicks on a listing to favorite it, but theyre not logged in
   const [loginPopOver, setLoginPopOver] = useState(false);
 
-  //State for card modal
-  const [listingModal, setListingModal] = useState(null);
+  //State for listing modal that displays listing information
+  //We set the intial state to 'false' to hide the component
+  const [listingModal, setListingModal] = useState(false);
 
   //-----MODAL HANDLERS------//
 
@@ -98,7 +98,8 @@ export default function AllListings() {
           );
         })}
       </Grid>
-
+      {/* Below is a conditional expression that checks whether the listingModal variable is truthy. If the value of listingModal is truthy 
+      (not null, undefined, false, 0, or an empty string), the code inside the parentheses (...) will be executed.  */}
       {listingModal && (
         <ListingModalComponent
           listingModal={listingModal}

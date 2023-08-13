@@ -14,21 +14,22 @@ import {
   Grid,
   Button,
 } from "@mui/material";
-import { ButtonComponent } from "../../components/DashboardModal/Button";
-import { FormModal } from "../../components/DashboardModal/DashboardModal";
+import { CreateListingButton } from "../../components/CreateListingModal/CreateListingButton";
+import { CreateListingModal } from "../../components/CreateListingModal/ListingModal";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 
-//-----------------START OF COMPONENT-----------------------//
+//-----------------------START OF COMPONENT-----------------------//
 const MyListings = () => {
   //-----------------STATE---------------//
-  //Here we create a state to track all listings being shown on the page
+  //Here we create a state called 'listings' to track all listings being shown on the page
   const [listings, setListings] = useState([]);
 
-  //Here we create a state for the modal , we set it to false because we start with it closed
-  //True means the modal is displayed on the page
+  //Here we create a state for the modal called 'isModalOpen', we set the initial state to 'false'
+  //We use a boolean value to display and hide the modal. false = hidden , true = modal appears 
+  //The user uses this modal to create a new listings
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   //-----------------QUERIES--------------//
@@ -47,10 +48,12 @@ const MyListings = () => {
   }, [userData.userPosts]);
 
   //-----------------MUTATIONS------------//
-
-  //Here we are setting the mutation that deletes a post
+  //Here we are setting a mutation called 'removeListing' , this mutations deletes a listing from the database
+  //We use the 'useMutation' hook and pass in the 'REMOVE_LISTING' mutation that we imported
   const [removeListing, { error }] = useMutation(REMOVE_LISTING);
 
+  //Here we define a function named 'deleteListing' that removes a user's listing from the database, it takes in a listing's id
+  //We invoke this function when a user clicks on the 'delete' button
   const deleteListing = async (_id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -58,8 +61,10 @@ const MyListings = () => {
       return false;
     }
     try {
+      //Here we call the removeListing mutation
       const listing = await removeListing({
         variables: { listingId: _id },
+        //We use the 'update' function to update the cache , this causes a rerender which eliminates the need to include the setListings setter
         update: (cache, { data: { removeListing } }) => {
           // Read the existing cached data for the current user
           const cachedData = cache.readQuery({ query: ME_QUERY });
@@ -79,8 +84,6 @@ const MyListings = () => {
               },
             },
           });
-          //   // Update the local state
-          setListings(updatedUserPosts);
         },
       });
     } catch (err) {
@@ -89,6 +92,7 @@ const MyListings = () => {
   };
 
   //----------MODAL HANDLERS ---------\\
+  //Here we define two functions, one displays the modal the other hides the modal
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -101,8 +105,13 @@ const MyListings = () => {
     return <h2>LOADING...</h2>;
   }
 
-  //sortedUserPosts contains all posts sorted from most recent to oldest
-  //the slice method returned a copy of an array, we use sort to sort the copied array
+  //Below we define a variable that holds the user's listings from latest to oldest called 'sortedUserPosts'
+  //If listings is truthy (not null, undefined, or an empty array), it proceeds with the sorting process. 
+  //If listings is falsy (null, undefined, or an empty array), it assigns an empty array [].
+  //The slice method creates a shallow copy of the listings array. Sort() mutates the array it operates on, avoiding the modification of the original array.
+  //The function used by the sort() method takes two elements, a and b, from the array and compares them based on the 'createdAt' property. 
+  //Read more about the sort() method at https://www.w3schools.com/jsref/jsref_sort.asp
+  //The localeCompare() method is used to compare the strings in a way that respects the natural order of characters in different languages.
   const sortedUserPosts = listings
     ? listings.slice().sort((a, b) => {
         return b.createdAt.localeCompare(a.createdAt);
@@ -129,9 +138,9 @@ const MyListings = () => {
                 : "You have no saved listings!"}
             </Typography>
             {/* button is the create new listing button to open modal, passing a prop that handles a function */}
-            <ButtonComponent openModal={handleOpenModal} />
+            <CreateListingButton openModal={handleOpenModal} />
             {/* this is the modal to create a new listing, give is a state of false, pass the prop handleCloseModal and a state to open/close the modal */}
-            <FormModal
+            <CreateListingModal
               handleOpen={isModalOpen}
               handleClose={handleCloseModal}
               listings={listings}

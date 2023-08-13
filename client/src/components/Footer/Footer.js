@@ -1,17 +1,21 @@
+//-----------------IMPORTS-----------------------//
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import styles from "./styles";
 import appName from "../../assets/images/appName.jpg";
 
+//-----------------------START OF COMPONENT-----------------------//
 const Footer = () => {
+   //-----------------STATE---------------//
   // Here we create a variable 'showFooter' and use State to set the value to true.
   //the function responsible for setting the state for this variable is 'setShowFooter'
   const [showFooter, setShowFooter] = useState(true);
 
+    //-----------------HOOKS-----------------//
   // The `useEffect` hook is used to add event listeners and perform side effects.
   useEffect(() => {
-    //This function updates the value of showFooter based on the window width.
+    //This function updates the state value of showFooter based on the window width.
     const handleResize = () => {
       //Here we are setting the value by passing in the value of the expression
       //'is my window's innerWidth greater than 768 right now? true or false

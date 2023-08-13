@@ -12,7 +12,7 @@ import SignUpLoginPage from "./pages/SignUpLogin/SignUpLogin";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import AboutUs from "./pages/AboutUs/AboutUs";
-import SinglePost from "./pages/SinglePost/SinglePost";
+import EditListing from "./pages/EditListing/EditListing";
 import BottomNavBar from "./components/Nav/nav";
 import Home from "./pages/Home/Home";
 import ContactUs from "./pages/ContactUs/ContactUs";
@@ -35,9 +35,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-
-
-
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
@@ -54,7 +51,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/MyListings" element={<MyListings />} />
             <Route path="/SavedListings" element={<SavedListings />} />
-            <Route path="/listings/:listingId" element={<SinglePost />} />
+            <Route path="/listings/:listingId" element={<EditListing />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
           </Routes>

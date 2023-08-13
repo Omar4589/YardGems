@@ -1,3 +1,4 @@
+//-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
@@ -15,15 +16,24 @@ import styles from "./styles";
 import appName from "../../assets/images/appName.jpg";
 import greenGem from "../../assets/images/greenGem.png";
 
+//-----------------------START OF COMPONENT-----------------------//
 export default function SignIn() {
-  const [userFormData, setUserFormData] = useState({ email: "", password: "" }); // setting form in empty string to initalize the state
+  //-----------------STATE---------------//
+  //We create a state 'userFormData' to track the form input fields for email and password
+  const [userFormData, setUserFormData] = useState({ email: "", password: "" });
+
+  //-----------------MUTATIONS------------//
+  //Here we set a 'login' mutation using the LOGIN_USER mutation we imported above
   const [login, { error }] = useMutation(LOGIN_USER);
 
+  //----------LOGIN FORM HANDLERS ---------\\
+  //This handles the updating of input fields state
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
 
+  //This function handles the login submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

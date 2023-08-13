@@ -14,8 +14,9 @@ const style = {
     fontSize: "1em",
   },
 };
-// openModal is is function handleOpenModal and pass it to the button for a onClick event
-export const ButtonComponent = ({ openModal }) => {
+
+//openModal comes from MyListings.js
+export const CreateListingButton = ({ openModal }) => {
   return (
     <div style={style.button}>
       <Button

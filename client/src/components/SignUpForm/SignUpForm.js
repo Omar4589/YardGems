@@ -1,3 +1,4 @@
+//-----------------IMPORTS-----------------------//
 import { useState } from "react";
 import {
   Typography,
@@ -14,16 +15,19 @@ import { useMutation } from "@apollo/client";
 import appName from "../../assets/images/appName.jpg";
 import styles from "./styles";
 
+//-----------------------START OF COMPONENT-----------------------//
 const SignUpForm = ({ handleComponentChange, LoginForm }) => {
-  // set initial form state
+  //-----------------STATE---------------//
   const [userFormData, setUserFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
 
+  //-----------------MUTATIONS------------//
   const [createUser, { error, data }] = useMutation(CREATE_USER);
 
+  //----------SIGNUP FORM HANDLERS ---------\\
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
@@ -33,11 +37,9 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
     });
   };
 
+  //This function handles the sign up form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(userFormData.username);
-    console.log(userFormData.email);
-    console.log(userFormData.password);
 
     try {
       const { data } = await createUser({

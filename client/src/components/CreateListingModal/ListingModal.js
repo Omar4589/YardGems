@@ -1,3 +1,4 @@
+//-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
 import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
 import { ADD_LISTING } from "../../utils/mutations";
@@ -19,24 +20,30 @@ import "@reach/combobox/styles.css";
 import dayjs from "dayjs";
 import { ME_QUERY } from "../../utils/queries";
 
-//------------------Create Listing Modal--------------\\
-export const FormModal = ({
+//-----------------------START OF COMPONENT-----------------------//
+export const CreateListingModal = ({
   handleClose,
   handleOpen,
   listings,
   setListings,
 }) => {
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  //-----------------STATE---------------//
 
-  const [addListing, { error }] = useMutation(ADD_LISTING);
+  //Here we create a state 'listingAddress' that will hold an object containing the address value of the listing
+  const [listingAddress, setListingAddress] = useState({});
 
+  //We create this 'formState' to hold the rest of the listing properties, we set the intial state to empty strings
   const [formState, setFormState] = useState({
-    title:"",
+    title: "",
     description: "",
     dateOfSale: "",
     image: "",
     author: "",
   });
+
+  //-----------------HOOKS-----------------//
+  //This hook below is responsible for the autocomplete functionality of the app
+  //It returns an object containing various properties and functions related to location-based autocomplete suggestions.
   const {
     ready,
     value,
@@ -45,12 +52,17 @@ export const FormModal = ({
     clearSuggestions,
   } = usePlacesAutocomplete();
 
+  //Here we set a mutation called 'addListing' that takes in the "ADD_LISTING" mutation
+  //this mutation is responsible for the creating and adding a listing to the database
+  const [addListing, { error }] = useMutation(ADD_LISTING);
+
+  //--------------FORM FIELD HANDLERES-----------//
   // Helper function to convert date from "MM/DD/YYYY" format to "yyyy-mm-dd" format
   const formatDateToInputValue = (formattedDate) => {
     return dayjs(formattedDate).format("YYYY-MM-DD");
   };
 
-  // for other field data
+   //The function below handles updating the 'formState'
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     // If the name of the input is "dateOfSale", format the date before setting it in the state.
@@ -62,18 +74,20 @@ export const FormModal = ({
     }
   };
 
-  // for address
-  const handleNewInputChange = (e) => {
+ //The function below handles updating the value of the 'value' property that is return by 'usePlacesAutoComplete' hook.
+  //We use the 'setValue' function that is provided by the 'usePlacesAutoComplete' hook.
+  const handleAutoCompleteChange = (e) => {
     setValue(e.target.value);
   };
 
-  // for lat and lng
-  const handleOptionSelect = async (address) => {
+// This function is triggered when a user selects an address from the autocomplete suggestions.
+  //It updates the state with the selected address and its coordinates
+  const handleAddressSelection = async (address) => {
     setValue(address, false);
     try {
       const results = await getGeocode({ address: address });
       const { lat, lng } = await getLatLng(results[0]);
-      setSelectedLocation({ address, lat, lng });
+      setListingAddress({ address, lat, lng });
 
       clearSuggestions();
     } catch (error) {
@@ -81,16 +95,16 @@ export const FormModal = ({
     }
   };
 
-  // allows user to create a new Post
+   //This function is responsible for creating and adding a listing to the database
   const submitNewListing = async (e) => {
     e.preventDefault();
     try {
       const { data } = await addListing({
         variables: {
           ...formState,
-          address: selectedLocation.address,
-          lat: selectedLocation.lat,
-          lng: selectedLocation.lng,
+          address: listingAddress.address,
+          lat: listingAddress.lat,
+          lng: listingAddress.lng,
         },
         update: (cache, { data: { addListing } }) => {
           // Read the existing cached data for the current user
@@ -108,15 +122,16 @@ export const FormModal = ({
           });
         },
       });
-    
-      // Assuming the response contains the newly created post
+
+      // Here we extract the response from the addListing mutation, which contains the new listing's data
       const newListing = data.addListing;
 
       // Update the list of posts in the parent component (MyListings)
       setListings([...listings, newListing]);
 
+      //clear the formState
       setFormState({
-        title:"",
+        title: "",
         description: "",
         dateOfSale: "",
         image: "",
@@ -160,10 +175,10 @@ export const FormModal = ({
               sx={{ marginLeft: "25%" }}
             >
               <div>
-                <Combobox onSelect={handleOptionSelect}>
+                <Combobox onSelect={handleAddressSelection}>
                   <ComboboxInput
                     value={value}
-                    onChange={handleNewInputChange}
+                    onChange={handleAutoCompleteChange}
                     disabled={!ready}
                     className="comboBox-input"
                     placeholder="Add a location"
