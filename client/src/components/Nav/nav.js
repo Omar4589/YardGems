@@ -1,4 +1,4 @@
-import * as React from "react";
+//-----------------IMPORTS-----------------------//
 import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_LISTINGS } from "../../utils/queries";
@@ -9,7 +9,7 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import InfoIcon from "@mui/icons-material/Info";
-import { Drawer, IconButton } from "@mui/material";
+import { Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -22,28 +22,18 @@ import AuthService from "../../utils/auth";
 import Switch from "@mui/material/Switch";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
+//-----------------------START OF COMPONENT-----------------------//
 export default function BottomNavBar({ handleThemeChange, darkMode }) {
   const pathname = window.location.pathname; // in case user visits the path directly. The BottomNavBar is able to follow suit.
-  const [value, setValue] = React.useState(pathname);
+  //-----------------STATE---------------//
+  //the 'windowPath' state tracks the path/route/url
+  const [windowPath, setWindowPath] = useState(pathname);
+  //this state tracks whether or not the menu drawer is open/visible in the DOM
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleLogout = () => {
-    AuthService.logout();
-    window.location.replace("/");
-  };
-
-  const { refetch } = useQuery(QUERY_LISTINGS); // Import and provide your actual query here
-
-  // Function to manually refetch data
-  const handleRefetch = () => {
-    refetch();
-  };
-
+  //This state tracks whether the bottom nav component is visible or hidden
   const [showBottomNav, setShowBottomNav] = useState(true);
 
+  //-----------------HOOKS---------------//
   // The `useEffect` hook is used to add event listeners and perform side effects.
   useEffect(() => {
     //This function updates the value of showBottomNav based on the window width.
@@ -68,6 +58,28 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     return cleanup;
   }, []);
 
+  //----------HANDLERS ---------\\
+  //this function handles updating state of windowPath
+  const handlePathChange = (event, newValue) => {
+    setWindowPath(newValue);
+  };
+
+  //this function handles logging out the user
+  const handleLogout = () => {
+    AuthService.logout();
+    window.location.replace("/");
+  };
+
+    //-----------------QUERIES--------------//
+  //Here we extract the refetch method from the useQuery hook
+  //refetch will execute the QUERY_LISTINGS query
+  const { refetch } = useQuery(QUERY_LISTINGS); // Import and provide your actual query here
+
+  // Function to manually refetch data
+  const handleRefetch = () => {
+    refetch();
+  };
+
   // If `showBottomNav` is false, the component returns `null`, indicating that the footer should not be rendered.
   if (!showBottomNav) {
     return null;
@@ -75,8 +87,8 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
 
   return (
     <BottomNavigation
-      value={value}
-      onChange={handleChange}
+      value={windowPath}
+      onChange={handlePathChange}
       showLabels="true"
       sx={{ ...styles.mainContainer }}
     >
