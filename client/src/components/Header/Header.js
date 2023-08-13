@@ -1,3 +1,4 @@
+//-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_LISTINGS } from "../../utils/queries";
@@ -9,25 +10,36 @@ import styles from "./styles";
 import AuthService from "../../utils/auth";
 import { Link as RouterLink } from "react-router-dom";
 
+//-----------------------START OF COMPONENT-----------------------//
 const Header = () => {
+  //-----------------STATE---------------//
+  //We create state: 'isSearchVisible' and set the intial state to 'false' to hide the search field
+  //'true' displays the search field
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
+  //----------HEADER LINKS HANDLERS ---------\\
+  //'toggleSearch' function handles updating the state of 'isSearchVisible' by calling the setter
   const toggleSearch = () => {
     setIsSearchVisible(!isSearchVisible);
   };
 
+  //this function handles submitting a search
   const handleSubmit = (event) => {
     event.preventDefault();
     // Add search logic here
     setIsSearchVisible(false);
   };
 
+  //this handles logging out the user
   const handleLogout = () => {
     AuthService.logout();
     window.location.replace("/");
   };
 
-  const { refetch } = useQuery(QUERY_LISTINGS); // Import and provide your actual query here
+  //-----------------QUERIES--------------//
+  //Here we extract the refetch method from the useQuery hook
+  //refetch will execute the QUERY_LISTINGS query
+  const { refetch } = useQuery(QUERY_LISTINGS);
 
   // Function to manually refetch data
   const handleRefetch = () => {
