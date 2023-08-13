@@ -125,6 +125,8 @@ const SinglePost = () => {
         title: "",
         image: "",
       });
+
+      window.location.assign("/MyListings");
     } catch (err) {
       console.error(err);
     }
