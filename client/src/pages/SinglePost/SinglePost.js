@@ -1,3 +1,4 @@
+//-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
@@ -18,60 +19,80 @@ import {
 import "@reach/combobox/styles.css";
 import "./singlePost.css";
 
+//-----------------------START OF COMPONENT-----------------------//
 const SinglePost = () => {
-  // Use `useParams()` to retrieve value of the route parameter `:listingId`
+  //-----------------HOOKS-----------------//
+  //Here we use the useParams hook to destructure the listingID param that we defined in App.js
   const { listingId } = useParams();
 
-  const [editPost, { error }] = useMutation(EDIT_LISTING);
-
-  //------------------useQuery for a single post -------\\
-   const { loading, data: queryData } = useQuery(QUERY_SINGLE_LISTING, {
-    variables: { listingId: listingId },  });
-
-  // data from useQuery
-  const post = queryData?.post || {};
-
-  //------ part of autocomplete from googlemaps----\\
+  //This hook below is responsible for the autocomplete functionality of the app
+  //It returns an object containing various properties and functions related to location-based autocomplete suggestions.
   const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
+    ready, //readiness of the autocomplete functionality.
+    value, //the current input value of the autocomplete input field
+    suggestions: {
+      status, //the status of the suggestions: loading, no results, or suggestions are available
+      data, //suggestion items returned by autocomplete system
+    },
+    setValue, //a function provided by usePlacesAutocomplete() that updates the value property
+    clearSuggestions, //a function provided by the hook that clears or resets the suggestions
   } = usePlacesAutocomplete();
 
-  // setting inital values for the both useState from current post so the user does not have
-  //to update everything if they don't want
-  const [selectedLocation, setSelectedLocation] = useState({
+  //-----------------MUTATIONS------------//
+  //Here we set a mutation called 'editPost' that takes in the "EDIT_LISTING" mutation
+  //this mutation is responsible for the editing of an existing listing
+  const [editPost, { error }] = useMutation(EDIT_LISTING);
+
+  //-----------------QUERIES--------------//
+  //Here we use the 'QUERY_SINGLE_LISTING' query to fetch the listing data we want to edit
+  // based on the listingId we got from the url param
+  const { loading, data: queryData } = useQuery(QUERY_SINGLE_LISTING, {
+    variables: { listingId: listingId },
+  });
+
+  //We assign the listingData to a variable named 'post'
+  const post = queryData?.listing || {};
+
+  //-----------------STATE---------------//
+  //Here we create two states that hold an initial state that is equal to the data values that we retrieved from the
+  //QUERY above
+
+  //Here we create the first state 'listingAddress' and set the intial state to the address of the post we are editing
+  //These values come from the QUERY above 'QUERY_SINGLE_LISTING'
+  const [listingAddress, setListingAddress] = useState({
     address: post.address,
   });
 
+  //Here we create the second state ' formState' and set the intial state to the rest of the prop values in 'post'
+  //These values come from the QUERY above 'QUERY_SINGLE_LISTING'
   const [formState, setFormState] = useState({
-    postDescription: post.postDescription,
+    title: post.title,
+    description: post.description,
     dateOfSale: post.dateOfSale,
-    postName: post.postName,
     image: "",
   });
 
-  // again had to reasign value to a different name due to usePlacesAutocomplete(),
-  //having value has a reserved property, this inputChange for to gather data other than address
+  //--------------FORM FIELD HANDLERES-----------//
+  //The function below handles updating the 'formState'
   const handleInputChange = (event) => {
     const { name, value: newVal } = event.target;
     setFormState({ ...formState, [name]: newVal });
   };
 
-  //-----functions to handle the auto complete----\\
-  const handleNewInputChange = (e) => {
+  //The function below handles updating the value of the 'value' property that is return by 'usePlacesAutoComplete' hook.
+  //We use the 'setValue' function that is provided by the 'usePlacesAutoComplete' hook.
+  const handleAutoCompleteChange = (e) => {
     setValue(e.target.value);
   };
 
-  // ---- for lat and lng---\\
+  // This function is triggered when a user selects an address from the autocomplete suggestions.
+  //It updates the state with the selected address and its coordinates
   const handleOptionSelect = async (address) => {
-    setValue(address, false);
+    setValue(address, false); // Set the selected address as the value in the autocomplete input; The second argument false indicates that the value should not be immediately focused after selection.
     try {
-      const results = await getGeocode({ address: address });
-      const { lat, lng } = await getLatLng(results[0]);
-      setSelectedLocation({ address, lat, lng });
+      const results = await getGeocode({ address: address }); // Retrieve geocode data for the selected address
+      const { lat, lng } = await getLatLng(results[0]); // Extract latitude and longitude from geocode data
+      setListingAddress({ address, lat, lng }); // Update the state with the selected address and its coordinates
       console.log(results, lat, lng);
       clearSuggestions();
     } catch (error) {
@@ -79,27 +100,25 @@ const SinglePost = () => {
     }
   };
 
-  //--------function to edit a post-----\\
+  //This function is responsible for the modification of the post,
+  //it uses the 'editPost mutation which sends the editedPost to the database
   const editPostSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formState.address)
-    // console.log(formState.postName)
-    // console.log(formState.description)
-    // console.log(formState.dateOfSale)
+
     try {
       const { updatedPost } = await editPost({
         variables: {
           ...formState,
           id: post._id,
-          address: selectedLocation.address,
-          lat: selectedLocation.lat,
-          lng: selectedLocation.lng,
+          address: listingAddress.address,
+          lat: listingAddress.lat,
+          lng: listingAddress.lng,
         },
       });
       setFormState({
-        postDescription: "",
+        description: "",
         dateOfSale: "",
-        postName: "",
+        title: "",
         image: "",
       });
     } catch (err) {
@@ -110,11 +129,6 @@ const SinglePost = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
-    console.log(formState.address)
-    console.log(formState.postName)
-    console.log(formState.postDescription)
-    console.log(formState.dateOfSale)
 
   return (
     <Container
@@ -148,7 +162,7 @@ const SinglePost = () => {
               <p className="projectTitle">Address:</p>
               <ComboboxInput
                 value={value}
-                onChange={handleNewInputChange}
+                onChange={handleAutoCompleteChange}
                 disabled={!ready}
                 className="comboBox-input"
                 placeholder={post.address}
@@ -181,29 +195,29 @@ const SinglePost = () => {
             <p className="projectTitle">Title:</p>
             <TextField
               fullWidth
-              label={post.postName}
+              label={post.title}
               id="fullWidth"
               onChange={handleInputChange}
-              value={formState.postName}
-              name="postName"
+              value={formState.title}
+              name="title"
               sx={{ backgroundColor: "white", borderRadius: ".5em" }}
             />
           </Grid>
           <Grid item xs={8}>
-            <p className="projectTitle">Description:</p>
+            <p className="projectdescription">Description:</p>
             <TextField
               multiline
               fullWidth
-              label={post.postDescription}
+              label={post.description}
               id="fullWidth"
               onChange={handleInputChange}
-              value={formState.postDescription}
+              value={formState.description}
               name="description"
               sx={{ backgroundColor: "white", borderRadius: ".5em" }}
             />
           </Grid>
           <Grid item xs={8}>
-            <p className="projectTitle">Date:</p>
+            <p className="projectDate">Date:</p>
             <input
               type="date"
               fullWidth
