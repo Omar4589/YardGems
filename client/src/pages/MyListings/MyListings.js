@@ -14,8 +14,8 @@ import {
   Grid,
   Button,
 } from "@mui/material";
-import { ButtonComponent } from "../../components/DashboardModal/Button";
-import { FormModal } from "../../components/DashboardModal/DashboardModal";
+import { ButtonComponent } from "../../components/CreateListingModal/Button";
+import { CreateListingModal } from "../../components/CreateListingModal/ListingModal";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
@@ -140,7 +140,7 @@ const MyListings = () => {
             {/* button is the create new listing button to open modal, passing a prop that handles a function */}
             <ButtonComponent openModal={handleOpenModal} />
             {/* this is the modal to create a new listing, give is a state of false, pass the prop handleCloseModal and a state to open/close the modal */}
-            <FormModal
+            <CreateListingModal
               handleOpen={isModalOpen}
               handleClose={handleCloseModal}
               listings={listings}

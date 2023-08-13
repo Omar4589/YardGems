@@ -17,7 +17,7 @@ import { styles } from "./styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { useListingContext } from "../../utils/ListingContext";
-import ListingModalComponent from "../ListingModal/ListingModalComponent";
+import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
 
 //---------------------------START OF COMPONENT----------------------//
 export default function AllListings() {

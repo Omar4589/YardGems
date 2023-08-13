@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import { ME_QUERY } from "../../utils/queries";
 
 //------------------Create Listing Modal--------------\\
-export const FormModal = ({
+export const CreateListingModal = ({
   handleClose,
   handleOpen,
   listings,
