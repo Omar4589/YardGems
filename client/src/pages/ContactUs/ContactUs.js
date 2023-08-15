@@ -1,13 +1,14 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./styles";
+import emailjs from "@emailjs/browser";
 
 // Component for the contact us form
 const ContactUs = () => {
   // State to store form data
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    user_name: "",
+    user_email: "",
     message: "",
   });
 
@@ -27,21 +28,34 @@ const ContactUs = () => {
     event.preventDefault();
 
     // Log form data to the console
-    console.log(formData.name);
-    console.log(formData.email);
+    console.log(formData.user_name);
+    console.log(formData.user_email);
     console.log(formData.message);
 
     try {
+      await sendEmail();
     } catch (err) {
       console.error(err);
     }
+  };
+  emailjs.init("yHQDycNvnINCMJg1d");
 
-    // Reset form data to initial state
-    setFormData({
-      name: "",
-      email: "",
-      message: "",
-    });
+  const sendEmail = (event) => {
+    try {
+      const form = document.getElementById("contactus-form");
+      // these IDs from the previous steps
+      emailjs.sendForm("service_y0kbg4u", "contactus_form", form);
+      // Clear input fields
+      // Clear input fields visually
+      document.getElementById("user_name").value = "";
+      document.getElementById("user_email").value = "";
+      document.getElementById("message").value = "";
+      console.log(
+        "Email Sent Successfully and input fields have been cleared!"
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // Render the contact form component
@@ -55,7 +69,7 @@ const ContactUs = () => {
         below:
       </Typography>
 
-      <form id="ContactUs-form" onSubmit={handleFormSubmit}>
+      <form id="contactus-form" onSubmit={handleFormSubmit}>
         <Box sx={{ ...styles.fieldContainers }}>
           <Typography component="label" sx={{ ...styles.labels }}>
             Full Name
@@ -64,7 +78,8 @@ const ContactUs = () => {
             fullWidth
             sx={{ ...styles.inputFields }}
             type="text"
-            name="name"
+            id="user_name"
+            name="user_name"
             required
             size="small"
             onChange={handleInputChange}
@@ -76,7 +91,8 @@ const ContactUs = () => {
           </Typography>
           <TextField
             type="email"
-            name="email"
+            id="user_email"
+            name="user_email"
             fullWidth
             size="small"
             sx={{ ...styles.inputFields }}
@@ -90,6 +106,7 @@ const ContactUs = () => {
           </Typography>
           <TextField
             type="text"
+            id="message"
             name="message"
             fullWidth
             multiline={true}
