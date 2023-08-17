@@ -57,7 +57,7 @@ userSchema.methods.isCorrectPassword = async function (password) {
 
 // when we query a user, we'll also get another field called `postCount` with the number of saved post a user has created for holding a sell
 userSchema.virtual('listingCount').get(function () {
-  return this.savedPost.length;
+  return this.userPosts.length;
 });
 
 

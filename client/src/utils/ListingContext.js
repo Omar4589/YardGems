@@ -27,12 +27,25 @@ export const ListingProvider = ({ children }) => {
   // new listings that are added, we set allListingsData as a dependency so that this hook runs when there is a change to allListingsData
 
   useEffect(() => {
+    if (allListingsData && loggedInUserData) {
+      const allListings = allListingsData?.allListings || [];
+
+      const userFavorites = loggedInUserData.me.savedFavorites || [];
+
+        // Compare and create listingsWithFavorites
+        const updatedListings = allListings.map((listing) => ({
+          ...listing,
+          isFavorited: userFavorites.includes(listing._id),
+        }));
+
+        setListings(updatedListings)
+    }
     // Variable that holds all listings, an array of objects containing listings props
     //if there are no listings available, we set this variable to an empty array
-    const allListings = allListingsData?.allListings || [];
+    // const allListings = allListingsData?.allListings || [];
 
-    setListings(allListings);
-  }, [allListingsData]);
+    // setListings(allListings);
+  }, [allListingsData, loggedInUserData]);
 
   //---------------RETURN STATEMENT-------------------//
 

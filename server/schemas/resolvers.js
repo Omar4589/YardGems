@@ -102,6 +102,19 @@ const resolvers = {
     },
     addFavorites: async (parent, { listingId }, context) => {
       if (context.user) {
+        //find logged in user through context
+        const user = await User.findOne({ _id: context.user._id });
+        //if the listing we are trying to favorite is already in the savedFavorites array,
+        if (user.savedFavorites.includes(listingId)) {
+          //we remove the listing from the 'savedFavorites' array.
+          await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $pull: { savedFavorites: listingId } },
+            { new: true }
+          );
+          return user; 
+        }
+        //else we run the code below which adds the listing to the 'savedFavorites' array
         const favoritedListing = await Listing.findOne({
           _id: listingId,
         });

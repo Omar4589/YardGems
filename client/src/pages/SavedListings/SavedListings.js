@@ -32,7 +32,7 @@ const SavedListings = () => {
       return false;
     }
     try {
-      const { data } = await removeFavorites({ variables: { postId: _id } });
+      const { data } = await removeFavorites({ variables: { listingId: _id } });
     } catch (err) {
       console.error(err);
     }

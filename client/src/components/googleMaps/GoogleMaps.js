@@ -51,7 +51,7 @@ function Map() {
     setActiveMarker(markerF);
   };
 
-  console.log(allListings);
+  // console.log(allListings);
 
   return (
     <div sx={{ backgroundColor: "#e8f5e9" }}>
@@ -81,7 +81,7 @@ function Map() {
             { _id, lat, lng, title, description, address, dateOfSale },
             index
           ) => {
-            console.log(title);
+            // console.log(title);
 
             return (
               <MarkerF
