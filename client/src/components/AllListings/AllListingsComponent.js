@@ -25,7 +25,7 @@ import { ADD_FAVORITES } from "../../utils/mutations";
 export default function AllListings() {
   //Here we destructure the context from 'useListingContext',
   //in this case, the context is the 'listings' that we query using GraphQL in 'ListingsContext.js'  *the loggedInUser's info is also available to be destructed*
-  const { listings, setListings, loggedInUserData } = useListingContext();
+  const { listings, setListings } = useListingContext();
 
   //---------STATES--------//
   //State for 'Please login' pop over; We set the initial state to false to hide the popOver
@@ -37,9 +37,11 @@ export default function AllListings() {
   const [listingModal, setListingModal] = useState(false);
 
   //-----------MUTATIONS----------//
+  //This mutation handles adding a listing to the logged in user's savedFavorites array
   const [addFavorites] = useMutation(ADD_FAVORITES);
 
-  //This function handles adding a listing to user's 'savedFavorites'
+  //This function handles adding a listing to user's 'savedFavorites' by calling
+  //the 'addFavorites' mutation; this mutation has logic that removes a listing from 'savedFavorites' if it's already there, checkout resolvers.js in server side
   const addToFavorites = async (_id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -48,15 +50,18 @@ export default function AllListings() {
     }
 
     try {
+      //invoke mutation
       const { data } = await addFavorites({ variables: { listingId: _id } });
 
-      // Find the listing that matches the _id
+      // Here we map over the each listing and check if the id of the listing we are mutating matches the listig id we are mapping over
+      //if the listing id's match, we then set the isFavorited property of that listing to the opposite boolean value that it is currently has
+      //this essentially toggles between 'true' and 'false'
       const updatedListings = listings.map((listing) =>
         listing._id === _id
           ? { ...listing, isFavorited: !listing.isFavorited }
           : listing
       );
-
+      //update listings state with the updatedListings array, this array includes an update to the isFavorited property of each listing
       setListings(updatedListings);
     } catch (err) {
       console.error(err);
