@@ -1,5 +1,6 @@
 //---------------------------IMPORTS--------------------------------//
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
 import {
   Container,
   Card,
@@ -18,12 +19,13 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { useListingContext } from "../../utils/ListingContext";
 import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
+import { ADD_FAVORITES } from "../../utils/mutations";
 
 //---------------------------START OF COMPONENT----------------------//
 export default function AllListings() {
   //Here we destructure the context from 'useListingContext',
   //in this case, the context is the 'listings' that we query using GraphQL in 'ListingsContext.js'  *the loggedInUser's info is also available to be destructed*
-  const { listings, setListings } = useListingContext();
+  const { listings, setListings, loggedInUserData } = useListingContext();
 
   //---------STATES--------//
   //State for 'Please login' pop over; We set the initial state to false to hide the popOver
@@ -34,6 +36,33 @@ export default function AllListings() {
   //We set the intial state to 'false' to hide the component
   const [listingModal, setListingModal] = useState(false);
 
+  //-----------MUTATIONS----------//
+  const [addFavorites] = useMutation(ADD_FAVORITES);
+
+  //This function handles adding a listing to user's 'savedFavorites'
+  const addToFavorites = async (_id) => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const { data } = await addFavorites({ variables: { listingId: _id } });
+
+      // Find the listing that matches the _id
+      const updatedListings = listings.map((listing) =>
+        listing._id === _id
+          ? { ...listing, isFavorited: !listing.isFavorited }
+          : listing
+      );
+
+      setListings(updatedListings);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   //-----MODAL HANDLERS------//
 
   //Opens modal when listings is clicked on
@@ -43,7 +72,8 @@ export default function AllListings() {
 
   //Closes pop over message - 'Please log in'
   const closePopOver = () => setLoginPopOver(false);
-
+  console.log("-----All Listings with isFavorited property");
+  console.log(listings);
   //---------------------------RETURN STATEMENT-------------------------//
   return (
     <Container sx={styles.container}>
@@ -65,6 +95,7 @@ export default function AllListings() {
               {/* Use the "isFavorited" property to set the color of the heart icon */}
               {Auth.loggedIn() ? (
                 <IconButton
+                  onClick={() => addToFavorites(listing._id)}
                   sx={
                     (styles.iconButton,
                     { color: listing.isFavorited ? "red" : "grey" }) // Set the color based on "isFavorited"

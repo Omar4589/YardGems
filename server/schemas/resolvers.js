@@ -102,6 +102,18 @@ const resolvers = {
     },
     addFavorites: async (parent, { listingId }, context) => {
       if (context.user) {
+        const user = await User.findOne({ _id: context.user._id });
+
+        if (user.savedFavorites.includes(listingId)) {
+          // Listing is already in the favorites, so remove it
+          await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $pull: { savedFavorites: listingId } },
+            { new: true }
+          );
+          return user; // Return null or appropriate response
+        }
+
         const favoritedListing = await Listing.findOne({
           _id: listingId,
         });
