@@ -27,24 +27,29 @@ export const ListingProvider = ({ children }) => {
   // new listings that are added, we set allListingsData as a dependency so that this hook runs when there is a change to allListingsData
 
   useEffect(() => {
-    if (allListingsData && loggedInUserData) {
+    if (allListingsData) {
       const allListings = allListingsData?.allListings || [];
 
-      const userFavorites = loggedInUserData.me.savedFavorites || [];
+      // If loggedInUserData is available, update isFavorited based on userFavorites
+      if (loggedInUserData) {
+        const userFavorites = loggedInUserData.me.savedFavorites || [];
 
-        // Compare and create listingsWithFavorites
         const updatedListings = allListings.map((listing) => ({
           ...listing,
           isFavorited: userFavorites.includes(listing._id),
         }));
 
-        setListings(updatedListings)
-    }
-    // Variable that holds all listings, an array of objects containing listings props
-    //if there are no listings available, we set this variable to an empty array
-    // const allListings = allListingsData?.allListings || [];
+        setListings(updatedListings);
+      } else {
+        // If not logged in, set isFavorited to false for all listings
+        const updatedListings = allListings.map((listing) => ({
+          ...listing,
+          isFavorited: false,
+        }));
 
-    // setListings(allListings);
+        setListings(updatedListings);
+      }
+    }
   }, [allListingsData, loggedInUserData]);
 
   //---------------RETURN STATEMENT-------------------//
@@ -52,7 +57,9 @@ export const ListingProvider = ({ children }) => {
   // The value prop expects an initial state object, in this case
   //the initial state is the listings state, we also pass in the state setter and loggedInUser's info in case we need it
   return (
-    <ListingContext.Provider value={{ listings, setListings, loggedInUserData }}>
+    <ListingContext.Provider
+      value={{ listings, setListings, loggedInUserData }}
+    >
       {children}
     </ListingContext.Provider>
   );
