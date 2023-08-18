@@ -22,10 +22,8 @@ export const ListingProvider = ({ children }) => {
   const { data: loggedInUserData } = useQuery(ME_QUERY);
 
   //-----------------HOOKS-------------------//
-  //The useEffect hook below runs when component mounts and sets the listings state to the allListingsData
-  // This useEffect hook updates the listings state to render any
-  // new listings that are added, we set allListingsData as a dependency so that this hook runs when there is a change to allListingsData
-
+  //The useEffect hook below runs when component mounts and sets the listings state to 
+  //an updated listings array we name 'updatedListings which will include a 'isFavorited' property
   useEffect(() => {
     if (allListingsData) {
       const allListings = allListingsData?.allListings || [];
