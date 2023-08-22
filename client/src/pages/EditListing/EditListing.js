@@ -18,10 +18,12 @@ import {
 import "@reach/combobox/styles.css";
 import "./singlePost.css";
 import { useListingContext } from "../../utils/ListingContext";
+import { useNavigate } from "react-router-dom";
 
 //-----------------------START OF COMPONENT-----------------------//
 const SinglePost = () => {
   const { editAListing } = useListingContext();
+  const navigate = useNavigate(); 
 
   //-----------------STATE---------------//
   //First state: 'listingAddress' and set the intial state to empty object because we expect an object when setting the state
@@ -125,7 +127,7 @@ const SinglePost = () => {
         image: "",
       });
 
-      window.location.assign("/MyListings");
+      navigate("/MyListings");
     } catch (err) {
       console.error(err);
     }
