@@ -1,9 +1,7 @@
 //-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
 import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
-import { ADD_LISTING } from "../../utils/mutations";
 import { TextField, Container } from "@mui/material";
-import { useMutation } from "@apollo/client";
 import { style } from "./modalStyles";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -18,7 +16,6 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import dayjs from "dayjs";
-import { ME_QUERY } from "../../utils/queries";
 
 //-----------------------START OF COMPONENT-----------------------//
 export const CreateListingModal = ({
@@ -26,9 +23,9 @@ export const CreateListingModal = ({
   handleOpen,
   listings,
   setListings,
+  addListing,
 }) => {
   //-----------------STATE---------------//
-
   //Here we create a state 'listingAddress' that will hold an object containing the address value of the listing
   const [listingAddress, setListingAddress] = useState({});
 
@@ -52,17 +49,13 @@ export const CreateListingModal = ({
     clearSuggestions,
   } = usePlacesAutocomplete();
 
-  //Here we set a mutation called 'addListing' that takes in the "ADD_LISTING" mutation
-  //this mutation is responsible for the creating and adding a listing to the database
-  const [addListing, { error }] = useMutation(ADD_LISTING);
-
   //--------------FORM FIELD HANDLERES-----------//
   // Helper function to convert date from "MM/DD/YYYY" format to "yyyy-mm-dd" format
   const formatDateToInputValue = (formattedDate) => {
     return dayjs(formattedDate).format("YYYY-MM-DD");
   };
 
-   //The function below handles updating the 'formState'
+  //The function below handles updating the 'formState'
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     // If the name of the input is "dateOfSale", format the date before setting it in the state.
@@ -74,13 +67,13 @@ export const CreateListingModal = ({
     }
   };
 
- //The function below handles updating the value of the 'value' property that is return by 'usePlacesAutoComplete' hook.
+  //The function below handles updating the value of the 'value' property that is return by 'usePlacesAutoComplete' hook.
   //We use the 'setValue' function that is provided by the 'usePlacesAutoComplete' hook.
   const handleAutoCompleteChange = (e) => {
     setValue(e.target.value);
   };
 
-// This function is triggered when a user selects an address from the autocomplete suggestions.
+  // This function is triggered when a user selects an address from the autocomplete suggestions.
   //It updates the state with the selected address and its coordinates
   const handleAddressSelection = async (address) => {
     setValue(address, false);
@@ -95,39 +88,23 @@ export const CreateListingModal = ({
     }
   };
 
-   //This function is responsible for creating and adding a listing to the database
+  //This function is responsible for creating and adding a listing to the database
   const submitNewListing = async (e) => {
     e.preventDefault();
+
+    console.log("formState:", formState);
+    console.log("listingAddress:", listingAddress);
+
     try {
-      const { data } = await addListing({
-        variables: {
-          ...formState,
-          address: listingAddress.address,
-          lat: listingAddress.lat,
-          lng: listingAddress.lng,
-        },
-        update: (cache, { data: { addListing } }) => {
-          // Read the existing cached data for the current user
-          const cachedData = cache.readQuery({ query: ME_QUERY });
-
-          // Update the cached data with the new listing
-          cache.writeQuery({
-            query: ME_QUERY,
-            data: {
-              me: {
-                ...cachedData.me,
-                userPosts: [...cachedData.me.userPosts, addListing],
-              },
-            },
-          });
-        },
+      await addListing({
+        description: formState.description,
+        address: listingAddress.address,
+        dateOfSale: formState.dateOfSale,
+        image: formState.image,
+        title: formState.title,
+        lat: listingAddress.lat,
+        lng: listingAddress.lng,
       });
-
-      // Here we extract the response from the addListing mutation, which contains the new listing's data
-      const newListing = data.addListing;
-
-      // Update the list of posts in the parent component (MyListings)
-      setListings([...listings, newListing]);
 
       //clear the formState
       setFormState({
@@ -280,3 +257,57 @@ export const CreateListingModal = ({
     </Container>
   );
 };
+
+// //Here we set a mutation called 'addListing' that takes in the "ADD_LISTING" mutation
+// //this mutation is responsible for the creating and adding a listing to the database
+// const [addListing, { error }] = useMutation(ADD_LISTING);
+
+// //This function is responsible for creating and adding a listing to the database
+// const submitNewListing = async (e) => {
+//   e.preventDefault();
+//   try {
+//     const { data } = await addListing({
+//       variables: {
+//         ...formState,
+//         address: listingAddress.address,
+//         lat: listingAddress.lat,
+//         lng: listingAddress.lng,
+//       },
+//       update: (cache, { data: { addListing } }) => {
+//         // Read the existing cached data for the current user
+//         const cachedData = cache.readQuery({ query: ME_QUERY });
+
+//         // Update the cached data with the new listing
+//         cache.writeQuery({
+//           query: ME_QUERY,
+//           data: {
+//             me: {
+//               ...cachedData.me,
+//               userPosts: [...cachedData.me.userPosts, addListing],
+//             },
+//           },
+//         });
+//       },
+//     });
+
+//     // Here we extract the response from the addListing mutation, which contains the new listing's data
+//     const newListing = data.addListing;
+
+//     // Update the list of posts in the parent component (MyListings)
+//     setListings([...listings, newListing]);
+
+//     //clear the formState
+//     setFormState({
+//       title: "",
+//       description: "",
+//       dateOfSale: "",
+//       image: "",
+//       author: "",
+//     });
+//     // Reset the address input field to an empty string
+//     setValue("");
+//     handleClose(); // closing the modal
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
