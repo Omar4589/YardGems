@@ -31,6 +31,8 @@ export const ListingProvider = ({ children }) => {
   const [listings, setListings] = useState([]);
   const [userListings, setUserListings] = useState([]);
   const [savedFavorites, setSavedFavorites] = useState([]);
+  const [favoritedListingIds, setFavoritedListingIds] = useState(new Set());
+
 
   //-----------------QUERIES-----------------//
   const { data: allListingsData } = useQuery(QUERY_LISTINGS);
@@ -69,6 +71,13 @@ export const ListingProvider = ({ children }) => {
     }
   }, [allListingsData, loggedInUserData]);
 
+  useEffect(() => {
+    // Load favorited listing IDs from the user's savedFavorites array
+    // Make sure you're adding only the IDs to the Set
+    setFavoritedListingIds(new Set(savedFavorites.map((listing) => listing._id)));
+  }, [savedFavorites]);
+  
+console.log(favoritedListingIds);
   //-----------------HANDLERS-------------------//
   const addAListing = async (newListingData) => {
     try {
@@ -215,6 +224,7 @@ export const ListingProvider = ({ children }) => {
         editAListing,
         favoriteAListing,
         unfavoriteAListing,
+        favoritedListingIds
       }}
     >
       {children}

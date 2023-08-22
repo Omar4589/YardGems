@@ -25,8 +25,13 @@ import { ADD_FAVORITES } from "../../utils/mutations";
 export default function AllListings() {
   //Here we destructure the context from 'useListingContext',
   //in this case, the context is the 'listings' that we query using GraphQL in 'ListingsContext.js'  *the loggedInUser's info is also available to be destructed*
-  const { listings, setListings, favoriteAListing, unfavoriteAListing } =
-    useListingContext();
+  const {
+    listings,
+    setListings,
+    favoriteAListing,
+    unfavoriteAListing,
+    favoritedListingIds,
+  } = useListingContext();
 
   //---------STATES--------//
   //State for 'Please login' pop over; We set the initial state to false to hide the popOver
@@ -66,11 +71,10 @@ export default function AllListings() {
                   <Typography>{listing.address}</Typography>
                 </CardContent>
               </CardActionArea>
-              {/* Use the "isFavorited" property to set the color of the heart icon */}
               {Auth.loggedIn() ? (
                 <IconButton
                   onClick={() => {
-                    if (listing.isFavorited) {
+                    if (favoritedListingIds.has(listing._id)) {
                       unfavoriteAListing(listing._id);
                     } else {
                       favoriteAListing(listing._id);
@@ -78,7 +82,11 @@ export default function AllListings() {
                   }}
                   sx={
                     (styles.iconButton,
-                    { color: listing.isFavorited ? "red" : "grey" }) // Set the color based on "isFavorited"
+                    {
+                      color: favoritedListingIds.has(listing._id)
+                        ? "red"
+                        : "grey",
+                    })
                   }
                   aria-label="favorite"
                 >
