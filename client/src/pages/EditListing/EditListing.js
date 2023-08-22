@@ -1,9 +1,8 @@
 //-----------------IMPORTS-----------------------//
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { QUERY_SINGLE_LISTING } from "../../utils/queries";
-import { EDIT_LISTING } from "../../utils/mutations";
 import { Container, Box, Grid, TextField, Button } from "@mui/material/";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -18,13 +17,13 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import "./singlePost.css";
+import { useListingContext } from "../../utils/ListingContext";
 
 //-----------------------START OF COMPONENT-----------------------//
 const SinglePost = () => {
-  //-----------------STATE---------------//
-  //Below we create two states that hold an initial state
-  //that is equal to the data values that we retrieved from the query: QUERY_SINGLE_LISTING
+  const { editAListing } = useListingContext();
 
+  //-----------------STATE---------------//
   //First state: 'listingAddress' and set the intial state to empty object because we expect an object when setting the state
   const [listingAddress, setListingAddress] = useState({});
 
@@ -54,25 +53,21 @@ const SinglePost = () => {
     variables: { listingId: listingId },
   });
 
-  //This useEffect runs once - when the component mounts.
-  //it sets the initial formState and listingAddress state to the data retrieved by query
+  // Your existing useEffect logic
   useEffect(() => {
-    if (!loading) {
-      const fetchedListing = queryData?.listing || {};
-      setFormState({
-        title: fetchedListing.title,
-        description: fetchedListing.description,
-        dateOfSale: fetchedListing.dateOfSale,
-        image: "",
-      });
-      setListingAddress(fetchedListing.address);
-    }
-  }, []);
+    const fetchedListing = queryData?.listing || {};
+
+    setFormState({
+      id: fetchedListing._id,
+      title: fetchedListing.title,
+      description: fetchedListing.description,
+      dateOfSale: fetchedListing.dateOfSale,
+      image: "",
+    });
+    setListingAddress(fetchedListing.address);
+  }, [queryData]);
 
   //-----------------MUTATIONS------------//
-  //Here we set a mutation called 'editPost' that takes in the "EDIT_LISTING" mutation
-  //this mutation is responsible for the editing of an existing listing
-  const [editPost, { error }] = useMutation(EDIT_LISTING);
 
   //--------------FORM FIELD HANDLERES-----------//
   //The function below handles updating the 'formState'
@@ -106,17 +101,22 @@ const SinglePost = () => {
   //it uses the 'editPost mutation which sends the editedPost to the database and then
   //it reassigns the window location to navigate user to /MyListings
   const editPostSubmit = async (e) => {
+    console.log("formState:", formState);
+    console.log("listingAddress:", listingAddress);
+    console.log("listing ID:", listingId);
+
     e.preventDefault();
 
     try {
-      const { updatedPost } = await editPost({
-        variables: {
-          ...formState,
-          id: queryData.listing._id,
-          address: listingAddress.address,
-          lat: listingAddress.lat,
-          lng: listingAddress.lng,
-        },
+      await editAListing({
+        id: formState.id,
+        description: formState.description,
+        address: listingAddress.address,
+        dateOfSale: formState.dateOfSale,
+        image: formState.image,
+        title: formState.title,
+        lat: listingAddress.lat,
+        lng: listingAddress.lng,
       });
       setFormState({
         description: "",
@@ -131,7 +131,8 @@ const SinglePost = () => {
     }
   };
 
-  if (loading) {
+  // Only render the component if data has been fetched
+  if (loading || !queryData) {
     return <div>Loading...</div>;
   }
 

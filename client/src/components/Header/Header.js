@@ -1,7 +1,7 @@
 //-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { QUERY_LISTINGS } from "../../utils/queries";
+import { ME_QUERY, QUERY_LISTINGS } from "../../utils/queries";
 import { Box, IconButton, Link, InputBase } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import SearchIcon from "@mui/icons-material/Search";
@@ -41,9 +41,15 @@ const Header = () => {
   //refetch will execute the QUERY_LISTINGS query
   const { refetch } = useQuery(QUERY_LISTINGS);
 
+  const { refetch: refetchMe } = useQuery(ME_QUERY);
+
   // Function to manually refetch data
   const handleRefetch = () => {
     refetch();
+  };
+
+  const handleRefetchMe = () => {
+    refetchMe();
   };
 
   return (
@@ -59,7 +65,7 @@ const Header = () => {
         </Link>
         <Link
           component={RouterLink}
-          onClick={handleRefetch}
+          onClick={handleRefetchMe}
           to="/SavedListings"
           sx={{ ...styles.savedListingLink }}
         >
