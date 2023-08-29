@@ -6,7 +6,6 @@ import {
   useLoadScript,
   MarkerF,
   InfoWindow,
-  scale,
 } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -82,8 +81,6 @@ function Map() {
             { _id, lat, lng, title, description, address, dateOfSale },
             index
           ) => {
-            // console.log(title);
-
             return (
               <MarkerF
                 key={_id}

@@ -17,14 +17,10 @@ import {
 import "@reach/combobox/styles.css";
 import dayjs from "dayjs";
 
+//This is the modal used to create a new listing by a user who is logged in. You can find this component in the MyListings.js page.
+
 //-----------------------START OF COMPONENT-----------------------//
-export const CreateListingModal = ({
-  handleClose,
-  handleOpen,
-  listings,
-  setListings,
-  addListing,
-}) => {
+export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   //-----------------STATE---------------//
   //Here we create a state 'listingAddress' that will hold an object containing the address value of the listing
   const [listingAddress, setListingAddress] = useState({});
