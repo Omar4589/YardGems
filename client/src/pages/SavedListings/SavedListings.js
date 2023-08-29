@@ -1,6 +1,3 @@
-import React, { useState, useEffect } from "react";
-import { useMutation } from "@apollo/client";
-import { REMOVE_FAVORITES } from "../../utils/mutations";
 import {
   Container,
   Card,
@@ -17,7 +14,9 @@ import Auth from "../../utils/auth";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 import { useListingContext } from "../../utils/ListingContext";
 
+//----------------START OF PAGE--------------//
 const SavedListings = () => {
+  //destructure 'savedFavorites' and 'unfavoriteAListing' from the ListingContext
   const { savedFavorites, unfavoriteAListing } = useListingContext();
 
   return (
