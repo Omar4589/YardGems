@@ -4,6 +4,8 @@ import styles from "./styles";
 import iphone1 from "../../assets/images/iphone1.PNG";
 import iphone2 from "../../assets/images/iphone2.PNG"
 
+
+//This is the AdditionalFeatures page is displayed if a user clicks on "MyListings","SavedListings","MyAccount" and they are not logged in.
 const AdditionalFeatures = () => {
   return (
     <Box sx={{ ...styles.mainContainer }}>
