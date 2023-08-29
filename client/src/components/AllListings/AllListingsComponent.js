@@ -1,6 +1,5 @@
 //---------------------------IMPORTS--------------------------------//
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
 import {
   Container,
   Card,
@@ -19,15 +18,12 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { useListingContext } from "../../utils/ListingContext";
 import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
-import { ADD_FAVORITES } from "../../utils/mutations";
 
 //---------------------------START OF COMPONENT----------------------//
 export default function AllListings() {
   //Here we destructure the context from 'useListingContext',
-  //in this case, the context is the 'listings' that we query using GraphQL in 'ListingsContext.js'  *the loggedInUser's info is also available to be destructed*
   const {
     listings,
-    setListings,
     favoriteAListing,
     unfavoriteAListing,
     favoritedListingIds,
@@ -51,6 +47,7 @@ export default function AllListings() {
 
   //Closes pop over message - 'Please log in'
   const closePopOver = () => setLoginPopOver(false);
+
   console.log("-----All Listings with isFavorited property");
   console.log(listings);
   //---------------------------RETURN STATEMENT-------------------------//
@@ -129,35 +126,3 @@ export default function AllListings() {
     </Container>
   );
 }
-
-// //-----------MUTATIONS----------//
-// //This mutation handles adding a listing to the logged in user's savedFavorites array
-// const [addFavorites] = useMutation(ADD_FAVORITES);
-
-// //This function handles adding a listing to user's 'savedFavorites' by calling
-// //the 'addFavorites' mutation; this mutation has logic that removes a listing from 'savedFavorites' if it's already there, checkout resolvers.js in server side
-// const addToFavorites = async (_id) => {
-//   const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-//   if (!token) {
-//     return false;
-//   }
-
-//   try {
-//     //invoke mutation
-//     const { data } = await addFavorites({ variables: { listingId: _id } });
-
-//     // Here we map over the each listing and check if the id of the listing we are mutating matches the listig id we are mapping over
-//     //if the listing id's match, we then set the isFavorited property of that listing to the opposite boolean value that it is currently has
-//     //this essentially toggles between 'true' and 'false'
-//     const updatedListings = listings.map((listing) =>
-//       listing._id === _id
-//         ? { ...listing, isFavorited: !listing.isFavorited }
-//         : listing
-//     );
-//     //update listings state with the updatedListings array, this array includes an update to the isFavorited property of each listing
-//     setListings(updatedListings);
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
