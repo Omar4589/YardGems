@@ -22,7 +22,9 @@ import { useNavigate } from "react-router-dom";
 
 //-----------------------START OF COMPONENT-----------------------//
 const SinglePost = () => {
+  //destrcture from ListingContext
   const { editAListing } = useListingContext();
+  //Here we set a variable for the userNavigate hook from react-router-dom
   const navigate = useNavigate(); 
 
   //-----------------STATE---------------//
@@ -55,7 +57,9 @@ const SinglePost = () => {
     variables: { listingId: listingId },
   });
 
-  // Your existing useEffect logic
+  // This use effect runs when the component mounts and is responsible for 
+  //setting the formState and listingAddress states to the data that we fetch from database
+  //this data is the listing data the user selected to edit
   useEffect(() => {
     const fetchedListing = queryData?.listing || {};
 
@@ -69,9 +73,8 @@ const SinglePost = () => {
     setListingAddress(fetchedListing.address);
   }, [queryData]);
 
-  //-----------------MUTATIONS------------//
-
-  //--------------FORM FIELD HANDLERES-----------//
+  
+  //--------------FORM FIELD HANDLERS-----------//
   //The function below handles updating the 'formState'
   const handleInputChange = (event) => {
     const { name, value: newVal } = event.target;
