@@ -26,11 +26,16 @@ export const ListingProvider = ({ children }) => {
   const [removeFavorites] = useMutation(REMOVE_FAVORITES);
 
   //-----------------STATE-------------------//
-  //Here we create a state called 'listings' that we will use to keep track of ALL LISTINGS in database
-  //We first set it to an empty array because we havent fetched the data yet
+  // Here we create states to manage different types of listings and user interactions
+  // We start with empty arrays because we haven't fetched the data yet
+  // This state tracks all listings in the database
   const [listings, setListings] = useState([]);
+  // This state tracks listings of the logged-in user
   const [userListings, setUserListings] = useState([]);
+  // This state tracks a user's saved favorite listings
   const [savedFavorites, setSavedFavorites] = useState([]);
+  // This state keeps track of IDs of favorited listings for quick lookups
+  const [favoritedListingIds, setFavoritedListingIds] = useState(new Set());
 
   //-----------------QUERIES-----------------//
   const { data: allListingsData } = useQuery(QUERY_LISTINGS);
@@ -38,36 +43,51 @@ export const ListingProvider = ({ children }) => {
   const { data: loggedInUserData } = useQuery(ME_QUERY);
 
   //-----------------HOOKS-------------------//
-  //The useEffect hook below runs when component mounts and sets the listings state to
-  //an updated listings array we name 'updatedListings which will include a 'isFavorited' property
+  // The useEffect hook below runs when the component mounts.
+  // It updates the 'listings' state with an updated array called 'updatedListings',
+  // which includes an 'isFavorited' property for each listing.
   useEffect(() => {
     if (allListingsData) {
       const allListings = allListingsData?.allListings || [];
 
-      // If loggedInUserData is available, update isFavorited based on userFavorites
+      // If 'loggedInUserData' is available, update 'isFavorited' based on user favorites
       if (loggedInUserData) {
         const userListings = loggedInUserData?.me?.userPosts || [];
         const userFavorites = loggedInUserData?.me?.savedFavorites || [];
 
+        // Map through all listings and add 'isFavorited' property based on user favorites
         const listingsWithFavorites = allListings.map((listing) => ({
           ...listing,
           isFavorited: userFavorites.includes(listing._id),
         }));
 
+        // Update states to reflect the changes
         setListings(listingsWithFavorites);
         setUserListings(userListings);
-        setSavedFavorites(userFavorites); // Set the initial state of savedFavorites
+        setSavedFavorites(userFavorites); // Set the initial state of 'savedFavorites'
       } else {
-        // If not logged in, set isFavorited to false for all listings
+        // If not logged in, set 'isFavorited' to false for all listings
         const updatedListings = allListings.map((listing) => ({
           ...listing,
           isFavorited: false,
         }));
 
+        // Update 'listings' state to reflect the changes
         setListings(updatedListings);
       }
     }
   }, [allListingsData, loggedInUserData]);
+
+  //this use effect only runs if the user is logged-in because it depends on savedFavorites array
+  useEffect(() => {
+    // Load favorited listing IDs from the user's savedFavorites array
+    // Make sure you're adding only the IDs to the Set
+    setFavoritedListingIds(
+      new Set(savedFavorites.map((listing) => listing._id))
+    );
+  }, [savedFavorites]);
+
+  
 
   //-----------------HANDLERS-------------------//
   const addAListing = async (newListingData) => {
@@ -199,11 +219,11 @@ export const ListingProvider = ({ children }) => {
   };
 
   //---------------RETURN STATEMENT-------------------//
-  // The value prop expects an initial state object, in this case
-  //the initial state is the listings state, we also pass in the state setter and loggedInUser's info in case we need it
+  // The value prop expects an initial state object
   return (
     <ListingContext.Provider
       value={{
+        //state objects
         listings,
         setListings,
         userListings,
@@ -215,6 +235,7 @@ export const ListingProvider = ({ children }) => {
         editAListing,
         favoriteAListing,
         unfavoriteAListing,
+        favoritedListingIds,
       }}
     >
       {children}

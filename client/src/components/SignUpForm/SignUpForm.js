@@ -18,6 +18,7 @@ import styles from "./styles";
 //-----------------------START OF COMPONENT-----------------------//
 const SignUpForm = ({ handleComponentChange, LoginForm }) => {
   //-----------------STATE---------------//
+  // State to store user input data for registration
   const [userFormData, setUserFormData] = useState({
     username: "",
     email: "",
@@ -25,9 +26,11 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
   });
 
   //-----------------MUTATIONS------------//
+  // Use the CREATE_USER mutation for user registration
   const [createUser, { error, data }] = useMutation(CREATE_USER);
 
   //----------SIGNUP FORM HANDLERS ---------\\
+  // Handler for input field changes in the signup form
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
@@ -37,11 +40,12 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
     });
   };
 
-  //This function handles the sign up form submission
+  // This function handles the sign up form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
+      // Use the createUser mutation to register the user
       const { data } = await createUser({
         variables: {
           username: userFormData.username,
@@ -50,17 +54,20 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
         },
       });
 
+      // Log the user in with the generated token
       Auth.login(data.createUser.token);
     } catch (err) {
       console.error(err);
     }
 
+    // Clear the form data after submission
     setUserFormData({
       username: "",
       email: "",
       password: "",
     });
   };
+
 
   return (
     <Container sx={{ ...styles.mainContainer }}>

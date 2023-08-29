@@ -6,7 +6,6 @@ import {
   useLoadScript,
   MarkerF,
   InfoWindow,
-  scale,
 } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -29,29 +28,30 @@ export default function GoogleMaps() {
     googleMapsApiKey: "AIzaSyDvK10cezc3bexO_QfHK7MPRVCY2IIGVt4",
     libraries: ["places"],
   });
-  // is we don't have access return loading, if we do return the Map
+  // If the API is not loaded yet, show loading message
   if (!isLoaded) return <div>Loading...</div>;
-  return <Map />; // from below function Map
+
+  // Render the map component
+  return <Map />;
 }
 
-// this returns the map with a marker taken from the PlacesAutoComplete
 function Map() {
-  // center is used to redirect to the selected city
-  // selected is for value selected from user to place pin
+  // State to manage the map center and selected marker
   const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 });
   const [selected, setSelected] = useState(null);
+
+  // Fetch listing data using Apollo useQuery
   const { loading, data } = useQuery(QUERY_LISTINGS);
   const allListings = data?.allListings || [];
 
-  const [activeMarker, setActiveMarker] = useState(null); // for window popups
-  const handleActiveMarker = (markerF) => {
-    if (markerF === activeMarker) {
+  // State to manage active marker for InfoWindow display
+  const [activeMarker, setActiveMarker] = useState(null);
+  const handleActiveMarker = (markerId) => {
+    if (markerId === activeMarker) {
       return;
     }
-    setActiveMarker(markerF);
+    setActiveMarker(markerId);
   };
-
-  // console.log(allListings);
 
   return (
     <div sx={{ backgroundColor: "#e8f5e9" }}>
@@ -81,8 +81,6 @@ function Map() {
             { _id, lat, lng, title, description, address, dateOfSale },
             index
           ) => {
-            // console.log(title);
-
             return (
               <MarkerF
                 key={_id}
@@ -112,17 +110,17 @@ function Map() {
   );
 }
 
-// this handles the autoComplete Box
 const PlacesAutocomplete = ({ setSelected, setCenter }) => {
+  // Use the usePlacesAutocomplete hook to manage Places Autocomplete functionality
   const {
     ready,
     value,
     setValue,
     suggestions: { status, data },
     clearSuggestions,
-  } = usePlacesAutocomplete(); // will give us some data back from the UI, ready is based on is the google script is ready to go, value / setValue is what the user has typed in, suggestions is that status of the result, data (all the attributes), clearSuggestions is what the user has clearly chose
-  // will render once when the page loads, a window will pop up asking to share location info with google
-  // if user clicks yes, then will cache, and automatically render the map to user's current location
+  } = usePlacesAutocomplete();
+
+  // Fetch user's current location if available
   useEffect(() => {
     const getCurrentLocation = () => {
       if (navigator.geolocation) {
@@ -142,17 +140,12 @@ const PlacesAutocomplete = ({ setSelected, setCenter }) => {
     getCurrentLocation();
   }, []);
 
-  // handleSelect will be a async function bc we will be converting the value selected to a lat and long
-  // val will be passsed as a string from the value selected
+  // Handle selection of a place from Autocomplete suggestions
   const handleSelect = async (address) => {
-    setValue(address, false); // setting to false to not fetch any other data
-    clearSuggestions(); // this will clear the autofill suggestions / function from google map api (i did not create)
-    console.log(address);
-    // results is equal to the value the user chose
+    setValue(address, false);
+    clearSuggestions();
     const results = await getGeocode({ address });
-    // now converting results to lat and long
     const { lat, lng } = await getLatLng(results[0]);
-    // this will set our selectedState to create where our marker gets placed based on user input
     setSelected({ lat, lng });
     setCenter({ lat, lng });
   };

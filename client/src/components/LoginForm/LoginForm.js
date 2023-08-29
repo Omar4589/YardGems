@@ -19,37 +19,40 @@ import greenGem from "../../assets/images/greenGem.png";
 //-----------------------START OF COMPONENT-----------------------//
 export default function SignIn() {
   //-----------------STATE---------------//
-  //We create a state 'userFormData' to track the form input fields for email and password
+  // State to track the form input fields for email and password
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
 
   //-----------------MUTATIONS------------//
-  //Here we set a 'login' mutation using the LOGIN_USER mutation we imported above
+  // Define the 'login' mutation using the LOGIN_USER mutation imported above
   const [login, { error }] = useMutation(LOGIN_USER);
 
   //----------LOGIN FORM HANDLERS ---------\\
-  //This handles the updating of input fields state
+  // Handler to update the state when input fields change
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
 
-  //This function handles the login submission
+  // Function to handle login form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({ email: data.get("email"), password: data.get("password") });
+
     try {
+      // Use the 'login' mutation to log the user in
       const { data } = await login({
         variables: { ...userFormData },
       });
 
+      // Log the user in with the generated token
       Auth.login(data.login.token);
     } catch (err) {
       console.error(err);
     }
 
+    // Clear the form data after submission
     setUserFormData({
-      username: "",
       email: "",
       password: "",
     });

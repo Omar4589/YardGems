@@ -5,7 +5,7 @@ import decode from "jwt-decode";
 class AuthService {
   // Method to get user profile information from the JWT token
   getProfile() {
-    return decode(this.getToken()); // Decode the token using jwt-decode library
+    return decode(this.getToken()); //Decode the token using jwt-decode library
   }
 
   // Method to check if a user is logged in
