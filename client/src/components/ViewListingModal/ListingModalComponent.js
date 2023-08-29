@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { styles } from "./styles";
 
+//This is the modal that appears when a user clicks on a listing from the AllListingsComponent in the Home page
 
 //----------------------START OF COMPONENT----------------------------//
 export default function ListingModalComponent({
