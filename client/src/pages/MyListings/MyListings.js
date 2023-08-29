@@ -21,6 +21,8 @@ import { useListingContext } from "../../utils/ListingContext";
 
 //-----------------------START OF COMPONENT-----------------------//
 const MyListings = () => {
+
+  //destructuring from ListingContext
   const { userListings, setUserListings, removeAListing, addAListing } =
     useListingContext();
 
@@ -154,66 +156,3 @@ const MyListings = () => {
 };
 
 export default MyListings;
-
-// //-----------------STATE---------------//
-// //Here we create a state called 'listings' to track all listings being shown on the page
-// const [listings, setListings] = useState([]);
-
-// //-----------------QUERIES--------------//
-// //Here we are use the user query that returns the logged in users data
-// const { loading, data } = useQuery(ME_QUERY);
-
-// //Here we extract the data from the above query
-// const userData = data?.me || [];
-
-// //-----------------HOOKS-----------------//
-// //this useEffect hook handles updating the listings state when the data from the query is updated
-// useEffect(() => {
-//   const userListings = userData?.userPosts || [];
-
-//   setListings(userListings);
-// }, [userData.userPosts]);
-
-// //-----------------MUTATIONS------------//
-// //Here we are setting a mutation called 'removeListing' , this mutations deletes a listing from the database
-// //We use the 'useMutation' hook and pass in the 'REMOVE_LISTING' mutation that we imported
-// const [removeListing, { error }] = useMutation(REMOVE_LISTING);
-
-// //Here we define a function named 'deleteListing' that removes a user's listing from the database, it takes in a listing's id
-// //We invoke this function when a user clicks on the 'delete' button
-// const deleteListing = async (_id) => {
-//   const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-//   if (!token) {
-//     return false;
-//   }
-//   try {
-//     //Here we call the removeListing mutation
-//     const listing = await removeListing({
-//       variables: { listingId: _id },
-//       //We use the 'update' function to update the cache , this causes a rerender which eliminates the need to include the setListings setter
-//       update: (cache, { data: { removeListing } }) => {
-//         // Read the existing cached data for the current user
-//         const cachedData = cache.readQuery({ query: ME_QUERY });
-
-//         // Filter out the deleted post from the cached userPosts
-//         const updatedUserPosts = cachedData.me.userPosts.filter(
-//           (listing) => listing._id !== _id
-//         );
-
-//         // Update the cached data without the deleted post
-//         cache.writeQuery({
-//           query: ME_QUERY,
-//           data: {
-//             me: {
-//               ...cachedData.me,
-//               userPosts: updatedUserPosts,
-//             },
-//           },
-//         });
-//       },
-//     });
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
