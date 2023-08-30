@@ -191,6 +191,12 @@ export const ListingProvider = ({ children }) => {
             : listing
         )
       );
+
+        // Update the savedFavorites state
+    setSavedFavorites((prevSavedFavorites) => [
+      ...prevSavedFavorites,
+      data.addFavorites,
+    ]);
     } catch (error) {
       // Handle any errors
       console.error("Error favoriting listing:", error);
@@ -212,6 +218,11 @@ export const ListingProvider = ({ children }) => {
             : listing
         )
       );
+
+      // Update the savedFavorites state
+    setSavedFavorites((prevSavedFavorites) =>
+    prevSavedFavorites.filter((listing) => listing._id !== listingId)
+  );
     } catch (error) {
       // Handle any errors
       console.error("Error unfavoriting listing:", error);
