@@ -18,6 +18,7 @@ import Home from "./pages/Home/Home";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import SavedListings from "./pages/SavedListings/SavedListings";
 import { ListingProvider } from "./utils/ListingContext";
+import MyAccount from "./pages/MyAccount/MyAccount";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -54,6 +55,7 @@ function App() {
             <Route path="/listings/:listingId" element={<EditListing />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
+            <Route path="/MyAccount" element={<MyAccount />} />
           </Routes>
           <BottomNavBar />
           <Footer />
