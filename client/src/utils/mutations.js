@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const CREATE_USER = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {
@@ -22,9 +22,33 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+export const UPDATE_USERNAME = gql`
+  mutation updateUsername($newUsername: String!) {
+    updateUsername(newUsername: $newUsername) {
+      _id
+      username
+    }
+  }
+`;
 export const ADD_LISTING = gql`
-  mutation addListing($description: String,  $address: String, $dateOfSale: String, $image: String, $title: String, $lat: Float, $lng: Float) {
-    addListing(description: $description, address: $address, dateOfSale: $dateOfSale, image: $image, title: $title, lat: $lat, lng: $lng) {
+  mutation addListing(
+    $description: String
+    $address: String
+    $dateOfSale: String
+    $image: String
+    $title: String
+    $lat: Float
+    $lng: Float
+  ) {
+    addListing(
+      description: $description
+      address: $address
+      dateOfSale: $dateOfSale
+      image: $image
+      title: $title
+      lat: $lat
+      lng: $lng
+    ) {
       _id
       description
       address
@@ -39,21 +63,39 @@ export const ADD_LISTING = gql`
   }
 `;
 export const EDIT_LISTING = gql`
-mutation editListing($id: ID, $description: String,  $address: String, $dateOfSale: String, $image: String, $title: String, $lat: Float, $lng: Float) {
-  editListing(id: $id, description: $description, address: $address, dateOfSale: $dateOfSale, image: $image, title: $title,lat: $lat, lng: $lng) {
-    _id
-    description
-    address
-    dateOfSale
-    image
-    author
-    title
-    lat
-    lng
-    createdAt
+  mutation editListing(
+    $id: ID
+    $description: String
+    $address: String
+    $dateOfSale: String
+    $image: String
+    $title: String
+    $lat: Float
+    $lng: Float
+  ) {
+    editListing(
+      id: $id
+      description: $description
+      address: $address
+      dateOfSale: $dateOfSale
+      image: $image
+      title: $title
+      lat: $lat
+      lng: $lng
+    ) {
+      _id
+      description
+      address
+      dateOfSale
+      image
+      author
+      title
+      lat
+      lng
+      createdAt
+    }
   }
-}
-`
+`;
 export const REMOVE_LISTING = gql`
   mutation removeListing($listingId: ID!) {
     removeListing(listingId: $listingId) {

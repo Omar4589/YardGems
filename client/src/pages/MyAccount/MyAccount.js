@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { ME_QUERY } from "../../utils/queries";
+import { useMutation } from "@apollo/client";
+import { UPDATE_USERNAME } from "../../utils/mutations";
 import { Box, Button, TextField, Typography, Container } from "@mui/material";
 import styles from "./styles";
 
@@ -9,6 +11,8 @@ const MyAccount = () => {
   const [userFormData, setUserFormData] = useState({ username: "", email: "" });
 
   const { data: loggedInUserData } = useQuery(ME_QUERY);
+
+  const [updateUsername] = useMutation(UPDATE_USERNAME);
 
   useEffect(() => {
     setUserFormData({
@@ -28,17 +32,15 @@ const MyAccount = () => {
     event.preventDefault();
 
     try {
+      // Call the updateUsername mutation
+      const { data } = await updateUsername({
+        variables: { newUsername: userFormData.username },
+      });
 
-        
+      window.location.assign("/");
     } catch (err) {
       console.error(err);
     }
-
-    // Clear the form data after submission
-    setUserFormData({
-      email: "",
-      password: "",
-    });
   };
 
   return (

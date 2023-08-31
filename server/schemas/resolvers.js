@@ -46,6 +46,17 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    updateUsername: async (parent, { newUsername }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { username: newUsername },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
     addListing: async (
       parent,
       { description, address, dateOfSale, image, author, title, lat, lng },
@@ -112,7 +123,7 @@ const resolvers = {
             { $pull: { savedFavorites: listingId } },
             { new: true }
           );
-          return user; 
+          return user;
         }
         //else we run the code below which adds the listing to the 'savedFavorites' array
         const favoritedListing = await Listing.findOne({
