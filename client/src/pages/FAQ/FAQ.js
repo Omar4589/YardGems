@@ -14,6 +14,7 @@ const FAQ = () => {
           <Typography
             component="a"
             href="#accessandsignup"
+            color="inherit"
             sx={{ ...styles.section }}
           >
             Access and Sign Up
