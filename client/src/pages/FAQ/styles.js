@@ -28,8 +28,9 @@ const styles = {
     textAlign: "center",
     mb: 2,
     mt: 2,
+    mx:"auto",
   },
-  link: { my: 0.5 },
+  link: { my: 0.5,  mr:"auto", },
   heading: { fontSize: 25, my: 1, textAlign: "center" },
   question: { my: 1, fontWeight: "bold" },
 };

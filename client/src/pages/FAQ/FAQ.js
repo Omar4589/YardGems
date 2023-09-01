@@ -5,16 +5,11 @@ import styles from "./styles";
 const FAQ = () => {
   return (
     <Box sx={{ ...styles.mainContainer }}>
-
-
-     
-
       <Box sx={{ ...styles.contextBox }}>
-
-
         <Box sx={{ ...styles.nav }}>
-        <Typography sx={{ ...styles.tobHeading }}>Table of Contents</Typography>
-
+          <Typography sx={{ ...styles.tobHeading }}>
+            Table of Contents
+          </Typography>
 
           <Typography
             component="a"
@@ -188,11 +183,10 @@ const FAQ = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ ...styles.faq}}>
-        <Typography sx={{ ...styles.tobHeading }}>
-          Frequently Asked Questions
-        </Typography>
-
+        <Box sx={{ ...styles.faq }}>
+          <Typography sx={{ ...styles.tobHeading }}>
+            Frequently Asked Questions
+          </Typography>
 
           <Typography id="accessandsignup" sx={{ ...styles.heading }}>
             Access and Sign Up
