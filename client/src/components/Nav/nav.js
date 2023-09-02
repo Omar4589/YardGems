@@ -186,7 +186,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
               <>
                 <MuiLink
                   component={RouterLink}
-                  to="/"
+                  to="/MyAccount"
                   color="inherit"
                   sx={{ textDecoration: "none" }}
                   onClick={() => setIsDrawerOpen(false)}

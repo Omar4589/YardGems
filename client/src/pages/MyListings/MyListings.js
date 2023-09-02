@@ -57,7 +57,7 @@ const MyListings = () => {
   return (
     <>
       {Auth.loggedIn() ? (
-        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9" }}>
+        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9", pb:10 }}>
           <Container maxWidth="md">
             <Typography
               component="div"
