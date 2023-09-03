@@ -6,182 +6,212 @@ const FAQ = () => {
   return (
     <Box sx={{ ...styles.mainContainer }}>
       <Box sx={{ ...styles.contextBox }}>
+        <Typography sx={{ ...styles.tobHeading }}>Table of Contents</Typography>
         <Box sx={{ ...styles.nav }}>
-          <Typography sx={{ ...styles.tobHeading }}>
-            Table of Contents
-          </Typography>
+          <Box sx={{ ...styles.section }}>
+            <Typography
+              component="a"
+              href="#accessandsignup"
+              color="inherit"
+              sx={{ ...styles.sectionTitle }}
+            >
+              Access and Sign Up
+            </Typography>
 
-          <Typography
-            component="a"
-            href="#accessandsignup"
-            color="inherit"
-            sx={{ ...styles.section }}
-          >
-            Access and Sign Up
-          </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {" "}
+              <Typography
+                component="a"
+                href="#isyardgemsfree"
+                sx={{ ...styles.link }}
+              >
+                Is YardGems free to use?
+              </Typography>
+              <Typography
+                component="a"
+                href="#doineedtoentercreditcard"
+                sx={{ ...styles.link }}
+              >
+                Do I need to enter my credit card info?
+              </Typography>
+              <Typography
+                component="a"
+                href="#doineedtosignup"
+                sx={{ ...styles.link }}
+              >
+                Do I need to sign up to view listings?
+              </Typography>
+              <Typography
+                component="a"
+                href="#whatadditionalfeatures"
+                sx={{ ...styles.link }}
+              >
+                What additional features do I get by signing up?
+              </Typography>
+              <Typography
+                component="a"
+                href="#howdoisignup"
+                sx={{ ...styles.link }}
+              >
+                {" "}
+                How do I sign up for YardGems?
+              </Typography>
+            </Box>
+          </Box>
 
-          <Typography
-            component="a"
-            href="#isyardgemsfree"
-            sx={{ ...styles.link }}
-          >
-            Is YardGems free to use?
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#doineedtoentercreditcard"
-            sx={{ ...styles.link }}
-          >
-            Do I need to enter my credit card info?
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#doineedtosignup"
-            sx={{ ...styles.link }}
-          >
-            Do I need to sign up to view listings?
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#whatadditionalfeatures"
-            sx={{ ...styles.link }}
-          >
-            What additional features do I get by signing up?
-          </Typography>
-          <Typography
-            component="a"
-            href="#howdoisignup"
-            sx={{ ...styles.link }}
-          >
+          <Box sx={{ ...styles.section }}>
             {" "}
-            How do I sign up for YardGems?
-          </Typography>
+            <Typography
+              component="a"
+              href="#navigationandinterface"
+              sx={{ ...styles.sectionTitle }}
+            >
+              {" "}
+              Navigation and Interface{" "}
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {" "}
+              <Typography
+                component="a"
+                href="#howdoinavigate"
+                sx={{ ...styles.link }}
+              >
+                How do I navigate the site?
+              </Typography>
+              <Typography
+                component="a"
+                href="#whydoesthenavigationchange"
+                sx={{ ...styles.link }}
+              >
+                Why does the navigation change on mobile devices?
+              </Typography>
+            </Box>
+          </Box>
 
-          <Typography
-            component="a"
-            href="#navigationandinterface"
-            sx={{ ...styles.section }}
-          >
+          <Box sx={{ ...styles.section }}>
+            <Typography
+              component="a"
+              href="#creatingandmanaginglistings"
+              sx={{ ...styles.sectionTitle }}
+            >
+              Creating and Managing Listings{" "}
+            </Typography>
+
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {" "}
+              <Typography
+                component="a"
+                href="#howdoicreateanewlisting"
+                sx={{ ...styles.link }}
+              >
+                {" "}
+                How do I create a new listing?
+              </Typography>
+              <Typography
+                component="a"
+                href="#canieditalisting"
+                sx={{ ...styles.link }}
+              >
+                {" "}
+                Can I edit or delete a listing after creating it?{" "}
+              </Typography>
+              <Typography
+                component="a"
+                href="#howdoisavealisting"
+                sx={{ ...styles.link }}
+              >
+                How do I save a listing as a favorite?{" "}
+              </Typography>
+              <Typography
+                component="a"
+                href="#howdoiremoveasavedlisting"
+                sx={{ ...styles.link }}
+              >
+              
+                How do I remove a saved listing from my favorites?
+              </Typography>
+            </Box>
+          </Box>
+
+          <Box sx={{ ...styles.section }}>
+         
+            <Typography
+              component="a"
+              href="#accountmanagement"
+              sx={{ ...styles.sectionTitle }}
+            >
+              {" "}
+              Account Management{" "}
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {" "}
+              <Typography
+                component="a"
+                href="#howcaniupdatemyusername"
+                sx={{ ...styles.link }}
+              >
+                How can I update my username?
+              </Typography>
+            </Box>
+          </Box>
+
+          <Box sx={{ ...styles.section }}>
+            <Typography
+              component="a"
+              href="#googlemapsintegration"
+              sx={{ ...styles.sectionTitle }}
+            >
+              {" "}
+              Google Maps Integration
+            </Typography>
+
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {" "}
+              <Typography
+                component="a"
+                href="#howarelistingsrepresentedonthemap"
+                sx={{ ...styles.link }}
+              >
+                {" "}
+                How are listings represented on the map?
+              </Typography>
+              <Typography
+                component="a"
+                href="#canisearchforlistingsinmap"
+                sx={{ ...styles.link }}
+              >
+                {" "}
+                Can I search for listings in specific areas on the map?
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ ...styles.section }}>
             {" "}
-            Navigation and Interface{" "}
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#howdoinavigate"
-            sx={{ ...styles.link }}
-          >
-            How do I navigate the site?
-          </Typography>
-          <Typography
-            component="a"
-            href="#whydoesthenavigationchange"
-            sx={{ ...styles.link }}
-          >
-            Why does the navigation change on mobile devices?
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#creatingandmanaginglistings"
-            sx={{ ...styles.section }}
-          >
-            Creating and Managing Listings{" "}
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#howdoicreateanewlisting"
-            sx={{ ...styles.link }}
-          >
-            {" "}
-            How do I create a new listing?
-          </Typography>
-          <Typography
-            component="a"
-            href="#canieditalisting"
-            sx={{ ...styles.link }}
-          >
-            {" "}
-            Can I edit or delete a listing after creating it?{" "}
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#howdoisavealisting"
-            sx={{ ...styles.link }}
-          >
-            How do I save a listing as a favorite?{" "}
-          </Typography>
-          <Typography
-            component="a"
-            href="#howdoiremoveasavedlisting"
-            sx={{ ...styles.link }}
-          >
-            {" "}
-            How do I remove a saved listing from my favorites?
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#accountmanagement"
-            sx={{ ...styles.section }}
-          >
-            {" "}
-            Account Management{" "}
-          </Typography>
-          <Typography
-            component="a"
-            href="#howcaniupdatemyusername"
-            sx={{ ...styles.link }}
-          >
-            How can I update my username?
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#googlemapsintegration"
-            sx={{ ...styles.section }}
-          >
-            {" "}
-            Google Maps Integration
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#howarelistingsrepresentedonthemap"
-            sx={{ ...styles.link }}
-          >
-            {" "}
-            How are listings represented on the map?
-          </Typography>
-          <Typography
-            component="a"
-            href="#canisearchforlistingsinmap"
-            sx={{ ...styles.link }}
-          >
-            {" "}
-            Can I search for listings in specific areas on the map?
-          </Typography>
-
-          <Typography component="a" href="#support" sx={{ ...styles.section }}>
-            Support
-          </Typography>
-
-          <Typography component="a" href="#reportissue" sx={{ ...styles.link }}>
-            How do I report an issue?
-          </Typography>
-
-          <Typography
-            component="a"
-            href="#contactadmin"
-            sx={{ ...styles.link }}
-          >
-            How do I contact an administrator?
-          </Typography>
+            <Typography
+              component="a"
+              href="#support"
+              sx={{ ...styles.sectionTitle }}
+            >
+              Support
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {" "}
+              <Typography
+                component="a"
+                href="#reportissue"
+                sx={{ ...styles.link }}
+              >
+                How do I report an issue?
+              </Typography>
+              <Typography
+                component="a"
+                href="#contactadmin"
+                sx={{ ...styles.link }}
+              >
+                How do I contact an administrator?
+              </Typography>
+            </Box>
+          </Box>
         </Box>
 
         <Box sx={{ ...styles.faq }}>
