@@ -37,29 +37,33 @@ app.get("/", (req, res) => {
 // 'upload.single('file')' middleware looks for a field name 'file' in the incoming request.
 // The file will be stored as a buffer in memory (RAM) rather than being written to disk.
 // Once the file is processed, Multer attaches it to the req object as req.file.
-app.post("/upload", upload.single("file"), async (req, res, next) => {
+app.post("/upload", upload.array("images", 5), async (req, res, next) => {
   try {
-    // Use a Promise to handle the Cloudinary upload.
-    // We first call the promise so that we can 'listen' for a buffer stream.
-    const result = await new Promise((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream(
-          // Configure Cloudinary upload options like folder and resource type.
-         { folder: "yardgemsListings", resource_type: "image" },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
-        )
-        // End the upload stream and send the file buffer.
-        // This triggers the upload process and the subsequent resolution or rejection of the promise.
-        .end(req.file.buffer);
-    });
+    let imageUrls = []; // Array to hold multiple image URLs
 
-    // Here we extract the image URL from the result of the promise call.
-    const imageUrl = result.secure_url;
-    // Send a message and the URL.
-    res.json({ message: "Image uploaded successfully", imageUrl });
+    for (const file of req.files) {
+      // Use a Promise to handle the Cloudinary upload.
+      // We first call the promise so that we can 'listen' for a buffer stream.
+      const result = await new Promise((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream(
+            // Configure Cloudinary upload options like folder and resource type.
+            { folder: "yardgemsListings", resource_type: "image" },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result);
+            }
+          )
+          // End the upload stream and send the file buffer.
+          // This triggers the upload process and the subsequent resolution or rejection of the promise.
+          .end(file.buffer);
+      });
+      // Push the secure URL to the imageUrls array
+      imageUrls.push(result.secure_url);
+    }
+
+    // Send a message and the array of URLs
+    res.json({ message: "Images uploaded successfully", imageUrls });
   } catch (error) {
     console.error("Error uploading image:", error);
     res.status(500).json({ error: "Image upload failed" }); // Send a more informative error response
