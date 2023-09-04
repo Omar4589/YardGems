@@ -1,5 +1,6 @@
 //-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
 import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
 import { TextField, Container } from "@mui/material";
 import { style } from "./modalStyles";
@@ -24,6 +25,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   //-----------------STATE---------------//
   //Here we create a state 'listingAddress' that will hold an object containing the address value of the listing
   const [listingAddress, setListingAddress] = useState({});
+
+  const [imageFile, setImageFile] = useState();
 
   //We create this 'formState' to hold the rest of the listing properties, we set the intial state to empty strings
   const [formState, setFormState] = useState({
@@ -84,12 +87,41 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     }
   };
 
+  // This function handles setting the state when a user chooses a file from their device
+  //We use this state in the uploadImage function. The state is passed into the formData
+  const handleFileChange = (e) => {
+    const img = e.target.files[0];
+    setImageFile(img);
+  };
+
+  //The function below handles uploading images to Cloudinary
+  //After it uploads the image to cloudinary, it sets the formstate.image prop to the returned url
+  const uploadImage = async () => {
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    try {
+      const response = await fetch("/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setFormState({ ...formState, image: data.imageUrl }); // Return the uploaded image URL
+      } else {
+        throw new Error("Image upload failed");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      // Handle error, show a notification, etc.
+      return null;
+    }
+  };
+
   //This function is responsible for creating and adding a listing to the database
   const submitNewListing = async (e) => {
     e.preventDefault();
-
-    console.log("formState:", formState);
-    console.log("listingAddress:", listingAddress);
 
     try {
       await addListing({
@@ -142,11 +174,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
             >
               Create a new listing
             </Typography>
-            <Box
-              component="form"
-              onSubmit={submitNewListing}
-              sx={{ marginLeft: "25%" }}
-            >
+            <form onSubmit={submitNewListing} sx={{ marginLeft: "25%" }}>
               <div>
                 <Combobox onSelect={handleAddressSelection}>
                   <ComboboxInput
@@ -230,14 +258,26 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                 placeholder={formState.dateOfSale}
                 value={formatDateToInputValue(formState.dateOfSale)}
               />
-              {/* <TextField
-                    style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
-                    label="Image"
-                    name='image'
-                    onChange={handleInputChange}
-                    placeholder={formState.image}
-                    value={formState.image}
-                /> */}
+              <input
+                type="file"
+                name="file"
+                onChange={handleFileChange}
+                style={{}}
+                id="file-input"
+              />
+              {/* <label htmlFor="file-input">Select an image</label> */}
+              <Button
+                variant="outlined"
+                component="span"
+                disabled={!imageFile}
+                sx={{ marginRight: "1em" }}
+                onClick={() => {
+                  uploadImage();
+                }}
+              >
+                Upload
+              </Button>
+
               <br></br>
               <Button
                 type="submit"
@@ -246,64 +286,10 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               >
                 Add
               </Button>
-            </Box>
+            </form>
           </Box>
         </Fade>
       </Modal>
     </Container>
   );
 };
-
-// //Here we set a mutation called 'addListing' that takes in the "ADD_LISTING" mutation
-// //this mutation is responsible for the creating and adding a listing to the database
-// const [addListing, { error }] = useMutation(ADD_LISTING);
-
-// //This function is responsible for creating and adding a listing to the database
-// const submitNewListing = async (e) => {
-//   e.preventDefault();
-//   try {
-//     const { data } = await addListing({
-//       variables: {
-//         ...formState,
-//         address: listingAddress.address,
-//         lat: listingAddress.lat,
-//         lng: listingAddress.lng,
-//       },
-//       update: (cache, { data: { addListing } }) => {
-//         // Read the existing cached data for the current user
-//         const cachedData = cache.readQuery({ query: ME_QUERY });
-
-//         // Update the cached data with the new listing
-//         cache.writeQuery({
-//           query: ME_QUERY,
-//           data: {
-//             me: {
-//               ...cachedData.me,
-//               userPosts: [...cachedData.me.userPosts, addListing],
-//             },
-//           },
-//         });
-//       },
-//     });
-
-//     // Here we extract the response from the addListing mutation, which contains the new listing's data
-//     const newListing = data.addListing;
-
-//     // Update the list of posts in the parent component (MyListings)
-//     setListings([...listings, newListing]);
-
-//     //clear the formState
-//     setFormState({
-//       title: "",
-//       description: "",
-//       dateOfSale: "",
-//       image: "",
-//       author: "",
-//     });
-//     // Reset the address input field to an empty string
-//     setValue("");
-//     handleClose(); // closing the modal
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };

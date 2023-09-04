@@ -12,6 +12,7 @@
     "@mui/material": "^5.13.6",
     "@reach/combobox": "^0.18.0",
     "@react-google-maps/api": "^2.18.1",
+    "apollo-upload-client": "^17.0.0",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
     "graphql": "^16.7.1",
