@@ -1,6 +1,15 @@
 //-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
-import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
+import {
+  Box,
+  Button,
+  Modal,
+  Fade,
+  Typography,
+  Backdrop,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import { TextField, Container } from "@mui/material";
 import { style } from "./modalStyles";
 import usePlacesAutocomplete, {
@@ -30,6 +39,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
 
   // This state holds the array of images the user uploads before creating a new listing
   const [imageFiles, setImageFiles] = useState([]);
+  // This state is used to display a toast message if the user tries to upload more than 5 images
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   //We create this 'formState' to hold the rest of the listing properties, we set the intial state to empty strings
   const [formState, setFormState] = useState({
@@ -94,6 +105,13 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   //We use this state in the uploadImage function. The state is passed into the formData
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
+    if (files.length > 5) {
+      // Show a toast message here
+      setOpenSnackbar(true);
+      // Reset the file input
+      e.target.value = null;
+      return;
+    }
     setImageFiles(files);
   };
 
@@ -315,6 +333,15 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               >
                 Upload
               </Button>
+              <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={() => setOpenSnackbar(false)}
+              >
+                <Alert onClose={() => setOpenSnackbar(false)} severity="error">
+                  You can only upload a maximum of 5 images.
+                </Alert>
+              </Snackbar>
 
               <br></br>
               <Button
