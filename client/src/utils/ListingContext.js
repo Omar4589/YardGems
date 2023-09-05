@@ -127,8 +127,7 @@ export const ListingProvider = ({ children }) => {
         prevListings.filter((listing) => listing._id !== listingId)
       );
       setUserListings((prevUserListings) => [
-        ...prevUserListings,
-        data.removeListing,
+        prevUserListings.filter((listing) => listing._id !== listingId),
       ]);
     } catch (error) {
       // Handle any errors

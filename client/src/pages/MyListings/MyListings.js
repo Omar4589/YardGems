@@ -97,6 +97,7 @@ const MyListings = () => {
           <Container sx={{ marginBottom: "3em" }}>
             <Grid container spacing={4}>
               {sortedUserPosts.map((post) => {
+                  console.log("Rendering post with ID:", post._id);
                 return (
                   <Grid key={post._id} item xs={12} sm={6} md={4}>
                     <Card
@@ -109,9 +110,9 @@ const MyListings = () => {
                       />
                       <Slider {...settings}>
                         {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
-                        {post.images.length > 0 ? (
+                        {post.images?.length > 0 ? (
                           post.images.map((url, index) => (
-                            <div key={index}>
+                            <div key={`${post._id}-image-${index}`}>
                               <img
                                 src={url}
                                 alt={`slide-${index}`}

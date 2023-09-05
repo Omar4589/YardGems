@@ -57,7 +57,7 @@ const Header = () => {
       <Box sx={{ ...styles.box }}>
         <Link
           component={RouterLink}
-          onClick={handleRefetch}
+          onClick={handleRefetchMe}
           to="/MyListings"
           sx={{ ...styles.myListingsLink }}
         >

@@ -10,7 +10,7 @@ const typeDefs = gql`
   }
 
   type Listing {
-    _id: ID
+    _id: ID!
     description: String
     address: String
     dateOfSale: String

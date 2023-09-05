@@ -17,7 +17,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
 // settings for react-slick's Slider component
 const settings = {
   dots: true,
@@ -26,8 +25,6 @@ const settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
 };
-
-
 
 //----------------START OF PAGE--------------//
 const SavedListings = () => {
@@ -75,28 +72,28 @@ const SavedListings = () => {
                           title={post.title}
                           subheader={`Post By: ${post.author}`}
                         />
-                         <Slider {...settings}>
-                        {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
-                        {post.images.length > 0 ? (
-                          post.images.map((url, index) => (
-                            <div key={index}>
+                        <Slider {...settings}>
+                          {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
+                          {post.images.length > 0 ? (
+                            post.images.map((url, index) => (
+                              <div key={`${post._id}-image-${index}`}>
+                                <img
+                                  src={url}
+                                  alt={`slide-${index}`}
+                                  style={{ width: "100%" }}
+                                />
+                              </div>
+                            ))
+                          ) : (
+                            <div>
                               <img
-                                src={url}
-                                alt={`slide-${index}`}
+                                src={image}
+                                alt="Default slide"
                                 style={{ width: "100%" }}
                               />
                             </div>
-                          ))
-                        ) : (
-                          <div>
-                            <img
-                              src={image}
-                              alt="Default slide"
-                              style={{ width: "100%" }}
-                            />
-                          </div>
-                        )}
-                      </Slider>
+                          )}
+                        </Slider>
                         <CardContent component="div">
                           <Typography
                             component="span"
