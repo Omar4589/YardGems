@@ -60,8 +60,6 @@ export default function AllListings() {
   //Closes pop over message - 'Please log in'
   const closePopOver = () => setLoginPopOver(false);
 
-  console.log("-----All Listings with isFavorited property");
-  console.log(listings);
   //---------------------------RETURN STATEMENT-------------------------//
   return (
     <Container sx={styles.container}>

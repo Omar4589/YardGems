@@ -97,7 +97,6 @@ const MyListings = () => {
           <Container sx={{ marginBottom: "3em" }}>
             <Grid container spacing={4}>
               {sortedUserPosts.map((post) => {
-                  console.log("Rendering post with ID:", post._id);
                 return (
                   <Grid key={post._id} item xs={12} sm={6} md={4}>
                     <Card
