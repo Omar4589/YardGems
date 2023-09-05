@@ -18,6 +18,18 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { useListingContext } from "../../utils/ListingContext";
 import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+// settings for react-slick's Slider component
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 //---------------------------START OF COMPONENT----------------------//
 export default function AllListings() {
@@ -62,7 +74,28 @@ export default function AllListings() {
                   title={listing.title}
                   subheader={`Listed by: ${listing.author}`}
                 />
-                <CardMedia sx={styles.cardMedia} image={image} />
+                <Slider {...settings}>
+                  {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
+                  {listing.images.length > 0 ? (
+                    listing.images.map((url, index) => (
+                      <div key={index}>
+                        <img
+                          src={url}
+                          alt={`slide-${index}`}
+                          style={{ width: "100%" }}
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div>
+                      <img
+                        src={image}
+                        alt="Default slide"
+                        style={{ width: "100%" }}
+                      />
+                    </div>
+                  )}
+                </Slider>
                 <CardContent component="div">
                   <Typography>Date Of Event: {listing.dateOfSale}</Typography>
                   <Typography>{listing.address}</Typography>
