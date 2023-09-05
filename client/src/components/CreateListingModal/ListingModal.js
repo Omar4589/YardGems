@@ -274,20 +274,41 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                 placeholder={formState.dateOfSale}
                 value={formatDateToInputValue(formState.dateOfSale)}
               />
-              <input
-                type="file"
-                multiple
-                name="file"
-                onChange={handleFileChange}
-                style={{}}
-                id="file-input"
-              />
-              {/* <label htmlFor="file-input">Select an image</label> */}
+              <div
+                style={{
+                  width: "70%",
+                  height: "3.6em",
+                  marginBottom: "1.5em",
+                  marginTop: "1em",
+                  fontSize: "1em",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {" "}
+                <input
+                  type="file"
+                  multiple
+                  name="file"
+                  onChange={handleFileChange}
+                  style={{}}
+                  id="file-input"
+                />
+              </div>
+
               <Button
                 variant="outlined"
                 component="span"
                 disabled={!imageFiles.length}
-                sx={{ marginRight: "1em" }}
+                sx={{
+                  marginRight: "1em",
+                  width: "70%",
+                  height: "3.6em",
+                  marginBottom: "1.5em",
+                  marginTop: "1em",
+                  fontSize: "1em",
+                }}
                 onClick={() => {
                   uploadImage();
                 }}
