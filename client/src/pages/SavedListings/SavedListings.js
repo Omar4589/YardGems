@@ -38,7 +38,7 @@ const SavedListings = () => {
     <>
       {Auth.loggedIn() ? (
         <Container
-          maxWidth="xl"
+          maxWidth=""
           sx={{
             backgroundColor: "#e8f5e9",
             marginBottom: "4em",
