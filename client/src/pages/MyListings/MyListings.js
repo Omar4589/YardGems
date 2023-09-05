@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import {
   Container,
   Card,
-  CardMedia,
   Typography,
   CardContent,
   CardActions,
@@ -110,15 +109,25 @@ const MyListings = () => {
                         subheader={post.createdAt}
                       />
                       <Slider {...settings}>
-                        {post.images.map((url, index) => (
-                          <div key={index}>
+                        {post.images.length > 0 ? (
+                          post.images.map((url, index) => (
+                            <div key={index}>
+                              <img
+                                src={url}
+                                alt={`slide-${index}`}
+                                style={{ width: "100%" }}
+                              />
+                            </div>
+                          ))
+                        ) : (
+                          <div>
                             <img
-                              src={url}
-                              alt={`slide-${index}`}
+                              src={image}
+                              alt="Default slide"
                               style={{ width: "100%" }}
                             />
                           </div>
-                        ))}
+                        )}
                       </Slider>
                       {/* <CardMedia
                         sx={{ height: 140, paddingTop: "56.2%" }}

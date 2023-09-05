@@ -1,6 +1,5 @@
 //-----------------IMPORTS-----------------------//
-import React, { useContext, useState } from "react";
-import { useMutation } from "@apollo/client";
+import React, { useState } from "react";
 import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
 import { TextField, Container } from "@mui/material";
 import { style } from "./modalStyles";
