@@ -13,6 +13,21 @@ import image from "../../assets/yardsale.jpg"; // hard coding for now
 import Auth from "../../utils/auth";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 import { useListingContext } from "../../utils/ListingContext";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+
+// settings for react-slick's Slider component
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
+
+
 
 //----------------START OF PAGE--------------//
 const SavedListings = () => {
@@ -60,10 +75,28 @@ const SavedListings = () => {
                           title={post.title}
                           subheader={`Post By: ${post.author}`}
                         />
-                        <CardMedia
-                          sx={{ height: 140, paddingTop: "56.2%" }}
-                          image={image}
-                        />
+                         <Slider {...settings}>
+                        {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
+                        {post.images.length > 0 ? (
+                          post.images.map((url, index) => (
+                            <div key={index}>
+                              <img
+                                src={url}
+                                alt={`slide-${index}`}
+                                style={{ width: "100%" }}
+                              />
+                            </div>
+                          ))
+                        ) : (
+                          <div>
+                            <img
+                              src={image}
+                              alt="Default slide"
+                              style={{ width: "100%" }}
+                            />
+                          </div>
+                        )}
+                      </Slider>
                         <CardContent component="div">
                           <Typography
                             component="span"
