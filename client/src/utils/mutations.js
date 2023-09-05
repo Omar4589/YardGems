@@ -35,7 +35,7 @@ export const ADD_LISTING = gql`
     $description: String
     $address: String
     $dateOfSale: String
-    $image: String
+    $images: [String]
     $title: String
     $lat: Float
     $lng: Float
@@ -44,7 +44,7 @@ export const ADD_LISTING = gql`
       description: $description
       address: $address
       dateOfSale: $dateOfSale
-      image: $image
+      images: $images
       title: $title
       lat: $lat
       lng: $lng
@@ -53,7 +53,7 @@ export const ADD_LISTING = gql`
       description
       address
       dateOfSale
-      image
+      images
       author
       title
       lat
@@ -68,7 +68,7 @@ export const EDIT_LISTING = gql`
     $description: String
     $address: String
     $dateOfSale: String
-    $image: String
+    $images: [String]
     $title: String
     $lat: Float
     $lng: Float
@@ -78,7 +78,7 @@ export const EDIT_LISTING = gql`
       description: $description
       address: $address
       dateOfSale: $dateOfSale
-      image: $image
+      images: $images
       title: $title
       lat: $lat
       lng: $lng
@@ -87,7 +87,7 @@ export const EDIT_LISTING = gql`
       description
       address
       dateOfSale
-      image
+      images
       author
       title
       lat
@@ -103,7 +103,7 @@ export const REMOVE_LISTING = gql`
       description
       address
       dateOfSale
-      image
+      images
       author
       title
       lat
@@ -120,7 +120,7 @@ export const ADD_FAVORITES = gql`
       description
       address
       dateOfSale
-      image
+      images
       author
       title
       lat
@@ -136,7 +136,7 @@ export const REMOVE_FAVORITES = gql`
       description
       address
       dateOfSale
-      image
+      images
       author
       title
       lat

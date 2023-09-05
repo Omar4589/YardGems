@@ -39,16 +39,27 @@ app.get("/", (req, res) => {
 // Once the file is processed, Multer attaches it to the req object as req.file.
 app.post("/upload", upload.array("images", 5), async (req, res, next) => {
   try {
+    console.log(req.body);
+    const username = req.body.username; // Now you have the username
+
     let imageUrls = []; // Array to hold multiple image URLs
 
-    for (const file of req.files) {
+    for (const [index, file] of req.files.entries()) {
+      const originalName = req.body.imageNames[index];
+      const sanitizedImageName = originalName.replace(/[^a-zA-Z0-9]/g, "_");
+      const uniqueFilename = `${username}_${new Date().toISOString()}_${sanitizedImageName}`;
+
       // Use a Promise to handle the Cloudinary upload.
       // We first call the promise so that we can 'listen' for a buffer stream.
       const result = await new Promise((resolve, reject) => {
         cloudinary.uploader
           .upload_stream(
             // Configure Cloudinary upload options like folder and resource type.
-            { folder: "yardgemsListings", resource_type: "image" },
+            {
+              folder: "yardgemsListings",
+              resource_type: "image",
+              public_id: uniqueFilename, // Set the public_id to your unique filename
+            },
             (error, result) => {
               if (error) reject(error);
               else resolve(result);

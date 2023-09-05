@@ -18,10 +18,21 @@ import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 import { useListingContext } from "../../utils/ListingContext";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+// Your settings for react-slick
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 //-----------------------START OF COMPONENT-----------------------//
 const MyListings = () => {
-
   //destructuring from ListingContext
   const { userListings, setUserListings, removeAListing, addAListing } =
     useListingContext();
@@ -57,7 +68,7 @@ const MyListings = () => {
   return (
     <>
       {Auth.loggedIn() ? (
-        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9", pb:10 }}>
+        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9", pb: 10 }}>
           <Container maxWidth="md">
             <Typography
               component="div"
@@ -87,6 +98,7 @@ const MyListings = () => {
           <Container sx={{ marginBottom: "3em" }}>
             <Grid container spacing={4}>
               {sortedUserPosts.map((post) => {
+                console.log(post);
                 return (
                   <Grid key={post._id} item xs={12} sm={6} md={4}>
                     <Card
@@ -97,11 +109,22 @@ const MyListings = () => {
                         title={post.title}
                         subheader={post.createdAt}
                       />
-                      <CardMedia
+                      <Slider {...settings}>
+                        {post.images.map((url, index) => (
+                          <div key={index}>
+                            <img
+                              src={url}
+                              alt={`slide-${index}`}
+                              style={{ width: "100%" }}
+                            />
+                          </div>
+                        ))}
+                      </Slider>
+                      {/* <CardMedia
                         sx={{ height: 140, paddingTop: "56.2%" }}
                         image={image}
                         title="green iguana"
-                      />
+                      /> */}
                       <CardContent component="div">
                         <Typography component="span" gutterBottom variant="h5">
                           Date Of Event: {post.dateOfSale}

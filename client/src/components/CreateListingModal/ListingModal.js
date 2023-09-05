@@ -1,5 +1,5 @@
 //-----------------IMPORTS-----------------------//
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
 import { TextField, Container } from "@mui/material";
@@ -17,23 +17,26 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import dayjs from "dayjs";
+import { useListingContext } from "../../utils/ListingContext";
 
 //This is the modal used to create a new listing by a user who is logged in. You can find this component in the MyListings.js page.
 
 //-----------------------START OF COMPONENT-----------------------//
 export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
+  const { loggedInUserData } = useListingContext();
+
   //-----------------STATE---------------//
   //Here we create a state 'listingAddress' that will hold an object containing the address value of the listing
   const [listingAddress, setListingAddress] = useState({});
 
-  const [imageFile, setImageFile] = useState();
+  const [imageFiles, setImageFiles] = useState([]);
 
   //We create this 'formState' to hold the rest of the listing properties, we set the intial state to empty strings
   const [formState, setFormState] = useState({
     title: "",
     description: "",
     dateOfSale: "",
-    image: "",
+    images: [],
     author: "",
   });
 
@@ -90,15 +93,21 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   // This function handles setting the state when a user chooses a file from their device
   //We use this state in the uploadImage function. The state is passed into the formData
   const handleFileChange = (e) => {
-    const img = e.target.files[0];
-    setImageFile(img);
+    const files = Array.from(e.target.files);
+    setImageFiles(files);
   };
 
+  console.log(imageFiles);
   //The function below handles uploading images to Cloudinary
   //After it uploads the image to cloudinary, it sets the formstate.image prop to the returned url
   const uploadImage = async () => {
+    const username = loggedInUserData.me.username;
     const formData = new FormData();
-    formData.append("file", imageFile);
+    formData.append("username", username);
+    imageFiles.forEach((file, index) => {
+      formData.append(`images`, file);
+      formData.append(`imageNames[]`, file.name);
+    });
 
     try {
       const response = await fetch("/upload", {
@@ -108,7 +117,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setFormState({ ...formState, image: data.imageUrl }); // Return the uploaded image URL
+        setFormState({ ...formState, images: data.imageUrls }); // Return the uploaded image URL
+        console.log("uploadImage() returned a 200 status code");
       } else {
         throw new Error("Image upload failed");
       }
@@ -128,7 +138,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
         description: formState.description,
         address: listingAddress.address,
         dateOfSale: formState.dateOfSale,
-        image: formState.image,
+        images: formState.images,
         title: formState.title,
         lat: listingAddress.lat,
         lng: listingAddress.lng,
@@ -142,6 +152,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
         image: "",
         author: "",
       });
+      setImageFiles([]);
+      setListingAddress({});
       // Reset the address input field to an empty string
       setValue("");
       handleClose(); // closing the modal
@@ -260,6 +272,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               />
               <input
                 type="file"
+                multiple
                 name="file"
                 onChange={handleFileChange}
                 style={{}}
@@ -269,7 +282,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               <Button
                 variant="outlined"
                 component="span"
-                disabled={!imageFile}
+                disabled={!imageFiles.length}
                 sx={{ marginRight: "1em" }}
                 onClick={() => {
                   uploadImage();
