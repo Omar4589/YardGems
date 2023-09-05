@@ -78,7 +78,7 @@ function Map() {
         </div>
         {allListings.map(
           (
-            { _id, lat, lng, title, description, address, dateOfSale },
+            { _id, lat, lng, title, description, images, address, dateOfSale },
             index
           ) => {
             return (
@@ -97,6 +97,17 @@ function Map() {
                       <h5>{description}</h5>
                       <p>{address}</p>
                       <p>Date of event: {dateOfSale}</p>
+                      <div>
+                        {images.map((imageURL, imgIndex) => (
+                          <img
+                            key={imgIndex}
+                            src={imageURL}
+                            alt={`${title}-${imgIndex}`}
+                            width="50"
+                            height="50"
+                          />
+                        ))}
+                      </div>
                     </div>
                   </InfoWindow>
                 ) : null}
