@@ -21,7 +21,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// Your settings for react-slick
+// settings for react-slick's Slider component
 const settings = {
   dots: true,
   infinite: true,
@@ -97,7 +97,6 @@ const MyListings = () => {
           <Container sx={{ marginBottom: "3em" }}>
             <Grid container spacing={4}>
               {sortedUserPosts.map((post) => {
-                console.log(post);
                 return (
                   <Grid key={post._id} item xs={12} sm={6} md={4}>
                     <Card
@@ -109,6 +108,7 @@ const MyListings = () => {
                         subheader={post.createdAt}
                       />
                       <Slider {...settings}>
+                        {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
                         {post.images.length > 0 ? (
                           post.images.map((url, index) => (
                             <div key={index}>
@@ -129,11 +129,7 @@ const MyListings = () => {
                           </div>
                         )}
                       </Slider>
-                      {/* <CardMedia
-                        sx={{ height: 140, paddingTop: "56.2%" }}
-                        image={image}
-                        title="green iguana"
-                      /> */}
+
                       <CardContent component="div">
                         <Typography component="span" gutterBottom variant="h5">
                           Date Of Event: {post.dateOfSale}

@@ -28,6 +28,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   //Here we create a state 'listingAddress' that will hold an object containing the address value of the listing
   const [listingAddress, setListingAddress] = useState({});
 
+  // This state holds the array of images the user uploads before creating a new listing
   const [imageFiles, setImageFiles] = useState([]);
 
   //We create this 'formState' to hold the rest of the listing properties, we set the intial state to empty strings
@@ -96,13 +97,16 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     setImageFiles(files);
   };
 
-  console.log(imageFiles);
   //The function below handles uploading images to Cloudinary
-  //After it uploads the image to cloudinary, it sets the formstate.image prop to the returned url
   const uploadImage = async () => {
+    //we use the user's username from the context and send it to the server for file naming purposes
     const username = loggedInUserData.me.username;
+    //when working with image uploads, we must send the data in a new FormData()
     const formData = new FormData();
+    //We append key value pairs
     formData.append("username", username);
+    //loop through imageFiles state array and append the images along with image names
+    //the array is full of image objects, thats how we grab the whole file object and also just the file objects name property.
     imageFiles.forEach((file, index) => {
       formData.append(`images`, file);
       formData.append(`imageNames[]`, file.name);
@@ -116,7 +120,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setFormState({ ...formState, images: data.imageUrls }); // Return the uploaded image URL
+        //Sets the formstate.images array to the array of urls returned by the server
+        setFormState({ ...formState, images: data.imageUrls });
         console.log("uploadImage() returned a 200 status code");
       } else {
         throw new Error("Image upload failed");

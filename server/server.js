@@ -39,11 +39,12 @@ app.get("/", (req, res) => {
 // Once the file is processed, Multer attaches it to the req object as req.file.
 app.post("/upload", upload.array("images", 5), async (req, res, next) => {
   try {
-    console.log(req.body);
-    const username = req.body.username; // Now you have the username
+    const username = req.body.username;
 
     let imageUrls = []; // Array to hold multiple image URLs
 
+    //the entries() returns an iterator that allows you to loop through all the entries in an array. 
+    //Each entry is an array where the first element is the index and the second element is the value (in this case, the file object).
     for (const [index, file] of req.files.entries()) {
       const originalName = req.body.imageNames[index];
       const sanitizedImageName = originalName.replace(/[^a-zA-Z0-9]/g, "_");
