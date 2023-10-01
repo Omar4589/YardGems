@@ -98,10 +98,10 @@ const MyListings = () => {
             <Grid container spacing={4}>
               {sortedUserPosts.map((post) => {
                 return (
-                  <Grid key={post._id} item xs={12} sm={6} md={4}>
+                  <Grid key={post._id} item xs={12} sm={6} md={4} sx={{}}>
                     <Card
                       component="div"
-                      sx={{ maxWidth: 500, marginBottom: "2em" }}
+                      sx={{ maxWidth: 500, marginBottom: "2em", minHeight:"500px", }}
                     >
                       <CardHeader
                         title={post.title}
@@ -115,7 +115,7 @@ const MyListings = () => {
                               <img
                                 src={url}
                                 alt={`slide-${index}`}
-                                style={{ width: "100%" }}
+                                style={{ height:"250px", margin:"auto" }}
                               />
                             </div>
                           ))
@@ -124,7 +124,7 @@ const MyListings = () => {
                             <img
                               src={image}
                               alt="Default slide"
-                              style={{ width: "100%" }}
+                              style={{ height:"250px", margin:"auto" }}
                             />
                           </div>
                         )}
