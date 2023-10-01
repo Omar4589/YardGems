@@ -53,7 +53,7 @@ const Header = () => {
   };
 
   return (
-    <Box sx={{ ...styles.mainContainer }}>
+    <Box id="header" sx={{ ...styles.mainContainer }}>
       <Box sx={{ ...styles.box }}>
         <Link
           component={RouterLink}
@@ -98,14 +98,14 @@ const Header = () => {
       ) : (
         <>
           <IconButton
-            sx={{ color: "inherit" }}
+            sx={{ color: "inherit", ...styles.searchIcon }}
             aria-label="search"
             onClick={toggleSearch}
           >
             <SearchIcon sx={{ ...styles.searchIcon }} />
           </IconButton>
           <IconButton
-            sx={{ color: "inherit", size: "small" }}
+            sx={{ color: "inherit", size: "small", ...styles.searchIcon }}
             aria-label="message"
             onClick={() => {
               alert("You clicked the message button");

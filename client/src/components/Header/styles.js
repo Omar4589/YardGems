@@ -11,13 +11,14 @@ const styles = {
     "@media (min-width: 768px)": {
       justifyContent: "space-between",
       padding: "5px 50px 15px 50px",
+      height: "70px"
     },
   },
   appLogobox: {
     paddingRight: 12,
     width: "45%",
     "@media (min-width: 768px)": {
-      width: "33.33%",
+      width: "25%",
       paddingRight: 0,
     },
   },
@@ -69,6 +70,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
+      fontSize:"19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -83,6 +85,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
+      fontSize:"19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -97,6 +100,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
+      fontSize:"19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -111,6 +115,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
+      fontSize:"19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -125,6 +130,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
+      fontSize:"19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -139,6 +145,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
+      fontSize:"19px",
       "&:hover": {
         color: "#66bb6a",
       },
