@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import {
   Container,
   Card,
+  Box,
   CardMedia,
   Typography,
   CardContent,
@@ -62,11 +63,13 @@ export default function AllListings() {
 
   //---------------------------RETURN STATEMENT-------------------------//
   return (
-    <Container sx={styles.container}>
-      <Grid spacing={6} sx={styles.grid}>
+    <Container id="all-listings" sx={styles.container}>
+      <Typography sx={{...styles.heading }}> Yard Sale Listings</Typography>
+      <Grid container spacing={2} sx={styles.grid}>
         {listings.map((listing) => {
           return (
-            <Card component="div" sx={{}}>
+            <Grid xs={12} md={6}>
+            <Card component="div" >
               <CardActionArea onClick={() => openModal(listing)}>
                 <CardHeader
                   title={listing.title}
@@ -80,7 +83,7 @@ export default function AllListings() {
                         <img
                           src={url}
                           alt={`slide-${index}`}
-                          style={{ width: "100%" }}
+                          style={{height:"250px", margin:"auto"  }}
                         />
                       </div>
                     ))
@@ -89,7 +92,7 @@ export default function AllListings() {
                       <img
                         src={image}
                         alt="Default slide"
-                        style={{ width: "100%" }}
+                        style={{ height:"250px", margin:"auto" }}
                       />
                     </div>
                   )}
@@ -142,6 +145,7 @@ export default function AllListings() {
                 </Typography>
               </Popover>
             </Card>
+            </Grid>
           );
         })}
       </Grid>

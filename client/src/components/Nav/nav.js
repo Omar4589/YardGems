@@ -87,6 +87,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
 
   return (
     <BottomNavigation
+    id="bottom-navigation"
       value={windowPath}
       onChange={handlePathChange}
       showLabels="true"
