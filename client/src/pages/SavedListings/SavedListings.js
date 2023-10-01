@@ -66,7 +66,7 @@ const SavedListings = () => {
                     <Grid key={post._id} item xs={12} sm={6} md={4}>
                       <Card
                         component="div"
-                        sx={{ maxWidth: 500, marginBottom: "1.5em" }}
+                        sx={{ maxWidth: 500, marginBottom: "1.5em", minHeight:"500px", }}
                       >
                         <CardHeader
                           title={post.title}
@@ -80,7 +80,7 @@ const SavedListings = () => {
                                 <img
                                   src={url}
                                   alt={`slide-${index}`}
-                                  style={{ width: "100%" }}
+                                  style={{ height:"250px", margin:"auto" }}
                                 />
                               </div>
                             ))
@@ -89,7 +89,7 @@ const SavedListings = () => {
                               <img
                                 src={image}
                                 alt="Default slide"
-                                style={{ width: "100%" }}
+                                style={{ height:"250px", margin:"auto" }}
                               />
                             </div>
                           )}
