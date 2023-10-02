@@ -20,6 +20,7 @@ import { useListingContext } from "../../utils/ListingContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import styles from "./styles";
 
 // settings for react-slick's Slider component
 const settings = {
@@ -75,7 +76,7 @@ const MyListings = () => {
               align="center"
               color="textPrimary"
               gutterBottom
-              style={{ fontSize: "3rem" }}
+              style={{ ...styles.heading }}
             >
               {userListings.length
                 ? `You have ${userListings.length} garage sale ${
@@ -101,7 +102,11 @@ const MyListings = () => {
                   <Grid key={post._id} item xs={12} sm={6} md={4} sx={{}}>
                     <Card
                       component="div"
-                      sx={{ maxWidth: 500, marginBottom: "2em", minHeight:"500px", }}
+                      sx={{
+                        maxWidth: 500,
+                        marginBottom: "2em",
+                        minHeight: "500px",
+                      }}
                     >
                       <CardHeader
                         title={post.title}
@@ -115,7 +120,7 @@ const MyListings = () => {
                               <img
                                 src={url}
                                 alt={`slide-${index}`}
-                                style={{ height:"250px", margin:"auto" }}
+                                style={{ height: "250px", margin: "auto" }}
                               />
                             </div>
                           ))
@@ -124,7 +129,7 @@ const MyListings = () => {
                             <img
                               src={image}
                               alt="Default slide"
-                              style={{ height:"250px", margin:"auto" }}
+                              style={{ height: "250px", margin: "auto" }}
                             />
                           </div>
                         )}

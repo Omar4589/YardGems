@@ -176,12 +176,12 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
               </ListItem>
             </MuiLink>
 
-            <ListItem button>
+            {/* <ListItem button>
               <ListItemIcon>
                 <Switch checked={darkMode} onChange={handleThemeChange} />
               </ListItemIcon>
               <ListItemText primary="Theme Switcher" />
-            </ListItem>
+            </ListItem> */}
 
             {AuthService.loggedIn() ? (
               <>
