@@ -9,7 +9,7 @@ import {
   Modal,
   Box,
 } from "@mui/material";
-import { styles } from "./styles";
+import  styles  from "./styles";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -34,12 +34,14 @@ export default function ListingModalComponent({
 }) {
   return (
     <Modal
+    id="listing-modal-container"
       open={Boolean(listingModal)}
       onClose={closeModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={styles.modalPopUp}>
+      <Box id="listing-modal"  
+      sx={{...styles.modalPopUp}}>
         <Card component="div" sx={{ maxWidth: "100%" }}>
           <CardHeader
             title={listingModal.title}
@@ -53,7 +55,7 @@ export default function ListingModalComponent({
                               <img
                                 src={url}
                                 alt={`slide-${index}`}
-                                style={{ width: "100%" }}
+                                style={{ width: "100%", }}
                               />
                             </div>
                           ))
