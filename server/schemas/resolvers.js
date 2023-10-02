@@ -1,4 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
+const cloudinary = require("../utils/cloudinary");
 
 const { User, Listing } = require("../models");
 const { signToken } = require("../utils/auth");
@@ -59,7 +60,7 @@ const resolvers = {
     },
     addListing: async (
       parent,
-      { description, address, dateOfSale, image, author, title, lat, lng },
+      { description, address, dateOfSale, images, author, title, lat, lng },
       context
     ) => {
       if (context.user) {
@@ -67,7 +68,7 @@ const resolvers = {
           description,
           address,
           dateOfSale,
-          image,
+          images,
           author: context.user.username,
           title,
           lat,
@@ -98,13 +99,13 @@ const resolvers = {
     },
     editListing: async (
       parent,
-      { id, description, address, dateOfSale, image, title, lat, lng },
+      { id, description, address, dateOfSale, images, title, lat, lng },
       context
     ) => {
       if (context.user) {
         const updateListing = await Listing.findOneAndUpdate(
           { _id: id },
-          { description, address, dateOfSale, image, title, lat, lng },
+          { description, address, dateOfSale, images, title, lat, lng },
           { new: true }
         );
         return updateListing;

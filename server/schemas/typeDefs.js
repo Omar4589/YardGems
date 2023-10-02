@@ -10,11 +10,11 @@ const typeDefs = gql`
   }
 
   type Listing {
-    _id: ID
+    _id: ID!
     description: String
     address: String
     dateOfSale: String
-    image: String
+    images: [String]
     author: String
     title: String
     lat: Float
@@ -39,8 +39,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     createUser(username: String!, email: String!, password: String!): Auth
     updateUsername(newUsername: String!): User
-    addListing(description: String, address: String, dateOfSale: String, image: String, title: String, lat: Float, lng: Float): Listing
-    editListing(id: ID, description: String, address: String, dateOfSale: String, image: String, title: String, lat: Float, lng: Float): Listing
+    addListing(description: String, address: String, dateOfSale: String, images: [String], title: String, lat: Float, lng: Float): Listing
+    editListing(id: ID, description: String, address: String, dateOfSale: String, images: [String], title: String, lat: Float, lng: Float): Listing
     removeListing(listingId: ID!): Listing
     addFavorites(listingId: ID!): Listing
     removeFavorites(listingId: ID!): Listing

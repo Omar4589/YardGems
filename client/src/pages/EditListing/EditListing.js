@@ -25,7 +25,7 @@ const SinglePost = () => {
   //destrcture from ListingContext
   const { editAListing } = useListingContext();
   //Here we set a variable for the userNavigate hook from react-router-dom
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   //-----------------STATE---------------//
   //First state: 'listingAddress' and set the intial state to empty object because we expect an object when setting the state
@@ -57,7 +57,7 @@ const SinglePost = () => {
     variables: { listingId: listingId },
   });
 
-  // This use effect runs when the component mounts and is responsible for 
+  // This use effect runs when the component mounts and is responsible for
   //setting the formState and listingAddress states to the data that we fetch from database
   //this data is the listing data the user selected to edit
   useEffect(() => {
@@ -68,12 +68,11 @@ const SinglePost = () => {
       title: fetchedListing.title,
       description: fetchedListing.description,
       dateOfSale: fetchedListing.dateOfSale,
-      image: "",
+      images: fetchedListing.images,
     });
     setListingAddress(fetchedListing.address);
   }, [queryData]);
 
-  
   //--------------FORM FIELD HANDLERS-----------//
   //The function below handles updating the 'formState'
   const handleInputChange = (event) => {
@@ -101,6 +100,9 @@ const SinglePost = () => {
       console.error("Error:", error);
     }
   };
+  console.log("formState before edit submition");
+  console.log("formState:", formState);
+  console.log("-----------------");
 
   //This function is responsible for the modification of the post,
   //it uses the 'editPost mutation which sends the editedPost to the database and then
@@ -118,7 +120,7 @@ const SinglePost = () => {
         description: formState.description,
         address: listingAddress.address,
         dateOfSale: formState.dateOfSale,
-        image: formState.image,
+        images: formState.images,
         title: formState.title,
         lat: listingAddress.lat,
         lng: listingAddress.lng,

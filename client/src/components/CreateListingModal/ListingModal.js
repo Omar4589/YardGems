@@ -1,8 +1,17 @@
 //-----------------IMPORTS-----------------------//
 import React, { useState } from "react";
-import { Box, Button, Modal, Fade, Typography, Backdrop } from "@mui/material";
+import {
+  Box,
+  Button,
+  Modal,
+  Fade,
+  Typography,
+  Backdrop,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import { TextField, Container } from "@mui/material";
-import { style } from "./modalStyles";
+import styles from "./modalStyles";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -16,21 +25,29 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import dayjs from "dayjs";
+import { useListingContext } from "../../utils/ListingContext";
 
 //This is the modal used to create a new listing by a user who is logged in. You can find this component in the MyListings.js page.
 
 //-----------------------START OF COMPONENT-----------------------//
 export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
+  const { loggedInUserData } = useListingContext();
+
   //-----------------STATE---------------//
   //Here we create a state 'listingAddress' that will hold an object containing the address value of the listing
   const [listingAddress, setListingAddress] = useState({});
+
+  // This state holds the array of images the user uploads before creating a new listing
+  const [imageFiles, setImageFiles] = useState([]);
+  // This state is used to display a toast message if the user tries to upload more than 5 images
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   //We create this 'formState' to hold the rest of the listing properties, we set the intial state to empty strings
   const [formState, setFormState] = useState({
     title: "",
     description: "",
     dateOfSale: "",
-    image: "",
+    images: [],
     author: "",
   });
 
@@ -84,19 +101,66 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     }
   };
 
+  // This function handles setting the state when a user chooses a file from their device
+  //We use this state in the uploadImage function. The state is passed into the formData
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length > 5) {
+      // Show a toast message here
+      setOpenSnackbar(true);
+      // Reset the file input
+      e.target.value = null;
+      return;
+    }
+    setImageFiles(files);
+  };
+
+  //The function below handles uploading images to Cloudinary
+  const uploadImage = async () => {
+    //we use the user's username from the context and send it to the server for file naming purposes
+    const username = loggedInUserData.me.username;
+    //when working with image uploads, we must send the data in a new FormData()
+    const formData = new FormData();
+    //We append key value pairs
+    formData.append("username", username);
+    //loop through imageFiles state array and append the images along with image names
+    //the array is full of image objects, thats how we grab the whole file object and also just the file objects name property.
+    imageFiles.forEach((file, index) => {
+      formData.append(`images`, file);
+      formData.append(`imageNames[]`, file.name);
+    });
+
+    try {
+      const response = await fetch("/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        //Sets the formstate.images array to the array of urls returned by the server
+        setFormState({ ...formState, images: data.imageUrls });
+        console.log("uploadImage() returned a 200 status code");
+      } else {
+        throw new Error("Image upload failed");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      // Handle error, show a notification, etc.
+      return null;
+    }
+  };
+
   //This function is responsible for creating and adding a listing to the database
   const submitNewListing = async (e) => {
     e.preventDefault();
-
-    console.log("formState:", formState);
-    console.log("listingAddress:", listingAddress);
 
     try {
       await addListing({
         description: formState.description,
         address: listingAddress.address,
         dateOfSale: formState.dateOfSale,
-        image: formState.image,
+        images: formState.images,
         title: formState.title,
         lat: listingAddress.lat,
         lng: listingAddress.lng,
@@ -110,6 +174,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
         image: "",
         author: "",
       });
+      setImageFiles([]);
+      setListingAddress({});
       // Reset the address input field to an empty string
       setValue("");
       handleClose(); // closing the modal
@@ -119,8 +185,9 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   };
 
   return (
-    <Container>
+    <Container id="create-listing-container">
       <Modal
+        id="create-listing-modal-container"
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={handleOpen}
@@ -133,7 +200,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
         }}
       >
         <Fade in={handleOpen}>
-          <Box sx={style}>
+          <Box sx={{ ...styles.main }} id="listing-modal">
             <Typography
               sx={{ display: "flex", justifyContent: "center" }}
               id="transition-modal-title"
@@ -142,13 +209,13 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
             >
               Create a new listing
             </Typography>
-            <Box
-              component="form"
-              onSubmit={submitNewListing}
-              sx={{ marginLeft: "25%" }}
-            >
+            <form onSubmit={submitNewListing} style={{ ...styles.form }}>
               <div>
-                <Combobox onSelect={handleAddressSelection}>
+                <Combobox
+                style={{
+                 
+                }}
+                onSelect={handleAddressSelection}>
                   <ComboboxInput
                     value={value}
                     onChange={handleAutoCompleteChange}
@@ -156,11 +223,11 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                     className="comboBox-input"
                     placeholder="Add a location"
                     style={{
-                      width: "66%",
+                      width: "100%",
                       height: "3.6em",
                       marginBottom: "1.5em",
                       marginTop: "1em",
-                      paddingLeft: "1em",
+                    
                       fontSize: "1em",
                     }}
                     required
@@ -168,7 +235,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                   <ComboboxPopover
                     style={{
                       zIndex: "99999",
-                      width: "40%",
+                      width: "100%",
                       fontSize: "1em",
                       fontFamily: "sans-serif",
                     }}
@@ -185,7 +252,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
 
               <TextField
                 style={{
-                  width: "70%",
+                  width: "100%",
                   height: "3.6em",
                   marginBottom: "1.5em",
                   marginTop: "1em",
@@ -200,7 +267,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               />
               <TextField
                 style={{
-                  width: "70%",
+                  width: "100%",
                   height: "3.6em",
                   marginBottom: "1.5em",
                   marginTop: "1em",
@@ -217,11 +284,12 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               <input
                 type="date"
                 style={{
-                  width: "70%",
+                  width: "100%",
                   height: "3.6em",
                   marginBottom: "1.5em",
                   marginTop: "1em",
                   fontSize: "1em",
+                textAlign:"center"
                 }}
                 label="Date of the Sale"
                 name="dateOfSale"
@@ -230,80 +298,70 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                 placeholder={formState.dateOfSale}
                 value={formatDateToInputValue(formState.dateOfSale)}
               />
-              {/* <TextField
-                    style={{width: '70%', height: '3.6em', marginBottom:'1.5em', marginTop:'1em',  fontSize: '1em'}}
-                    label="Image"
-                    name='image'
-                    onChange={handleInputChange}
-                    placeholder={formState.image}
-                    value={formState.image}
-                /> */}
+              <div
+                style={{
+                  width: "100%",
+                  height: "3.6em",
+                  marginBottom: "1.5em",
+                  marginTop: "1em",
+                  fontSize: "1em",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {" "}
+                <input
+                  type="file"
+                  multiple
+                  name="file"
+                  onChange={handleFileChange}
+                  style={{}}
+                  id="file-input"
+                />
+              </div>
+
+              <Button
+                variant="outlined"
+                component="span"
+                disabled={!imageFiles.length}
+                sx={{
+                  width: "100%",
+                  height: "3.6em",
+                  marginBottom: "1.5em",
+                  marginTop: "1em",
+                  fontSize: "1em",
+                  marginLeft:"auto", 
+                  marginRight:"auto",
+                }}
+                onClick={() => {
+                  uploadImage();
+                }}
+              >
+                Upload
+              </Button>
+              <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={() => setOpenSnackbar(false)}
+              >
+                <Alert onClose={() => setOpenSnackbar(false)} severity="error">
+                  You can only upload a maximum of 5 images.
+                </Alert>
+              </Snackbar>
+
               <br></br>
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ display: "flex", justifyContent: "center", width: "70%" }}
+                sx={{ display: "flex", justifyContent: "center", width: "70%", marginLeft:"auto", marginRight:"auto" }}
               >
                 Add
               </Button>
-            </Box>
+            </form>
           </Box>
         </Fade>
       </Modal>
     </Container>
   );
 };
-
-// //Here we set a mutation called 'addListing' that takes in the "ADD_LISTING" mutation
-// //this mutation is responsible for the creating and adding a listing to the database
-// const [addListing, { error }] = useMutation(ADD_LISTING);
-
-// //This function is responsible for creating and adding a listing to the database
-// const submitNewListing = async (e) => {
-//   e.preventDefault();
-//   try {
-//     const { data } = await addListing({
-//       variables: {
-//         ...formState,
-//         address: listingAddress.address,
-//         lat: listingAddress.lat,
-//         lng: listingAddress.lng,
-//       },
-//       update: (cache, { data: { addListing } }) => {
-//         // Read the existing cached data for the current user
-//         const cachedData = cache.readQuery({ query: ME_QUERY });
-
-//         // Update the cached data with the new listing
-//         cache.writeQuery({
-//           query: ME_QUERY,
-//           data: {
-//             me: {
-//               ...cachedData.me,
-//               userPosts: [...cachedData.me.userPosts, addListing],
-//             },
-//           },
-//         });
-//       },
-//     });
-
-//     // Here we extract the response from the addListing mutation, which contains the new listing's data
-//     const newListing = data.addListing;
-
-//     // Update the list of posts in the parent component (MyListings)
-//     setListings([...listings, newListing]);
-
-//     //clear the formState
-//     setFormState({
-//       title: "",
-//       description: "",
-//       dateOfSale: "",
-//       image: "",
-//       author: "",
-//     });
-//     // Reset the address input field to an empty string
-//     setValue("");
-//     handleClose(); // closing the modal
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };

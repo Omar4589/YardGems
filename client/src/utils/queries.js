@@ -11,7 +11,7 @@ query userMe {
        description
        address
        dateOfSale
-       image
+       images
        title
        lat
        lng
@@ -22,7 +22,7 @@ query userMe {
         description
         address
         dateOfSale
-        image
+        images
         author
         title
       }
@@ -37,7 +37,7 @@ export const QUERY_LISTINGS = gql`
       description
       address
       dateOfSale
-      image
+      images
       author
       title
       lat
@@ -53,7 +53,7 @@ export const QUERY_SINGLE_LISTING= gql`
       description
       address
       dateOfSale
-      image
+      images
       author
       title
       lat

@@ -22,8 +22,9 @@ const listingSchema = new Schema({
     type: String,
     required: [true, "Enter a date to hold the sale"],
   },
-  image: {
-    type: String,
+  images: {
+    type: [String],  // Changed from String to an array of strings
+    default: [] 
   },
   author: {
     type: String,

@@ -87,8 +87,6 @@ export const ListingProvider = ({ children }) => {
     );
   }, [savedFavorites]);
 
-  
-
   //-----------------HANDLERS-------------------//
   const addAListing = async (newListingData) => {
     try {
@@ -98,7 +96,7 @@ export const ListingProvider = ({ children }) => {
           description: newListingData.description,
           address: newListingData.address,
           dateOfSale: newListingData.dateOfSale,
-          image: newListingData.image,
+          images: newListingData.images,
           title: newListingData.title,
           lat: newListingData.lat,
           lng: newListingData.lng,
@@ -128,10 +126,9 @@ export const ListingProvider = ({ children }) => {
       setListings((prevListings) =>
         prevListings.filter((listing) => listing._id !== listingId)
       );
-      setUserListings((prevUserListings) => [
-        ...prevUserListings,
-        data.removeListing,
-      ]);
+      setUserListings((prevUserListings) => 
+        prevUserListings.filter((listing) => listing._id !== listingId),
+      );
     } catch (error) {
       // Handle any errors
       console.error("Error removing listing:", error);
@@ -147,7 +144,7 @@ export const ListingProvider = ({ children }) => {
           description: editedListingData.description,
           address: editedListingData.address,
           dateOfSale: editedListingData.dateOfSale,
-          image: editedListingData.image,
+          images: editedListingData.images,
           title: editedListingData.title,
           lat: editedListingData.lat,
           lng: editedListingData.lng,
@@ -192,11 +189,11 @@ export const ListingProvider = ({ children }) => {
         )
       );
 
-        // Update the savedFavorites state
-    setSavedFavorites((prevSavedFavorites) => [
-      ...prevSavedFavorites,
-      data.addFavorites,
-    ]);
+      // Update the savedFavorites state
+      setSavedFavorites((prevSavedFavorites) => [
+        ...prevSavedFavorites,
+        data.addFavorites,
+      ]);
     } catch (error) {
       // Handle any errors
       console.error("Error favoriting listing:", error);
@@ -220,9 +217,9 @@ export const ListingProvider = ({ children }) => {
       );
 
       // Update the savedFavorites state
-    setSavedFavorites((prevSavedFavorites) =>
-    prevSavedFavorites.filter((listing) => listing._id !== listingId)
-  );
+      setSavedFavorites((prevSavedFavorites) =>
+        prevSavedFavorites.filter((listing) => listing._id !== listingId)
+      );
     } catch (error) {
       // Handle any errors
       console.error("Error unfavoriting listing:", error);
@@ -247,6 +244,7 @@ export const ListingProvider = ({ children }) => {
         favoriteAListing,
         unfavoriteAListing,
         favoritedListingIds,
+        loggedInUserData,
       }}
     >
       {children}

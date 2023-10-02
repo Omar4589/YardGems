@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import {
   Container,
   Card,
+  Box,
   CardMedia,
   Typography,
   CardContent,
@@ -18,6 +19,18 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { useListingContext } from "../../utils/ListingContext";
 import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+// settings for react-slick's Slider component
+const settings = {
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 //---------------------------START OF COMPONENT----------------------//
 export default function AllListings() {
@@ -48,21 +61,43 @@ export default function AllListings() {
   //Closes pop over message - 'Please log in'
   const closePopOver = () => setLoginPopOver(false);
 
-  console.log("-----All Listings with isFavorited property");
-  console.log(listings);
   //---------------------------RETURN STATEMENT-------------------------//
   return (
-    <Container sx={styles.container}>
-      <Grid spacing={6} sx={styles.grid}>
+    <Container id="all-listings" sx={styles.container}>
+      <Typography sx={{...styles.heading }}> Yard Sale Listings</Typography>
+      <Typography sx={{...styles.results}}>{listings.length + " Results"}</Typography>
+      <Grid container spacing={2} sx={styles.grid}>
         {listings.map((listing) => {
           return (
-            <Card component="div" sx={{}}>
+            <Grid xs={12} md={6}>
+            <Card component="div" >
               <CardActionArea onClick={() => openModal(listing)}>
                 <CardHeader
                   title={listing.title}
                   subheader={`Listed by: ${listing.author}`}
                 />
-                <CardMedia sx={styles.cardMedia} image={image} />
+                <Slider {...settings}>
+                  {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
+                  {listing.images.length > 0 ? (
+                    listing.images.map((url, index) => (
+                      <div key={index}>
+                        <img
+                          src={url}
+                          alt={`slide-${index}`}
+                          style={{height:"250px", margin:"auto"  }}
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div>
+                      <img
+                        src={image}
+                        alt="Default slide"
+                        style={{ height:"250px", margin:"auto" }}
+                      />
+                    </div>
+                  )}
+                </Slider>
                 <CardContent component="div">
                   <Typography>Date Of Event: {listing.dateOfSale}</Typography>
                   <Typography>{listing.address}</Typography>
@@ -111,6 +146,7 @@ export default function AllListings() {
                 </Typography>
               </Popover>
             </Card>
+            </Grid>
           );
         })}
       </Grid>

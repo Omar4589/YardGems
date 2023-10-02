@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import {
   Container,
   Card,
-  CardMedia,
   Typography,
   CardContent,
   CardActions,
@@ -18,10 +17,22 @@ import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import AdditionalFeatures from "../AdditionalFeatures/AdditionalFeatures";
 import { useListingContext } from "../../utils/ListingContext";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import styles from "./styles";
+
+// settings for react-slick's Slider component
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 //-----------------------START OF COMPONENT-----------------------//
 const MyListings = () => {
-
   //destructuring from ListingContext
   const { userListings, setUserListings, removeAListing, addAListing } =
     useListingContext();
@@ -57,7 +68,7 @@ const MyListings = () => {
   return (
     <>
       {Auth.loggedIn() ? (
-        <Container maxWidth="xl" sx={{ backgroundColor: "#e8f5e9", pb:10 }}>
+        <Container maxWidth="" sx={{ backgroundColor: "#e8f5e9", pb: 10 }}>
           <Container maxWidth="md">
             <Typography
               component="div"
@@ -65,7 +76,7 @@ const MyListings = () => {
               align="center"
               color="textPrimary"
               gutterBottom
-              style={{ fontSize: "3rem" }}
+              style={{ ...styles.heading }}
             >
               {userListings.length
                 ? `You have ${userListings.length} garage sale ${
@@ -84,24 +95,46 @@ const MyListings = () => {
               addListing={addAListing}
             />
           </Container>
-          <Container sx={{ marginBottom: "3em" }}>
-            <Grid container spacing={4}>
+          <Container sx={{ marginBottom: "3em", marginTop:"1em" }}>
+            <Grid container spacing={2}>
               {sortedUserPosts.map((post) => {
                 return (
-                  <Grid key={post._id} item xs={12} sm={6} md={4}>
+                  <Grid key={post._id} item xs={12} sm={6} md={4} sx={{}}>
                     <Card
                       component="div"
-                      sx={{ maxWidth: 500, marginBottom: "2em" }}
+                      sx={{
+                        maxWidth: 500,
+                        marginBottom: "2em",
+                        minHeight: "500px",
+                      }}
                     >
                       <CardHeader
                         title={post.title}
                         subheader={post.createdAt}
                       />
-                      <CardMedia
-                        sx={{ height: 140, paddingTop: "56.2%" }}
-                        image={image}
-                        title="green iguana"
-                      />
+                      <Slider {...settings}>
+                        {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
+                        {post.images?.length > 0 ? (
+                          post.images.map((url, index) => (
+                            <div key={`${post._id}-image-${index}`}>
+                              <img
+                                src={url}
+                                alt={`slide-${index}`}
+                                style={{ height: "250px", margin: "auto" }}
+                              />
+                            </div>
+                          ))
+                        ) : (
+                          <div>
+                            <img
+                              src={image}
+                              alt="Default slide"
+                              style={{ height: "250px", margin: "auto" }}
+                            />
+                          </div>
+                        )}
+                      </Slider>
+
                       <CardContent component="div">
                         <Typography component="span" gutterBottom variant="h5">
                           Date Of Event: {post.dateOfSale}
