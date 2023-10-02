@@ -18,8 +18,9 @@ export const styles = {
   },
   heading:{
     fontSize:"25px",
-    padding:"20px 0px 10px 0px"
+    padding:"20px 0px 0px 0px"
   },
+  results:{padding:"0px 0px 3px 0px "},
   grid: { paddingTop: "1%", paddingBottom: "100%" },
   cardMedia: { height: 140, paddingTop: "56.2%" },
   iconButton: { marginLeft: "75%" },

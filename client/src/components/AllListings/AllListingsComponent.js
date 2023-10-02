@@ -65,6 +65,7 @@ export default function AllListings() {
   return (
     <Container id="all-listings" sx={styles.container}>
       <Typography sx={{...styles.heading }}> Yard Sale Listings</Typography>
+      <Typography sx={{...styles.results}}>{listings.length + " Results"}</Typography>
       <Grid container spacing={2} sx={styles.grid}>
         {listings.map((listing) => {
           return (
