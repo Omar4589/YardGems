@@ -95,8 +95,8 @@ const MyListings = () => {
               addListing={addAListing}
             />
           </Container>
-          <Container sx={{ marginBottom: "3em" }}>
-            <Grid container spacing={4}>
+          <Container sx={{ marginBottom: "3em", marginTop:"1em" }}>
+            <Grid container spacing={2}>
               {sortedUserPosts.map((post) => {
                 return (
                   <Grid key={post._id} item xs={12} sm={6} md={4} sx={{}}>

@@ -11,7 +11,7 @@ import {
   Alert,
 } from "@mui/material";
 import { TextField, Container } from "@mui/material";
-import { style } from "./modalStyles";
+import styles from "./modalStyles";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -185,8 +185,9 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   };
 
   return (
-    <Container>
+    <Container id="create-listing-container">
       <Modal
+        id="create-listing-modal-container"
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={handleOpen}
@@ -199,7 +200,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
         }}
       >
         <Fade in={handleOpen}>
-          <Box sx={style}>
+          <Box sx={{ ...styles.main }} id="listing-modal">
             <Typography
               sx={{ display: "flex", justifyContent: "center" }}
               id="transition-modal-title"
@@ -208,9 +209,13 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
             >
               Create a new listing
             </Typography>
-            <form onSubmit={submitNewListing} sx={{ marginLeft: "25%" }}>
+            <form onSubmit={submitNewListing} style={{ ...styles.form }}>
               <div>
-                <Combobox onSelect={handleAddressSelection}>
+                <Combobox
+                style={{
+                 
+                }}
+                onSelect={handleAddressSelection}>
                   <ComboboxInput
                     value={value}
                     onChange={handleAutoCompleteChange}
@@ -218,11 +223,11 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                     className="comboBox-input"
                     placeholder="Add a location"
                     style={{
-                      width: "66%",
+                      width: "100%",
                       height: "3.6em",
                       marginBottom: "1.5em",
                       marginTop: "1em",
-                      paddingLeft: "1em",
+                    
                       fontSize: "1em",
                     }}
                     required
@@ -230,7 +235,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                   <ComboboxPopover
                     style={{
                       zIndex: "99999",
-                      width: "40%",
+                      width: "100%",
                       fontSize: "1em",
                       fontFamily: "sans-serif",
                     }}
@@ -247,7 +252,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
 
               <TextField
                 style={{
-                  width: "70%",
+                  width: "100%",
                   height: "3.6em",
                   marginBottom: "1.5em",
                   marginTop: "1em",
@@ -262,7 +267,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               />
               <TextField
                 style={{
-                  width: "70%",
+                  width: "100%",
                   height: "3.6em",
                   marginBottom: "1.5em",
                   marginTop: "1em",
@@ -279,11 +284,12 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               <input
                 type="date"
                 style={{
-                  width: "70%",
+                  width: "100%",
                   height: "3.6em",
                   marginBottom: "1.5em",
                   marginTop: "1em",
                   fontSize: "1em",
+                textAlign:"center"
                 }}
                 label="Date of the Sale"
                 name="dateOfSale"
@@ -294,7 +300,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               />
               <div
                 style={{
-                  width: "70%",
+                  width: "100%",
                   height: "3.6em",
                   marginBottom: "1.5em",
                   marginTop: "1em",
@@ -320,12 +326,13 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                 component="span"
                 disabled={!imageFiles.length}
                 sx={{
-                  marginRight: "1em",
-                  width: "70%",
+                  width: "100%",
                   height: "3.6em",
                   marginBottom: "1.5em",
                   marginTop: "1em",
                   fontSize: "1em",
+                  marginLeft:"auto", 
+                  marginRight:"auto",
                 }}
                 onClick={() => {
                   uploadImage();
@@ -347,7 +354,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ display: "flex", justifyContent: "center", width: "70%" }}
+                sx={{ display: "flex", justifyContent: "center", width: "70%", marginLeft:"auto", marginRight:"auto" }}
               >
                 Add
               </Button>
