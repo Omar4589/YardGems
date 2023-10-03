@@ -102,10 +102,10 @@ export default function ListingModalComponent({
             )}
           </Slider>
           <CardContent component="div">
-            <Typography component="span" gutterBottom variant="h5">
-              Date Of Event: {listingModal.dateOfSale}
+            <Typography component="span" gutterBottom variant="body2">
+              Date Of Sale: {listingModal.dateOfSale}
             </Typography>
-            <Typography component="div" variant="body2" color="text.secondary">
+            <Typography component="div" variant="h5" >
               {listingModal.description}
               <Typography
                 component="div"
