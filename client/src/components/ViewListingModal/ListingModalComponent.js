@@ -45,7 +45,7 @@ export default function ListingModalComponent({
           style={{
             position: "absolute",
             top: "3%",
-            left: "87%",
+            left: "90%",
             background: "transparent",
             border: "0px ",
             fontSize: "1.2em",
