@@ -2,11 +2,11 @@ const styles = {
   mainContainer: {
     mx: "auto",
     px: 3,
-    paddingTop: 5,
+    paddingTop: 3,
     paddingBottom: 15,
     backgroundColor: "#e8f5e9",
     fontFamily: "'Roboto', sans-serif", // Add this line to set the font
-    "@media (min-width: 768px)": { padding: "5% 20% 10% 20%" },
+    "@media (min-width: 768px)": { padding: "3% 20% 10% 20%" },
   },
   heading: { mb: 2, fontSize: 35, fontWeight: "semi-bold" },
   statement: { mb: 2, fontSize: 20 },
