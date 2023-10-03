@@ -1,7 +1,7 @@
 //-----------------IMPORTS-----------------------//
 import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { QUERY_LISTINGS } from "../../utils/queries";
+import { QUERY_LISTINGS, ME_QUERY } from "../../utils/queries";
 import { Link as MuiLink } from "@mui/material";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
@@ -74,10 +74,17 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   //Here we extract the refetch method from the useQuery hook
   //refetch will execute the QUERY_LISTINGS query
   const { refetch } = useQuery(QUERY_LISTINGS); // Import and provide your actual query here
+  const { refetch: refetchMe } = useQuery(ME_QUERY);
+
+
 
   // Function to manually refetch data
   const handleRefetch = () => {
     refetch();
+  };
+
+  const handleRefetchMe = () => {
+    refetchMe();
   };
 
   // If `showBottomNav` is false, the component returns `null`, indicating that the footer should not be rendered.
@@ -97,6 +104,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
         component={RouterLink}
         to="/MyListings"
         label="My Listings"
+        onClick={handleRefetchMe}
         sx={{ ...styles.icons }}
         icon={<DashboardIcon />}
       />
@@ -105,6 +113,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
         component={RouterLink}
         to="/SavedListings"
         label="Saved Listings"
+        onClick={handleRefetchMe}
         sx={{ ...styles.icons }}
         icon={<FavoriteIcon />}
       />

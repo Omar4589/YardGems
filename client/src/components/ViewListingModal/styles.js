@@ -5,13 +5,10 @@ const styles = {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "100%",
-    bgcolor: "transparent",
-    border: "2px solid #000",
-    boxShadow: 2,
-    p: 4,
+    boxShadow: 6,
     padding: 0,
     "@media (min-width: 768px)": {
-      width: "600px",
+      width: "900px",
     },
   },
 };
