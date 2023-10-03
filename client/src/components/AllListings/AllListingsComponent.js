@@ -64,88 +64,90 @@ export default function AllListings() {
   //---------------------------RETURN STATEMENT-------------------------//
   return (
     <Container id="all-listings" sx={styles.container}>
-      <Typography sx={{...styles.heading }}> Yard Sale Listings</Typography>
-      <Typography sx={{...styles.results}}>{listings.length + " Results"}</Typography>
+      <Typography sx={{ ...styles.heading }}> Yard Sale Listings</Typography>
+      <Typography sx={{ ...styles.results }}>
+        {listings.length + " Results"}
+      </Typography>
       <Grid container spacing={2} sx={styles.grid}>
         {listings.map((listing) => {
           return (
             <Grid xs={12} md={6}>
-            <Card component="div" >
-              <CardActionArea onClick={() => openModal(listing)}>
-                <CardHeader
-                  title={listing.title}
-                  subheader={`Listed by: ${listing.author}`}
-                />
-                <Slider {...settings}>
-                  {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
-                  {listing.images.length > 0 ? (
-                    listing.images.map((url, index) => (
-                      <div key={index}>
+              <Card component="div">
+                <CardActionArea onClick={() => openModal(listing)}>
+                  <CardHeader
+                    title={listing.title}
+                    subheader={`Listed by: ${listing.author}`}
+                  />
+                  <Slider {...settings}>
+                    {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
+                    {listing.images.length > 0 ? (
+                      listing.images.map((url, index) => (
+                        <div key={index}>
+                          <img
+                            src={url}
+                            alt={`slide-${index}`}
+                            style={{ height: "250px", margin: "auto" }}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <div>
                         <img
-                          src={url}
-                          alt={`slide-${index}`}
-                          style={{height:"250px", margin:"auto"  }}
+                          src={image}
+                          alt="Default slide"
+                          style={{ height: "250px", margin: "auto" }}
                         />
                       </div>
-                    ))
-                  ) : (
-                    <div>
-                      <img
-                        src={image}
-                        alt="Default slide"
-                        style={{ height:"250px", margin:"auto" }}
-                      />
-                    </div>
-                  )}
-                </Slider>
-                <CardContent component="div">
-                  <Typography>Date Of Event: {listing.dateOfSale}</Typography>
-                  <Typography>{listing.address}</Typography>
-                </CardContent>
-              </CardActionArea>
-              {Auth.loggedIn() ? (
-                <IconButton
-                  onClick={() => {
-                    if (favoritedListingIds.has(listing._id)) {
-                      unfavoriteAListing(listing._id);
-                    } else {
-                      favoriteAListing(listing._id);
+                    )}
+                  </Slider>
+                  <CardContent component="div">
+                    <Typography>Date Of Sale: {listing.dateOfSale}</Typography>
+                    <Typography>{listing.address}</Typography>
+                  </CardContent>
+                </CardActionArea>
+                {Auth.loggedIn() ? (
+                  <IconButton
+                    onClick={() => {
+                      if (favoritedListingIds.has(listing._id)) {
+                        unfavoriteAListing(listing._id);
+                      } else {
+                        favoriteAListing(listing._id);
+                      }
+                    }}
+                    sx={
+                      {...styles.iconButton,
+                      
+                        color: favoritedListingIds.has(listing._id)
+                          ? "red"
+                          : "grey",
+                      }
                     }
+                    aria-label="favorite"
+                  >
+                    <FavoriteIcon />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    onClick={() => setLoginPopOver(true)}
+                    sx={styles.iconButton}
+                    aria-label="favorite"
+                  >
+                    <FavoriteIcon sx={{ color: "grey" }} />
+                  </IconButton>
+                )}
+                <Popover
+                  open={loginPopOver}
+                  onClose={closePopOver}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
                   }}
-                  sx={
-                    (styles.iconButton,
-                    {
-                      color: favoritedListingIds.has(listing._id)
-                        ? "red"
-                        : "grey",
-                    })
-                  }
-                  aria-label="favorite"
                 >
-                  <FavoriteIcon />
-                </IconButton>
-              ) : (
-                <IconButton
-                  onClick={() => setLoginPopOver(true)}
-                  sx={styles.iconButton}
-                  aria-label="favorite"
-                >
-                  <FavoriteIcon sx={{ color: "grey" }} />
-                </IconButton>
-              )}
-              <Popover
-                open={loginPopOver}
-                onClose={closePopOver}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-              >
-                <Typography sx={{ p: 2 }}>
-                  You need to be logged in to save this listing
-                </Typography>
-              </Popover>
-            </Card>
+                  <Typography sx={{ p: 2 }}>
+                    You need to be logged in to save this listing
+                  </Typography>
+                </Popover>
+              </Card>
             </Grid>
           );
         })}

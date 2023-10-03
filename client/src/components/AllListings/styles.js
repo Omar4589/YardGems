@@ -23,5 +23,5 @@ export const styles = {
   results:{padding:"0px 0px 3px 0px "},
   grid: { paddingTop: "1%", paddingBottom: "100%" },
   cardMedia: { height: 140, paddingTop: "56.2%" },
-  iconButton: { marginLeft: "75%" },
+  iconButton: { marginLeft: "80%" },
 };

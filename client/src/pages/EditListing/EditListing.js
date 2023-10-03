@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_SINGLE_LISTING } from "../../utils/queries";
-import { Container, Box, Grid, TextField, Button } from "@mui/material/";
+import { Container, Box, Grid, TextField, Button, Typography } from "@mui/material/";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -100,17 +100,12 @@ const SinglePost = () => {
       console.error("Error:", error);
     }
   };
-  console.log("formState before edit submition");
-  console.log("formState:", formState);
-  console.log("-----------------");
+
 
   //This function is responsible for the modification of the post,
   //it uses the 'editPost mutation which sends the editedPost to the database and then
   //it reassigns the window location to navigate user to /MyListings
   const editPostSubmit = async (e) => {
-    console.log("formState:", formState);
-    console.log("listingAddress:", listingAddress);
-    console.log("listing ID:", listingId);
 
     e.preventDefault();
 
@@ -144,29 +139,28 @@ const SinglePost = () => {
   }
 
   return (
-    <Container
-      maxWidth="xl"
+    <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        marginTop: "2em",
         backgroundColor: "#e8f5e9",
-        fontFamily: "Helvetica, sans-serif",
+        fontFamily: "Roboto",
+        height:"100vh",
+        paddingBottom:"3em",
+        paddingTop:"2em"
       }}
     >
-      <Box
+      <Typography
         sx={{
-          padding: ".3em",
-          marginRight: "2%",
-          letterSpacing: ".1em",
           fontSize: "1.5em",
+          textAlign:"center",
+          paddingBottom:"0.8em"
         }}
       >
         Edit Listing
-      </Box>
+      </Typography>
       <Box
         component="form"
-        sx={{ border: "3px #a5d6a7 solid", margin: "1em" }}
+        className="editForm"
+        sx={{ fontFamily:"" }}
         onSubmit={editPostSubmit}
       >
         <Grid sx={{ justifyContent: "center" }} container spacing={2}>
@@ -242,6 +236,7 @@ const SinglePost = () => {
                 marginBottom: "1.5em",
                 marginTop: "1em",
                 fontSize: "1em",
+                textAlign:"center"
               }}
               onChange={handleInputChange}
               value={formState.dateOfSale}
@@ -257,7 +252,7 @@ const SinglePost = () => {
         </Grid>
         <Button type="submit">Submit Edit</Button>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

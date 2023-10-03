@@ -1,3 +1,17 @@
+.editForm {
+   margin-left: 10%;
+   margin-right: 10%;
+   border: 3px #a5d6a7 solid;
+}
+
+@media screen and (min-width: 768px) {
+    .editForm {
+        margin-left:25%;
+        margin-right: 25%;
+    }
+}
+
+
 .projectTitle  {
     padding-right:70%;
     letter-spacing:.1em;
@@ -8,7 +22,7 @@
     font-size: 1.3em
     }
     
-.projectTitle:before {
+/* .projectTitle:before {
     background-color: #c8e6c9;
     position: absolute;
     content: "";
@@ -17,4 +31,4 @@
     z-index: -50;
     bottom: 0;
     transform: translate(20px, 0px);
-}
+} */

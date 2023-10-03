@@ -45,10 +45,12 @@ export default function ListingModalComponent({
           style={{
             position: "absolute",
             top: "3%",
-            left: "87%",
+            left: "90%",
             background: "transparent",
             border: "0px ",
             fontSize: "1.2em",
+            textColor:"black",
+            cursor:"pointer"
           }}
         >
           X
@@ -100,10 +102,10 @@ export default function ListingModalComponent({
             )}
           </Slider>
           <CardContent component="div">
-            <Typography component="span" gutterBottom variant="h5">
-              Date Of Event: {listingModal.dateOfSale}
+            <Typography component="span" gutterBottom variant="body2">
+              Date Of Sale: {listingModal.dateOfSale}
             </Typography>
-            <Typography component="div" variant="body2" color="text.secondary">
+            <Typography component="div" variant="h5" >
               {listingModal.description}
               <Typography
                 component="div"
