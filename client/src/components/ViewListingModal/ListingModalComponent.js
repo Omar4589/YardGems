@@ -49,6 +49,8 @@ export default function ListingModalComponent({
             background: "transparent",
             border: "0px ",
             fontSize: "1.2em",
+            textColor:"black",
+            cursor:"pointer"
           }}
         >
           X
