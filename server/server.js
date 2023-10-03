@@ -8,11 +8,6 @@ const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
 require("dotenv").config();
 
-const multer = require("multer");
-// Configure multer to use memory storage. This stores the uploaded files as buffers in memory.
-const storage = multer.memoryStorage();
-// Initialize multer with the storage configuration
-const upload = multer({ storage: storage });
 
 const PORT = process.env.PORT || 3001;
 const app = express();
