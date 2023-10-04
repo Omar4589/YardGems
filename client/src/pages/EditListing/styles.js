@@ -16,8 +16,13 @@ const styles = {
     "@media (min-width: 768px)": { width:"30%" },
   },
   heading: { fontWeight: "bold", fontSize: 25,mt:3, mb: 1, py:2, px:2 },
-  inputBoxes: { py: 1 },
-  labels: { fontWeight: "semibold", mb: 1, display: "block" },
+  inputBoxes: { py: 1, "@media (min-width: 768px)":{
+    py:3
+  } },
+  labels: { fontWeight: "semibold", mb: 1, display: "block",
+"@media (min-width: 768px)":{
+  fontSize:"1.2em"
+} },
   button: { bgcolor: "#66bb6a", color: "white", fontWeight: "semibold", py: 1, mb:5  },
   
 };
