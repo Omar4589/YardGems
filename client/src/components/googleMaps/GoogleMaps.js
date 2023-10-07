@@ -182,22 +182,37 @@ const PlacesAutocomplete = ({ setSelected, setCenter }) => {
 
   // Fetch user's current location if available
   useEffect(() => {
+    let isMounted = true;
+
     const getCurrentLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            const { latitude, longitude } = position.coords;
-            setCenter({ lat: latitude, lng: longitude });
+            if (isMounted) {
+              // Check if the component is still mounted
+              const { latitude, longitude } = position.coords;
+              setCenter({ lat: latitude, lng: longitude });
+            }
           },
           (error) => {
-            console.error("Error getting current location:", error);
+            if (isMounted) {
+              // Check if the component is still mounted
+              console.error("Error getting current location:", error);
+            }
           }
         );
       } else {
-        console.error("Geolocation is not supported by this browser.");
+        if (isMounted) {
+          // Check if the component is still mounted
+          console.error("Geolocation is not supported by this browser.");
+        }
       }
     };
     getCurrentLocation();
+
+    return () => {
+      isMounted = false; // Cleanup: set flag to false when component unmounts
+    };
   }, []);
 
   // Handle selection of a place from Autocomplete suggestions

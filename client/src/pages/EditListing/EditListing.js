@@ -10,7 +10,10 @@ import {
   TextField,
   Button,
   Typography,
+  Autocomplete,
 } from "@mui/material/";
+import dayjs from "dayjs";
+import { DatePicker } from "@mui/x-date-pickers";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -37,7 +40,7 @@ const SinglePost = () => {
 
   //-----------------STATE---------------//
   //First state: 'listingAddress' and set the intial state to empty object because we expect an object when setting the state
-  const [listingAddress, setListingAddress] = useState({});
+  const [listingAddress, setListingAddress] = useState("");
 
   //Second state: 'formState' and set the intial state to an empty object
   const [formState, setFormState] = useState({});
@@ -58,6 +61,11 @@ const SinglePost = () => {
     setValue, //a function provided by usePlacesAutocomplete() that updates the value property
     clearSuggestions, //a function provided by the hook that clears or resets the suggestions
   } = usePlacesAutocomplete();
+
+  //Store list of addresses in a variable from the usePlacesAutoComplete hook data
+  const listOfAddresses = data.map((object) => {
+    return object.description;
+  });
 
   //Here we use the 'QUERY_SINGLE_LISTING' query to fetch the listing data we want to edit
   // based on the listingId we got from the url param
@@ -92,6 +100,12 @@ const SinglePost = () => {
   //We use the 'setValue' function that is provided by the 'usePlacesAutoComplete' hook.
   const handleAutoCompleteChange = (e) => {
     setValue(e.target.value);
+  };
+
+  //handles state update when date is selected
+  const handleDateChange = (newDate) => {
+    const formattedDate = dayjs(newDate).format("MM/DD/YYYY");
+    setFormState({ ...formState, dateOfSale: formattedDate });
   };
 
   // This function is triggered when a user selects an address from the autocomplete suggestions.
@@ -139,6 +153,8 @@ const SinglePost = () => {
     }
   };
 
+  console.log(listingAddress);
+
   // Only render the component if data has been fetched
   if (loading || !queryData) {
     return <div>Loading...</div>;
@@ -162,37 +178,33 @@ const SinglePost = () => {
 
         <form id="edit-listing-form" onSubmit={editPostSubmit}>
           <Box sx={{ ...styles.inputBoxes }}>
-            <Combobox
-              onSelect={handleAddressSelection}
-              style={{ width: "100%" }}
-            >
-              <Typography component="label" sx={{ ...styles.labels }}>
-                Address:
-              </Typography>
-              <ComboboxInput
-                style={{ paddingTop: 1, paddingBottom: 1, width: "100%" }}
-                value={value}
-                onChange={handleAutoCompleteChange}
-                disabled={!ready}
-                className="comboBox-input"
-                placeholder={queryData.listing.address}
-              />
-              <ComboboxPopover
-                style={{
-                  zIndex: "99999",
-                  width: "70%",
-                  fontSize: "1em",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                <ComboboxList>
-                  {status === "OK" &&
-                    data.map(({ place_id, description }) => (
-                      <ComboboxOption key={place_id} value={description} />
-                    ))}
-                </ComboboxList>
-              </ComboboxPopover>
-            </Combobox>
+            <Typography component="label" sx={{ ...styles.labels }}>
+              Address
+            </Typography>
+            <Autocomplete
+              options={listOfAddresses}
+              getOptionLabel={(option) => option}
+              fullWidth
+              value={listingAddress || ""}
+              onInputChange={(event, newValue) => {
+                handleAutoCompleteChange({ target: { value: newValue } });
+              }}
+              onChange={(event, newValue) => {
+                handleAddressSelection(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={queryData.listing.address}
+                  name="location"
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                  margin="none"
+                  required
+                />
+              )}
+            />
           </Box>
 
           <Box sx={{ ...styles.inputBoxes }}>
@@ -208,7 +220,7 @@ const SinglePost = () => {
               label={queryData.listing.title}
               id="project-title"
               onChange={handleInputChange}
-              value={formState.title}
+              value={formState.title || ""}
               name="title"
             />
           </Box>
@@ -231,39 +243,26 @@ const SinglePost = () => {
               label={queryData.listing.description}
               id="project-description"
               onChange={handleInputChange}
-              value={formState.description}
+              value={formState.description || ""}
               name="description"
             />
           </Box>
 
-          <Box sx={{ ...styles.inputBoxes }}>
-            {" "}
-            <Typography
-              component="label"
-              className="projectDate"
-              sx={{ ...styles.labels }}
-            >
-              Date:
+          <Box sx={{ ...styles.inputBoxes }} id="date-field">
+            <Typography component="label" sx={{ ...styles.labels }}>
+              Date of sale
             </Typography>
-            <input
+            <DatePicker
+              sx={{ ...styles.datePicker }}
+              label="Date of the Sale"
+              name="dateOfSale"
+              fullWidth
               variant="outlined"
               size="small"
               margin="none"
-              type="date"
-              fullWidth
-              label={queryData.listing.dateOfSale}
-              style={{
-                width: "100%",
-                height: "3.6em",
-                marginBottom: "1.5em",
-                marginTop: "1em",
-                fontSize: "1em",
-                textAlign: "center",
-              }}
-              onChange={handleInputChange}
-              value={formState.dateOfSale}
-              name="dateOfSale"
-              sx={{ backgroundColor: "white", borderRadius: ".5em" }}
+              required
+              value={dayjs(formState.dateOfSale) || ""}
+              onChange={(newDate) => handleDateChange(newDate)}
             />
           </Box>
 

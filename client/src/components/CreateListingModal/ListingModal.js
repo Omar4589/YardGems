@@ -71,8 +71,6 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   //The function below handles updating the 'formState'
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    // If the name of the input is "dateOfSale", format the date before setting it in the state.
-
     setFormState({ ...formState, [name]: value });
   };
 

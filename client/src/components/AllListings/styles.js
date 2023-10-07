@@ -1,6 +1,6 @@
 const styles = {
   main: {
-    maxHeight: "100vh",
+    minHeight: "100vh",
     overflow: "auto",
     backgroundColor: "#e8f5e9",
   },
