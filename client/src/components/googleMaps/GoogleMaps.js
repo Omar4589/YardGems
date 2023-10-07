@@ -21,6 +21,10 @@ import {
 import "@reach/combobox/styles.css";
 import "./google.css";
 import gem from "../../assets/images/greenGem.png";
+import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
+import image from "../../assets/yardsale.jpg";
+import { Box, Typography } from "@mui/material";
+import styles from "./styles";
 
 const libraries = ["places"];
 
@@ -38,6 +42,12 @@ export default function GoogleMaps() {
 }
 
 function Map() {
+  const [listingModal, setListingModal] = useState(false);
+
+  const openModal = (listing) => setListingModal(listing);
+  //Closes modal when listings is clicked on
+  const closeModal = () => setListingModal(false);
+
   // State to manage the map center and selected marker
   const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 });
   const [selected, setSelected] = useState(null);
@@ -80,9 +90,31 @@ function Map() {
         </div>
         {allListings.map(
           (
-            { _id, lat, lng, title, description, images, address, dateOfSale },
+            {
+              _id,
+              author,
+              lat,
+              lng,
+              title,
+              description,
+              images,
+              address,
+              dateOfSale,
+            },
             index
           ) => {
+            const listing = {
+              _id,
+              author,
+              lat,
+              lng,
+              title,
+              description,
+              images,
+              address,
+              dateOfSale,
+            };
+
             return (
               <MarkerF
                 key={_id}
@@ -94,11 +126,23 @@ function Map() {
               >
                 {activeMarker === _id ? (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                    <div>
-                      <h3>{title}</h3>
-                      <h5>{description}</h5>
-                      <p>{address}</p>
-                      <p>Date of event: {dateOfSale}</p>
+                    <Box id="infoWindow" sx={{ p: 1 }}>
+                      <Typography
+                        onClick={() => {
+                          openModal(listing);
+                        }}
+                        sx={{ ...styles.viewListing }}
+                      >
+                        View Listing
+                      </Typography>
+                      <Typography sx={{...styles.largeFont}}>{title}</Typography>
+         
+                      <Typography sx={{...styles.largeFont}}>{description}</Typography>
+                      <Typography>Date of event: {dateOfSale}</Typography>
+
+                      <Typography>{address}</Typography>
+                      <Typography sx={{...styles.mediumFont}}>{`Listed by: ${author}`}</Typography>
+
                       <div>
                         {images.map((imageURL, imgIndex) => (
                           <img
@@ -110,7 +154,7 @@ function Map() {
                           />
                         ))}
                       </div>
-                    </div>
+                    </Box>
                   </InfoWindow>
                 ) : null}
               </MarkerF>
@@ -119,6 +163,13 @@ function Map() {
         )}
         {selected && <MarkerF position={selected} />}
       </GoogleMap>
+      {listingModal && (
+        <ListingModalComponent
+          listingModal={listingModal}
+          closeModal={closeModal}
+          image={image}
+        />
+      )}
     </div>
   );
 }

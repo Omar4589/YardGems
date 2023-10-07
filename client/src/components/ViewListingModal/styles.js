@@ -4,7 +4,7 @@ const styles = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    maxWidth: "100%",
+    width: "100%",
     borderRadius: "1%",
     boxShadow: 6,
     padding: 0,
