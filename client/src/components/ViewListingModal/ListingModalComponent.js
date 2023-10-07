@@ -43,14 +43,7 @@ export default function ListingModalComponent({
         <button
           onClick={closeModal}
           style={{
-            position: "absolute",
-            top: "3%",
-            left: "90%",
-            background: "transparent",
-            border: "0px ",
-            fontSize: "1.2em",
-            textColor:"black",
-            cursor:"pointer"
+            ...styles.button,
           }}
         >
           X
@@ -58,35 +51,23 @@ export default function ListingModalComponent({
         <Card
           component="div"
           sx={{
-            maxWidth: "100%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            ...styles.card,
           }}
         >
           <CardHeader
             title={listingModal.title}
-            subheader={`Post By: ${listingModal.author}`}
+            subheader={`Listed By: ${listingModal.author}`}
           />
-          <Slider {...settings} style={{ width: "100%", height:"100%" }}>
+          <Slider {...settings}>
             {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
             {listingModal.images.length > 0 ? (
               listingModal.images.map((url, index) => (
-                <div
-                  key={index}
-                  style={{
-                    width: "100%"
-                  }}
-                >
+                <div key={index} style={{}}>
                   <img
                     src={url}
                     alt={`slide-${index}`}
                     style={{
-                      maxHeight: "484px",
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      maxWidth: "100%",
+                      ...styles.img,
                     }}
                   />
                 </div>
@@ -96,25 +77,24 @@ export default function ListingModalComponent({
                 <img
                   src={image}
                   alt="Default slide"
-                  style={{ width: "100%" }}
+                  style={{ ...styles.img }}
                 />
               </div>
             )}
           </Slider>
           <CardContent component="div">
-            <Typography component="span" gutterBottom variant="body2">
+            <Typography sx={{ ...styles.date }}>
               Date Of Sale: {listingModal.dateOfSale}
             </Typography>
-            <Typography component="div" variant="h5" >
-              {listingModal.description}
-              <Typography
-                component="div"
-                variant="body2"
-                color="text.secondary"
-              >
-                <br></br>
-                {listingModal.address}
-              </Typography>
+            <Typography variant="h5" style={{ ...styles.description }}>
+              {listingModal.description}dafa dfsa fdasf adsfasdfadsfa dfda
+              dsaafdssdfasdf sad fasds adfasd fasdf dssdfasdf sad fasds adfasd
+              fasdf asdfasdfdsfadf a dfsdf sdasfd fsdfsadfdsf saf sdf asd
+              sdfasdfasdf adsfasdfasd fasd fasdf dssdfasdf sad fasds adfasd
+              fasdf dssdfasdf sad fasds adfasd fasdf
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {listingModal.address}
             </Typography>
           </CardContent>
         </Card>
