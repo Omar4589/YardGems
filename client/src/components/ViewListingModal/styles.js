@@ -9,6 +9,7 @@ const styles = {
     boxShadow: 6,
     padding: 0,
     overflowY: "auto",
+    overflowX:"hidden",
     maxHeight: "100vh",
     "@media (min-width: 768px)": {
       width: "900px",

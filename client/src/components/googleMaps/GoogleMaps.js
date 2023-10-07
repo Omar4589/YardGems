@@ -75,6 +75,8 @@ function Map() {
         mapContainerClassName="map-container" // styling
         onClick={() => setActiveMarker(null)}
         options={{
+          streetViewControl: false, // Removes the Pegman
+          fullscreenControl: false,
           styles: [
             {
               elementType: "labels",
@@ -128,7 +130,10 @@ function Map() {
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                     <Box>
                       <h3>{title}</h3>
-                      <span onClick={() => openModal(listing)} style={{...styles.viewListing}}>
+                      <span
+                        onClick={() => openModal(listing)}
+                        style={{ ...styles.viewListing }}
+                      >
                         View Listing
                       </span>
                       <h5>{description}</h5>
