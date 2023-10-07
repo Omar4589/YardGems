@@ -19,14 +19,6 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import "@reach/combobox/styles.css";
 import dayjs from "dayjs";
 import { useListingContext } from "../../utils/ListingContext";
 
@@ -108,8 +100,6 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
       console.error("Error:", error);
     }
   };
-
- 
 
   // This function handles setting the state when a user chooses a file from their device
   //We use this state in the uploadImage function. The state is passed into the formData
@@ -289,7 +279,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                 Date of sale
               </Typography>
               <DatePicker
-              sx={{...styles.datePicker}}
+                sx={{ ...styles.datePicker }}
                 label="Date of the Sale"
                 name="dateOfSale"
                 fullWidth
