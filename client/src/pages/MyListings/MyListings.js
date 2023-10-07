@@ -68,7 +68,14 @@ const MyListings = () => {
   return (
     <>
       {Auth.loggedIn() ? (
-        <Container maxWidth="" sx={{ backgroundColor: "#e8f5e9", pb: 10, height:"100vh" }}>
+        <Container
+          maxWidth=""
+          sx={{
+            backgroundColor: "#e8f5e9",
+            paddingBottom: "6em",
+            minHeight: "100vh",
+          }}
+        >
           <Container maxWidth="md">
             <Typography
               component="div"
@@ -95,7 +102,7 @@ const MyListings = () => {
               addListing={addAListing}
             />
           </Container>
-          <Container sx={{ marginBottom: "3em", marginTop:"1em" }}>
+          <Container sx={{ marginBottom: "3em", marginTop: "1em" }}>
             <Grid container spacing={2}>
               {sortedUserPosts.map((post) => {
                 return (
@@ -116,7 +123,7 @@ const MyListings = () => {
                         {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
                         {post.images?.length > 0 ? (
                           post.images.map((url, index) => (
-                            <div key={`${post._id}-image-${index}`} >
+                            <div key={`${post._id}-image-${index}`}>
                               <img
                                 src={url}
                                 alt={`slide-${index}`}

@@ -3,7 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_SINGLE_LISTING } from "../../utils/queries";
-import { Container, Box, Grid, TextField, Button, Typography } from "@mui/material/";
+import {
+  Container,
+  Box,
+  Grid,
+  TextField,
+  Button,
+  Typography,
+} from "@mui/material/";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -16,9 +23,10 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import "./singlePost.css";
+import "./styles.js";
 import { useListingContext } from "../../utils/ListingContext";
 import { useNavigate } from "react-router-dom";
+import styles from "./styles";
 
 //-----------------------START OF COMPONENT-----------------------//
 const SinglePost = () => {
@@ -101,12 +109,10 @@ const SinglePost = () => {
     }
   };
 
-
   //This function is responsible for the modification of the post,
   //it uses the 'editPost mutation which sends the editedPost to the database and then
   //it reassigns the window location to navigate user to /MyListings
   const editPostSubmit = async (e) => {
-
     e.preventDefault();
 
     try {
@@ -139,47 +145,37 @@ const SinglePost = () => {
   }
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#e8f5e9",
-        fontFamily: "Roboto",
-        height:"100vh",
-        paddingBottom:"3em",
-        paddingTop:"2em"
-      }}
-    >
-      <Typography
+    <Container sx={{ ...styles.mainContainer }}>
+      <Box
+        id="edit-listing-container"
         sx={{
-          fontSize: "1.5em",
-          textAlign:"center",
-          paddingBottom:"0.8em"
+          ...styles.editListingContainer,
         }}
       >
-        Edit Listing
-      </Typography>
-      <Box
-        component="form"
-        className="editForm"
-        sx={{ fontFamily:"" }}
-        onSubmit={editPostSubmit}
-      >
-        <Grid sx={{ justifyContent: "center" }} container spacing={2}>
-          <Grid item xs={8}>
-            <Combobox onSelect={handleAddressSelection}>
-              <p className="projectTitle">Address:</p>
+        <Typography
+          sx={{
+            ...styles.heading,
+          }}
+        >
+          Edit Listing
+        </Typography>
+
+        <form id="edit-listing-form" onSubmit={editPostSubmit}>
+          <Box sx={{ ...styles.inputBoxes }}>
+            <Combobox
+              onSelect={handleAddressSelection}
+              style={{ width: "100%" }}
+            >
+              <Typography component="label" sx={{ ...styles.labels }}>
+                Address:
+              </Typography>
               <ComboboxInput
+                style={{ paddingTop: 1, paddingBottom: 1, width: "100%" }}
                 value={value}
                 onChange={handleAutoCompleteChange}
                 disabled={!ready}
                 className="comboBox-input"
                 placeholder={queryData.listing.address}
-                style={{
-                  width: "96%",
-                  height: "3.6em",
-                  paddingLeft: "1em",
-                  fontSize: "1em",
-                  borderRadius: ".5em",
-                }}
               />
               <ComboboxPopover
                 style={{
@@ -197,62 +193,95 @@ const SinglePost = () => {
                 </ComboboxList>
               </ComboboxPopover>
             </Combobox>
-          </Grid>
-          <Grid item xs={8}>
-            <p className="projectTitle">Title:</p>
+          </Box>
+
+          <Box sx={{ ...styles.inputBoxes }}>
+            <Typography component="label" sx={{ ...styles.labels }}>
+              Title:
+            </Typography>
             <TextField
+              type="text"
+              variant="outlined"
+              size="small"
+              margin="none"
               fullWidth
               label={queryData.listing.title}
-              id="fullWidth"
+              id="project-title"
               onChange={handleInputChange}
               value={formState.title}
               name="title"
-              sx={{ backgroundColor: "white", borderRadius: ".5em" }}
             />
-          </Grid>
-          <Grid item xs={8}>
-            <p className="projectdescription">Description:</p>
+          </Box>
+
+          <Box sx={{ ...styles.inputBoxes }}>
+            <Typography
+              component="label"
+              className="projectdescription"
+              sx={{ ...styles.labels }}
+            >
+              Description:
+            </Typography>
             <TextField
+              type="text"
+              variant="outlined"
+              size="small"
+              margin="none"
               multiline
               fullWidth
               label={queryData.listing.description}
-              id="fullWidth"
+              id="project-description"
               onChange={handleInputChange}
               value={formState.description}
               name="description"
-              sx={{ backgroundColor: "white", borderRadius: ".5em" }}
             />
-          </Grid>
-          <Grid item xs={8}>
-            <p className="projectDate">Date:</p>
+          </Box>
+
+          <Box sx={{ ...styles.inputBoxes }}>
+            {" "}
+            <Typography
+              component="label"
+              className="projectDate"
+              sx={{ ...styles.labels }}
+            >
+              Date:
+            </Typography>
             <input
+              variant="outlined"
+              size="small"
+              margin="none"
               type="date"
               fullWidth
               label={queryData.listing.dateOfSale}
-              id="fullWidth"
               style={{
                 width: "100%",
                 height: "3.6em",
                 marginBottom: "1.5em",
                 marginTop: "1em",
                 fontSize: "1em",
-                textAlign:"center"
+                textAlign: "center",
               }}
               onChange={handleInputChange}
               value={formState.dateOfSale}
               name="dateOfSale"
               sx={{ backgroundColor: "white", borderRadius: ".5em" }}
             />
-          </Grid>
-          <Grid item xs={8}>
-            {/* <TextField fullWidth label="fullWidth" id="fullWidth" 
-                        
-                        /> */}
-          </Grid>
-        </Grid>
-        <Button type="submit">Submit Edit</Button>
+          </Box>
+
+          {/* <TextField fullWidth label="fullWidth" id="fullWidth"  /> */}
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+              ...styles.button,
+            }}
+          >
+            Submit Edit
+          </Button>
+        </form>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

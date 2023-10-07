@@ -7,6 +7,8 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import MyListings from "./pages/MyListings/MyListings";
 import SignUpLoginPage from "./pages/SignUpLogin/SignUpLogin";
 import Header from "./components/Header/Header";
@@ -45,24 +47,26 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <ListingProvider>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/signup-login" element={<SignUpLoginPage />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/MyListings" element={<MyListings />} />
-            <Route path="/SavedListings" element={<SavedListings />} />
-            <Route path="/listings/:listingId" element={<EditListing />} />
-            <Route path="/AboutUs" element={<AboutUs />} />
-            <Route path="/ContactUs" element={<ContactUs />} />
-            <Route path="/MyAccount" element={<MyAccount />} />
-            <Route path="/FAQ" element={<FAQ />} />
-          </Routes>
-          <BottomNavBar />
-          <Footer />
-        </Router>
-      </ListingProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <ListingProvider>
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/signup-login" element={<SignUpLoginPage />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/MyListings" element={<MyListings />} />
+              <Route path="/SavedListings" element={<SavedListings />} />
+              <Route path="/listings/:listingId" element={<EditListing />} />
+              <Route path="/AboutUs" element={<AboutUs />} />
+              <Route path="/ContactUs" element={<ContactUs />} />
+              <Route path="/MyAccount" element={<MyAccount />} />
+              <Route path="/FAQ" element={<FAQ />} />
+            </Routes>
+            <BottomNavBar />
+            <Footer />
+          </Router>
+        </ListingProvider>
+      </LocalizationProvider>
     </ApolloProvider>
   );
 }

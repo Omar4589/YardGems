@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import {
   Container,
   Card,
-  Box,
-  CardMedia,
   Typography,
   CardContent,
   CardHeader,
@@ -14,7 +12,7 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
-import { styles } from "./styles";
+import styles from "./styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Auth from "../../utils/auth";
 import { useListingContext } from "../../utils/ListingContext";
@@ -63,16 +61,25 @@ export default function AllListings() {
 
   //---------------------------RETURN STATEMENT-------------------------//
   return (
-    <Container id="all-listings" sx={styles.container}>
+    <Container id="all-listings" sx={{ ...styles.main }}>
       <Typography sx={{ ...styles.heading }}> Yard Sale Listings</Typography>
       <Typography sx={{ ...styles.results }}>
         {listings.length + " Results"}
       </Typography>
-      <Grid container spacing={2} sx={styles.grid}>
+      <Grid
+        id="all-listings-grid"
+        container
+        spacing={2}
+        sx={{ ...styles.grid }}
+      >
         {listings.map((listing) => {
           return (
-            <Grid xs={12} md={6}>
-              <Card component="div">
+            <Grid xs={12} md={6} id="listing-grid">
+              <Card
+                id="listing-card"
+                component="div"
+                sx={{ ...styles.listingCard }}
+              >
                 <CardActionArea onClick={() => openModal(listing)}>
                   <CardHeader
                     title={listing.title}
@@ -86,7 +93,7 @@ export default function AllListings() {
                           <img
                             src={url}
                             alt={`slide-${index}`}
-                            style={{ height: "250px", margin: "auto" }}
+                            style={{ ...styles.img }}
                           />
                         </div>
                       ))
@@ -95,7 +102,7 @@ export default function AllListings() {
                         <img
                           src={image}
                           alt="Default slide"
-                          style={{ height: "250px", margin: "auto" }}
+                          style={{ ...styles.img }}
                         />
                       </div>
                     )}
@@ -114,14 +121,13 @@ export default function AllListings() {
                         favoriteAListing(listing._id);
                       }
                     }}
-                    sx={
-                      {...styles.iconButton,
-                      
-                        color: favoritedListingIds.has(listing._id)
-                          ? "red"
-                          : "grey",
-                      }
-                    }
+                    sx={{
+                      ...styles.iconButton,
+
+                      color: favoritedListingIds.has(listing._id)
+                        ? "red"
+                        : "grey",
+                    }}
                     aria-label="favorite"
                   >
                     <FavoriteIcon />
@@ -129,7 +135,7 @@ export default function AllListings() {
                 ) : (
                   <IconButton
                     onClick={() => setLoginPopOver(true)}
-                    sx={styles.iconButton}
+                    sx={{ ...styles.iconButton }}
                     aria-label="favorite"
                   >
                     <FavoriteIcon sx={{ color: "grey" }} />
@@ -153,7 +159,7 @@ export default function AllListings() {
         })}
       </Grid>
       {/* Below is a conditional expression that checks whether the listingModal variable is truthy. If the value of listingModal is truthy 
-      (not null, undefined, false, 0, or an empty string), the code inside the parentheses (...) will be executed.  */}
+      (NOT null, undefined, false, 0, or an empty string), the code inside the parentheses (...) will be executed.  */}
       {listingModal && (
         <ListingModalComponent
           listingModal={listingModal}
