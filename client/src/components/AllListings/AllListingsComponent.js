@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import {
   Container,
   Card,
-  Box,
-  CardMedia,
   Typography,
   CardContent,
   CardHeader,
@@ -161,7 +159,7 @@ export default function AllListings() {
         })}
       </Grid>
       {/* Below is a conditional expression that checks whether the listingModal variable is truthy. If the value of listingModal is truthy 
-      (not null, undefined, false, 0, or an empty string), the code inside the parentheses (...) will be executed.  */}
+      (NOT null, undefined, false, 0, or an empty string), the code inside the parentheses (...) will be executed.  */}
       {listingModal && (
         <ListingModalComponent
           listingModal={listingModal}

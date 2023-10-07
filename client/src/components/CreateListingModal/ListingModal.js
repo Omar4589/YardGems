@@ -9,9 +9,12 @@ import {
   Backdrop,
   Snackbar,
   Alert,
+  Input,
+  TextField,
+  Autocomplete,
 } from "@mui/material";
-import { TextField, Container } from "@mui/material";
-import styles from "./modalStyles";
+import { DatePicker } from "@mui/x-date-pickers";
+import styles from "./styles";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -62,6 +65,10 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
+  const listOfAddresses = data.map((object) => {
+    return object.description;
+  });
+
   //--------------FORM FIELD HANDLERES-----------//
   // Helper function to convert date from "MM/DD/YYYY" format to "yyyy-mm-dd" format
   const formatDateToInputValue = (formattedDate) => {
@@ -72,12 +79,13 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     // If the name of the input is "dateOfSale", format the date before setting it in the state.
-    if (name === "dateOfSale") {
-      const formattedDate = dayjs(value).format("MM/DD/YYYY");
-      setFormState({ ...formState, [name]: formattedDate });
-    } else {
-      setFormState({ ...formState, [name]: value });
-    }
+
+    setFormState({ ...formState, [name]: value });
+  };
+
+  const handleDateChange = (newDate) => {
+    const formattedDate = dayjs(newDate).format("MM/DD/YYYY");
+    setFormState({ ...formState, dateOfSale: formattedDate });
   };
 
   //The function below handles updating the value of the 'value' property that is return by 'usePlacesAutoComplete' hook.
@@ -100,6 +108,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
       console.error("Error:", error);
     }
   };
+
+ 
 
   // This function handles setting the state when a user chooses a file from their device
   //We use this state in the uploadImage function. The state is passed into the formData
@@ -185,161 +195,146 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   };
 
   return (
-    <Container id="create-listing-container">
-      <Modal
-        id="create-listing-modal-container"
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={handleOpen}
-        onClose={handleClose}
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 1500,
-          },
-        }}
-      >
-        <Fade in={handleOpen}>
-          <Box sx={{ ...styles.main }} id="listing-modal">
-            <Typography
-              sx={{ display: "flex", justifyContent: "center" }}
-              id="transition-modal-title"
-              variant="h6"
-              component="h2"
-            >
-              Create a new listing
-            </Typography>
-            <form onSubmit={submitNewListing} style={{ ...styles.form }}>
-              <div>
-                <Combobox
-                style={{
-                 
+    <Modal
+      id="create-listing-modal-container"
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      open={handleOpen}
+      onClose={handleClose}
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          timeout: 1500,
+        },
+      }}
+    >
+      <Fade in={handleOpen}>
+        <Box sx={{ ...styles.main }} id="listing-modal">
+          <Typography sx={{ ...styles.heading }} id="transition-modal-title">
+            Create a new listing
+          </Typography>
+          <form onSubmit={submitNewListing} style={{ ...styles.form }}>
+            <Box sx={{ py: 1, mb: 1 }} id="address-field">
+              <Typography component="label" sx={{ ...styles.labels }}>
+                Address
+              </Typography>
+              <Autocomplete
+                options={listOfAddresses}
+                getOptionLabel={(option) => option}
+                fullWidth
+                onInputChange={(event, newValue) => {
+                  handleAutoCompleteChange({ target: { value: newValue } });
                 }}
-                onSelect={handleAddressSelection}>
-                  <ComboboxInput
-                    value={value}
-                    onChange={handleAutoCompleteChange}
-                    disabled={!ready}
-                    className="comboBox-input"
-                    placeholder="Add a location"
-                    style={{
-                      width: "100%",
-                      height: "3.6em",
-                      marginBottom: "1.5em",
-                      marginTop: "1em",
-                    
-                      fontSize: "1em",
-                    }}
+                onChange={(event, newValue) => {
+                  handleAddressSelection(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Add a location"
+                    name="location"
+                    type="text"
+                    variant="outlined"
+                    size="small"
+                    margin="none"
                     required
                   />
-                  <ComboboxPopover
-                    style={{
-                      zIndex: "99999",
-                      width: "100%",
-                      fontSize: "1em",
-                      fontFamily: "sans-serif",
-                    }}
-                  >
-                    <ComboboxList>
-                      {status === "OK" &&
-                        data.map(({ place_id, description }) => (
-                          <ComboboxOption key={place_id} value={description} />
-                        ))}
-                    </ComboboxList>
-                  </ComboboxPopover>
-                </Combobox>
-              </div>
+                )}
+              />
+            </Box>
 
+            <Box sx={{ py: 1, mb: 1 }} id="title-field">
+              <Typography component="label" sx={{ ...styles.labels }}>
+                Listing Title
+              </Typography>
               <TextField
-                style={{
-                  width: "100%",
-                  height: "3.6em",
-                  marginBottom: "1.5em",
-                  marginTop: "1em",
-                  fontSize: "1em",
-                }}
+                style={{}}
                 label="Listing Title"
                 name="title"
+                type="text"
+                fullWidth
+                variant="outlined"
+                size="small"
+                margin="none"
+                multiline
                 required
                 onChange={handleInputChange}
                 placeholder={formState.title}
                 value={formState.title}
               />
+            </Box>
+
+            <Box sx={{ ...styles.inputBoxes }} id="description-field">
+              <Typography component="label" sx={{ ...styles.labels }}>
+                Description
+              </Typography>
               <TextField
-                style={{
-                  width: "100%",
-                  height: "3.6em",
-                  marginBottom: "1.5em",
-                  marginTop: "1em",
-                  fontSize: "1em",
-                }}
+                style={{}}
                 label="Description"
                 name="description"
+                fullWidth
+                variant="outlined"
+                size="small"
+                margin="none"
                 required
                 multiline
                 onChange={handleInputChange}
                 placeholder={formState.description}
                 value={formState.description}
               />
-              <input
-                type="date"
-                style={{
-                  width: "100%",
-                  height: "3.6em",
-                  marginBottom: "1.5em",
-                  marginTop: "1em",
-                  fontSize: "1em",
-                textAlign:"center"
-                }}
+            </Box>
+
+            <Box sx={{ ...styles.inputBoxes }} id="date-field">
+              <Typography component="label" sx={{ ...styles.labels }}>
+                Date of sale
+              </Typography>
+              <DatePicker
+              sx={{...styles.datePicker}}
                 label="Date of the Sale"
                 name="dateOfSale"
+                fullWidth
+                variant="outlined"
+                size="small"
+                margin="none"
                 required
-                onChange={handleInputChange}
-                placeholder={formState.dateOfSale}
                 value={formatDateToInputValue(formState.dateOfSale)}
+                onChange={(newDate) => handleDateChange(newDate)}
               />
-              <div
-                style={{
-                  width: "100%",
-                  height: "3.6em",
-                  marginBottom: "1.5em",
-                  marginTop: "1em",
-                  fontSize: "1em",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {" "}
-                <input
-                  type="file"
-                  multiple
-                  name="file"
-                  onChange={handleFileChange}
-                  style={{}}
-                  id="file-input"
-                />
-              </div>
+            </Box>
+
+            <Box
+              id="images"
+              style={{
+                ...styles.inputBoxes,
+              }}
+            >
+              <Typography component="label" sx={{ ...styles.labels }}>
+                Images
+              </Typography>
+              <Input
+                type="file"
+                multiple
+                name="file"
+                fullWidth
+                variant="outlined"
+                size="small"
+                margin="none"
+                onChange={handleFileChange}
+                style={{}}
+                id="file-input"
+              />
 
               <Button
                 variant="outlined"
-                component="span"
                 disabled={!imageFiles.length}
-                sx={{
-                  width: "100%",
-                  height: "3.6em",
-                  marginBottom: "1.5em",
-                  marginTop: "1em",
-                  fontSize: "1em",
-                  marginLeft:"auto", 
-                  marginRight:"auto",
-                }}
+                sx={{ ...styles.uploadButton }}
                 onClick={() => {
                   uploadImage();
                 }}
               >
                 Upload
               </Button>
+
               <Snackbar
                 open={openSnackbar}
                 autoHideDuration={6000}
@@ -349,19 +344,20 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                   You can only upload a maximum of 5 images.
                 </Alert>
               </Snackbar>
+            </Box>
 
-              <br></br>
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ display: "flex", justifyContent: "center", width: "70%", marginLeft:"auto", marginRight:"auto" }}
-              >
-                Add
-              </Button>
-            </form>
-          </Box>
-        </Fade>
-      </Modal>
-    </Container>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                ...styles.addButton,
+              }}
+            >
+              Add
+            </Button>
+          </form>
+        </Box>
+      </Fade>
+    </Modal>
   );
 };
