@@ -97,7 +97,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     id="bottom-navigation"
       value={windowPath}
       onChange={handlePathChange}
-      showLabels="true"
+      showLabels={true}
       sx={{ ...styles.mainContainer }}
     >
       <BottomNavigationAction
