@@ -57,6 +57,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
+  //Store list of addresses in a variable from the usePlacesAutoComplete hook data
   const listOfAddresses = data.map((object) => {
     return object.description;
   });
@@ -75,6 +76,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     setFormState({ ...formState, [name]: value });
   };
 
+  //handles state update when date is selected
   const handleDateChange = (newDate) => {
     const formattedDate = dayjs(newDate).format("MM/DD/YYYY");
     setFormState({ ...formState, dateOfSale: formattedDate });
