@@ -126,23 +126,14 @@ function Map() {
               >
                 {activeMarker === _id ? (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                    <Box id="infoWindow" sx={{ p: 1 }}>
-                      <Typography
-                        onClick={() => {
-                          openModal(listing);
-                        }}
-                        sx={{ ...styles.viewListing }}
-                      >
+                    <Box>
+                      <h3>{title}</h3>
+                      <span onClick={() => openModal(listing)} style={{...styles.viewListing}}>
                         View Listing
-                      </Typography>
-                      <Typography sx={{...styles.largeFont}}>{title}</Typography>
-         
-                      <Typography sx={{...styles.largeFont}}>{description}</Typography>
-                      <Typography>Date of event: {dateOfSale}</Typography>
-
-                      <Typography>{address}</Typography>
-                      <Typography sx={{...styles.mediumFont}}>{`Listed by: ${author}`}</Typography>
-
+                      </span>
+                      <h5>{description}</h5>
+                      <p>{address}</p>
+                      <p>Date of event: {dateOfSale}</p>
                       <div>
                         {images.map((imageURL, imgIndex) => (
                           <img
