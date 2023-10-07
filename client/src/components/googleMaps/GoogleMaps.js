@@ -22,11 +22,13 @@ import "@reach/combobox/styles.css";
 import "./google.css";
 import gem from "../../assets/images/greenGem.png";
 
+const libraries = ["places"];
+
 export default function GoogleMaps() {
   // isLoaded is gives us access to the apiKey
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyCNzXt-MC2wxZGcPsT_YV9kflh4Lw_cqpk",
-    libraries: ["places"],
+    libraries,
   });
   // If the API is not loaded yet, show loading message
   if (!isLoaded) return <div>Loading...</div>;

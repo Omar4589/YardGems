@@ -28,6 +28,7 @@ const settings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
+  arrows: false 
 };
 
 //---------------------------START OF COMPONENT----------------------//
@@ -74,7 +75,7 @@ export default function AllListings() {
       >
         {listings.map((listing) => {
           return (
-            <Grid xs={12} md={6} id="listing-grid">
+            <Grid key={listing._id} xs={12} md={6} id="listing-grid">
               <Card
                 id="listing-card"
                 component="div"
