@@ -77,14 +77,7 @@ const MyListings = () => {
           }}
         >
           <Container maxWidth="md">
-            <Typography
-              component="div"
-              variant="h2"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-              style={{ ...styles.heading }}
-            >
+            <Typography align="center" sx={{ ...styles.heading }}>
               {userListings.length
                 ? `You have ${userListings.length} garage sale ${
                     userListings.length === 1 ? "listing" : "listings"

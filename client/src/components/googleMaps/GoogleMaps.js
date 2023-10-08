@@ -66,10 +66,9 @@ function Map() {
   };
 
   return (
-    <div sx={{ backgroundColor: "#e8f5e9" }}>
+    <Box className="main">
       {/* below renders the google map */}
       <GoogleMap
-        sx={{ marginLeft: "20%" }}
         zoom={10} //how far you want the map to be zoomed in
         center={center} // displays location
         mapContainerClassName="map-container" // styling
@@ -88,7 +87,7 @@ function Map() {
       >
         <div className="places-container">
           {/* will render out a placed based on the selection */}
-          <PlacesAutocomplete setSelected={setSelected} setCenter={setCenter} />
+          {/* <PlacesAutocomplete setSelected={setSelected} setCenter={setCenter} /> */}
         </div>
         {allListings.map(
           (
@@ -129,13 +128,14 @@ function Map() {
                 {activeMarker === _id ? (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                     <Box>
-                      <h3>{title}</h3>
-                      <span
+                      <Typography
                         onClick={() => openModal(listing)}
-                        style={{ ...styles.viewListing }}
+                        sx={{ ...styles.viewListing }}
                       >
                         View Listing
-                      </span>
+                      </Typography>
+                      <h3 style={{ ...styles.title }}>{title}</h3>
+
                       <h5>{description}</h5>
                       <p>{address}</p>
                       <p>Date of event: {dateOfSale}</p>
@@ -166,7 +166,7 @@ function Map() {
           image={image}
         />
       )}
-    </div>
+    </Box>
   );
 }
 
@@ -182,22 +182,37 @@ const PlacesAutocomplete = ({ setSelected, setCenter }) => {
 
   // Fetch user's current location if available
   useEffect(() => {
+    let isMounted = true;
+
     const getCurrentLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            const { latitude, longitude } = position.coords;
-            setCenter({ lat: latitude, lng: longitude });
+            if (isMounted) {
+              // Check if the component is still mounted
+              const { latitude, longitude } = position.coords;
+              setCenter({ lat: latitude, lng: longitude });
+            }
           },
           (error) => {
-            console.error("Error getting current location:", error);
+            if (isMounted) {
+              // Check if the component is still mounted
+              console.error("Error getting current location:", error);
+            }
           }
         );
       } else {
-        console.error("Geolocation is not supported by this browser.");
+        if (isMounted) {
+          // Check if the component is still mounted
+          console.error("Geolocation is not supported by this browser.");
+        }
       }
     };
     getCurrentLocation();
+
+    return () => {
+      isMounted = false; // Cleanup: set flag to false when component unmounts
+    };
   }, []);
 
   // Handle selection of a place from Autocomplete suggestions

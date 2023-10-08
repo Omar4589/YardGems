@@ -36,7 +36,7 @@ const SavedListings = () => {
     <>
       {Auth.loggedIn() ? (
         <Container
-        id="saved-listings-component"
+          id="saved-listings-component"
           maxWidth=""
           sx={{
             backgroundColor: "#e8f5e9",
@@ -45,16 +45,11 @@ const SavedListings = () => {
           }}
         >
           <Container
-          id="saved-listings-heading"
-           maxWidth="md" sx={{ marginBottom: "0em" }}>
-            <Typography
-              component="div"
-              variant="h2"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-              style={{ ...styles.heading }}
-            >
+            id="saved-listings-heading"
+            maxWidth="md"
+            sx={{ marginBottom: "0em" }}
+          >
+            <Typography align="center" sx={{ ...styles.heading }}>
               {savedFavorites.length
                 ? `Viewing ${savedFavorites.length} saved ${
                     savedFavorites.length === 1 ? "listing" : "listings"
@@ -67,7 +62,7 @@ const SavedListings = () => {
               {savedFavorites.length > 0 &&
                 savedFavorites.map((post) => {
                   return (
-                    <Grid key={post._id} item xs={12} sm={6} md={4} >
+                    <Grid key={post._id} item xs={12} sm={6} md={4}>
                       <Card
                         component="div"
                         sx={{
