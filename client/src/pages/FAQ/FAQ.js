@@ -127,14 +127,12 @@ const FAQ = () => {
                 href="#howdoiremoveasavedlisting"
                 sx={{ ...styles.link }}
               >
-              
                 How do I remove a saved listing from my favorites?
               </Typography>
             </Box>
           </Box>
 
           <Box sx={{ ...styles.section }}>
-         
             <Typography
               component="a"
               href="#accountmanagement"
@@ -222,76 +220,97 @@ const FAQ = () => {
           <Typography id="accessandsignup" sx={{ ...styles.heading }}>
             Access and Sign Up
           </Typography>
-          <Typography id="isyardgemsfree">
+          <Box id="isyardgemsfree">
             {" "}
             <Typography sx={{ ...styles.question }}>
               {" "}
               Is YardGems free to use?{" "}
             </Typography>
-            Yes, YardGems is completely free to use. There are no subscription
-            fees or charges for accessing the platform.
-          </Typography>
-          <Typography id="doineedtoentercreditcard">
+            <Typography>
+              {" "}
+              Yes, YardGems is completely free to use. There are no subscription
+              fees or charges for accessing the platform.
+            </Typography>
+          </Box>
+          <Box id="doineedtoentercreditcard">
             <Typography sx={{ ...styles.question }}>
               {" "}
               Do I need to enter my credit card info?
             </Typography>
-            No, you do not need to enter your credit card information to use
-            YardGems. Our service is entirely free, and we do not require any
-            payment details.
-          </Typography>
-          <Typography id="doineedtosignup">
+            <Typography>
+              {" "}
+              No, you do not need to enter your credit card information to use
+              YardGems. Our service is entirely free, and we do not require any
+              payment details.
+            </Typography>
+          </Box>
+          <Box id="doineedtosignup">
             {" "}
             <Typography sx={{ ...styles.question }}>
               Do I need to sign up to view listings?
             </Typography>{" "}
-            No, you can view all available listings without signing up. We
-            believe in making the browsing experience as easy and accessible as
-            possible.
-          </Typography>
-          <Typography id="whatadditionalfeatures">
+            <Typography>
+              No, you can view all available listings without signing up. We
+              believe in making the browsing experience as easy and accessible
+              as possible.
+            </Typography>
+          </Box>
+          <Box id="whatadditionalfeatures">
             {" "}
             <Typography sx={{ ...styles.question }}>
               {" "}
               What additional features do I get by signing up?{" "}
             </Typography>{" "}
-            By signing up for YardGems, you gain access to additional features
-            such as the ability to create listings, update them, and save
-            listings as favorites for quicker access.
-          </Typography>
-          <Typography id="howdoisignup">
+            <Typography>
+              {" "}
+              By signing up for YardGems, you gain access to additional features
+              such as the ability to create listings, update them, and save
+              listings as favorites for quicker access.
+            </Typography>
+          </Box>
+          <Box id="howdoisignup">
             {" "}
             <Typography sx={{ ...styles.question }}>
               How do I sign up for YardGems?{" "}
             </Typography>{" "}
-            To sign up for YardGems, click on the "Sign Up" in the header or
-            bottom nav menu, and follow the simple registration process. It's
-            quick and easy to get started.
-          </Typography>
+            <Typography>
+              {" "}
+              To sign up for YardGems, click on the "Sign Up" in the header or
+              bottom nav menu, and follow the simple registration process. It's
+              quick and easy to get started.
+            </Typography>
+          </Box>
           <Typography id="navigationandinterface" sx={{ ...styles.heading }}>
             {" "}
             Navigation and Interface
           </Typography>
-          <Typography id="howdoinavigate">
+          <Box id="howdoinavigate">
             {" "}
             <Typography sx={{ ...styles.question }}>
               {" "}
               How do I navigate the site?{" "}
             </Typography>
-            Navigating YardGems is straightforward. You can explore listings on
-            the homepage, and use the header or bottom navigation links to
-            access different sections of the platform.
-          </Typography>
-          <Typography id="whydoesthenavigationchange">
+            <Typography>
+              {" "}
+              Navigating YardGems is straightforward. You can explore listings
+              on the homepage, and use the header or bottom navigation links to
+              access different sections of the platform.
+            </Typography>
+          </Box>
+          <Box id="whydoesthenavigationchange">
             {" "}
             <Typography sx={{ ...styles.question }}>
               {" "}
               Why does the navigation change on mobile devices?
             </Typography>
-            To enhance your experience on smaller screens, like mobile devices,
-            we've optimized the navigation. The links move to the bottom,
-            similar to popular mobile app interfaces, for easier access.
-          </Typography>
+            <Typography>
+              {" "}
+              To enhance your experience on smaller screens, like mobile
+              devices, we've optimized the navigation. The links move to the
+              bottom, similar to popular mobile app interfaces, for easier
+              access.
+            </Typography>
+          </Box>
           <Typography
             id="creatingandmanaginglistings"
             sx={{ ...styles.heading }}
@@ -299,100 +318,127 @@ const FAQ = () => {
             {" "}
             Creating and Managing Listings
           </Typography>
-          <Typography id="howdoicreateanewlisting">
+          <Box id="howdoicreateanewlisting">
             {" "}
             <Typography sx={{ ...styles.question }}>
               How do I create a new listing?{" "}
             </Typography>
-            After signing in, visit the "My Listings" page and click the "Create
-            New Listing" button. Fill out the form, and submit your listing to
-            share it with the community.
-          </Typography>
-          <Typography id="canieditalisting">
+            <Typography>
+              After signing in, visit the "My Listings" page and click the
+              "Create New Listing" button. Fill out the form, and submit your
+              listing to share it with the community.
+            </Typography>
+          </Box>
+          <Box id="canieditalisting">
             <Typography sx={{ ...styles.question }}>
               {" "}
               Can I edit or delete a listing after creating it?{" "}
             </Typography>
-            Yes, you can edit a listing by clicking the "Edit" button on the "My
-            Listings" page. To delete a listing, simply use the "Delete" button.
-          </Typography>
-          <Typography id="howdoisavealisting">
+            <Typography>
+              {" "}
+              Yes, you can edit a listing by clicking the "Edit" button on the
+              "My Listings" page. To delete a listing, simply use the "Delete"
+              button.
+            </Typography>
+          </Box>
+          <Box id="howdoisavealisting">
             {" "}
             <Typography sx={{ ...styles.question }}>
               {" "}
               How do I save a listing as a favorite?{" "}
             </Typography>
-            To save a listing as a favorite, click the heart icon beneath the
-            listing. The heart will turn red, indicating that you've saved it
-            for easier access later.
-          </Typography>
-          <Typography id="howdoiremoveasavedlisting">
+            <Typography>
+              {" "}
+              To save a listing as a favorite, click the heart icon beneath the
+              listing. The heart will turn red, indicating that you've saved it
+              for easier access later.
+            </Typography>
+          </Box>
+          <Box id="howdoiremoveasavedlisting">
             {" "}
             <Typography sx={{ ...styles.question }}>
               {" "}
               How do I remove a saved listing from my favorites?
             </Typography>
-            On the "Saved Listings" page, you can remove a saved listing by
-            clicking the "Remove Favorite" button.
-          </Typography>
+            <Typography>
+              {" "}
+              On the "Saved Listings" page, you can remove a saved listing by
+              clicking the "Remove Favorite" button.
+            </Typography>
+          </Box>
           <Typography id="accountmanagement" sx={{ ...styles.heading }}>
             {" "}
             Account Management
           </Typography>
-          <Typography id="howcaniupdatemyusername">
+          <Box id="howcaniupdatemyusername">
             <Typography sx={{ ...styles.question }}>
               {" "}
               How can I update my username?
             </Typography>
-            You can update your username by clicking on the "My Account" link in
-            the navigation, then updating the username field and clicking the
-            "Save" button.
-          </Typography>
+            <Typography>
+              {" "}
+              You can update your username by clicking on the "My Account" link
+              in the navigation, then updating the username field and clicking
+              the "Save" button.
+            </Typography>
+          </Box>
 
           <Typography id="googlemapsintegration">
             {" "}
             Google Maps Integration
           </Typography>
-          <Typography id="howarelistingsrepresentedonthemap">
+          <Box id="howarelistingsrepresentedonthemap">
             {" "}
             <Typography sx={{ ...styles.question }}>
               How are listings represented on the map?
             </Typography>
-            Listings are displayed on the map with green gem icons. Clicking on
-            an icon allows you to view the details of that specific listing.
-          </Typography>
-          <Typography id="canisearchforlistingsinmap">
+            <Typography>
+              {" "}
+              Listings are displayed on the map with green gem icons. Clicking
+              on an icon allows you to view the details of that specific
+              listing.
+            </Typography>
+          </Box>
+          <Box id="canisearchforlistingsinmap">
             {" "}
             <Typography sx={{ ...styles.question }}>
               {" "}
               Can I search for listings in specific areas on the map?
             </Typography>
-            Yes, you can use the search box within the Google Maps component to
-            find listings in different areas. This makes it easy to explore
-            sales in your desired location.
-          </Typography>
+            <Typography>
+              Yes, you can use the search box within the Google Maps component
+              to find listings in different areas. This makes it easy to explore
+              sales in your desired location.
+            </Typography>
+          </Box>
           <Typography id="support" sx={{ ...styles.heading }}>
             {" "}
             Support
           </Typography>
-          <Typography id="reportissue">
+          <Box id="reportissue">
             <Typography sx={{ ...styles.question }}>
               {" "}
               How do I report an issue?
             </Typography>
-            If you encounter any issues or have concerns, please visit our
-            "Contact Us" page, where you can report problems and get assistance
-            from our team.
-          </Typography>
-          <Typography id="contactadmin">
+            <Typography>
+              {" "}
+              If you encounter any issues or have concerns, please visit our
+              "Contact Us" page, where you can report problems and get
+              assistance from our team.
+            </Typography>
+          </Box>
+          <Box id="contactadmin">
             {" "}
             <Typography sx={{ ...styles.question }}>
               How do I contact an administrator?
             </Typography>
-            If you need to contact an administrator for any reason, you can do
-            so through our "Contact Us" page. We're here to help and address any
-            questions or concerns you may have.
-          </Typography>
+            <Typography>
+              {" "}
+              If you need to contact an administrator for any reason, you can do
+              so through our "Contact Us" page. We're here to help and address
+              any questions or concerns you may have.
+            </Typography>
+          </Box>
         </Box>
       </Box>
     </Box>
