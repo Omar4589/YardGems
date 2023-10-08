@@ -52,6 +52,42 @@ function Map() {
   const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 });
   const [selected, setSelected] = useState(null);
 
+    // Fetch user's current location if available
+    useEffect(() => {
+      let isMounted = true;
+  
+      const getCurrentLocation = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              if (isMounted) {
+                // Check if the component is still mounted
+                const { latitude, longitude } = position.coords;
+                setCenter({ lat: latitude, lng: longitude });
+              }
+            },
+            (error) => {
+              if (isMounted) {
+                // Check if the component is still mounted
+                console.error("Error getting current location:", error);
+              }
+            }
+          );
+        } else {
+          if (isMounted) {
+            // Check if the component is still mounted
+            console.error("Geolocation is not supported by this browser.");
+          }
+        }
+      };
+      getCurrentLocation();
+  
+      return () => {
+        isMounted = false; // Cleanup: set flag to false when component unmounts
+      };
+    }, []);
+  
+
   // Fetch listing data using Apollo useQuery
   const { loading, data } = useQuery(QUERY_LISTINGS);
   const allListings = data?.allListings || [];
@@ -180,40 +216,6 @@ const PlacesAutocomplete = ({ setSelected, setCenter }) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
-  // Fetch user's current location if available
-  useEffect(() => {
-    let isMounted = true;
-
-    const getCurrentLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            if (isMounted) {
-              // Check if the component is still mounted
-              const { latitude, longitude } = position.coords;
-              setCenter({ lat: latitude, lng: longitude });
-            }
-          },
-          (error) => {
-            if (isMounted) {
-              // Check if the component is still mounted
-              console.error("Error getting current location:", error);
-            }
-          }
-        );
-      } else {
-        if (isMounted) {
-          // Check if the component is still mounted
-          console.error("Geolocation is not supported by this browser.");
-        }
-      }
-    };
-    getCurrentLocation();
-
-    return () => {
-      isMounted = false; // Cleanup: set flag to false when component unmounts
-    };
-  }, []);
 
   // Handle selection of a place from Autocomplete suggestions
   const handleSelect = async (address) => {
