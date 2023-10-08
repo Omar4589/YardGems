@@ -1,6 +1,6 @@
 const styles = {
   main: {
-    minHeight: "100vh",
+    height: "100vh",
     overflow: "auto",
     backgroundColor: "#e8f5e9",
   },
@@ -8,7 +8,13 @@ const styles = {
     fontSize: "25px",
     padding: "20px 0px 0px 0px",
   },
-  results: { padding: "0px 0px 15px 0px" },
+  results: {
+    padding: "0px 0px 15px 0px",
+    fontSize: "15px",
+    "@media (min-width:768px)": {
+      fontSize:"20px"
+    },
+  },
   grid: { paddingTop: "1%", paddingBottom: "50%" },
   listingCard: {},
   img: {

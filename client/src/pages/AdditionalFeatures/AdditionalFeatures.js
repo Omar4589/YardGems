@@ -14,13 +14,13 @@ const AdditionalFeatures = () => {
       </Typography>
 
       <Box sx={{ ...styles.featuresContainer }}>
-        <Box item sx={{ ...styles.feature }}>
+        <Box  sx={{ ...styles.feature }}>
           <img src={iphone1} alt="featureImage" style={styles.img} />
           <Typography sx={{ ...styles.typography }}>
             Create, View, and Manage your listings
           </Typography>
         </Box>
-        <Box item sx={{ ...styles.feature }}>
+        <Box  sx={{ ...styles.feature }}>
           <img src={iphone2} alt="featureImage" />
           <Typography sx={{ ...styles.typography }}>
             See a listing you want to keep an eye on? Save it to view it under

@@ -66,10 +66,9 @@ function Map() {
   };
 
   return (
-    <div sx={{ backgroundColor: "#e8f5e9" }}>
+    <Box className="main">
       {/* below renders the google map */}
       <GoogleMap
-        sx={{ marginLeft: "20%" }}
         zoom={10} //how far you want the map to be zoomed in
         center={center} // displays location
         mapContainerClassName="map-container" // styling
@@ -167,7 +166,7 @@ function Map() {
           image={image}
         />
       )}
-    </div>
+    </Box>
   );
 }
 
