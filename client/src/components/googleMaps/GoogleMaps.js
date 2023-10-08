@@ -129,13 +129,14 @@ function Map() {
                 {activeMarker === _id ? (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                     <Box>
-                      <h3>{title}</h3>
-                      <span
+                      <Typography
                         onClick={() => openModal(listing)}
-                        style={{ ...styles.viewListing }}
+                        sx={{ ...styles.viewListing }}
                       >
                         View Listing
-                      </span>
+                      </Typography>
+                      <h3 style={{ ...styles.title }}>{title}</h3>
+
                       <h5>{description}</h5>
                       <p>{address}</p>
                       <p>Date of event: {dateOfSale}</p>

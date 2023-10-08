@@ -1,11 +1,13 @@
 const styles = {
   viewListing: {
     cursor: "pointer",
-    ":hover": { color: "#ffffff" },
-    position: "absolute",
-    right: "5%",
-    top: "15%",
+    textAlign:"end",
+    ":hover": { color: "#66bb6a" },
   },
+  title:{
+    padding:"0px", 
+    margin:"0px"
+  }
 };
 
 export default styles;
