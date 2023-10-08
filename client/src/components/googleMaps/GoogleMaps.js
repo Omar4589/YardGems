@@ -88,7 +88,7 @@ function Map() {
       >
         <div className="places-container">
           {/* will render out a placed based on the selection */}
-          <PlacesAutocomplete setSelected={setSelected} setCenter={setCenter} />
+          {/* <PlacesAutocomplete setSelected={setSelected} setCenter={setCenter} /> */}
         </div>
         {allListings.map(
           (
