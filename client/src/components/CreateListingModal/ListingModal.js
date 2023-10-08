@@ -1,5 +1,5 @@
 //-----------------IMPORTS-----------------------//
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -22,7 +22,7 @@ import usePlacesAutocomplete, {
 import dayjs from "dayjs";
 import { useListingContext } from "../../utils/ListingContext";
 
-//This is the modal used to create a new listing by a user who is logged in. You can find this component in the MyListings.js page.
+
 
 //-----------------------START OF COMPONENT-----------------------//
 export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
@@ -57,10 +57,16 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
+  console.log(ready);
+  console.log(value);
+  console.log(data);
+  console.log(status);
   //Store list of addresses in a variable from the usePlacesAutoComplete hook data
   const listOfAddresses = data.map((object) => {
     return object.description;
   });
+
+  console.log(listOfAddresses);
 
   //--------------FORM FIELD HANDLERES-----------//
   // Helper function to convert date from "MM/DD/YYYY" format to "yyyy-mm-dd" format
