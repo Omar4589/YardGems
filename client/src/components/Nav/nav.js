@@ -15,7 +15,9 @@ import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
+import InstallMobileIcon from "@mui/icons-material/InstallMobile";
 import LoginIcon from "@mui/icons-material/Login";
+import DownloadIcon from "@mui/icons-material/Download";
 import styles from "./styles";
 import { Link as RouterLink } from "react-router-dom";
 import AuthService from "../../utils/auth";
@@ -32,6 +34,9 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   //This state tracks whether the bottom nav component is visible or hidden
   const [showBottomNav, setShowBottomNav] = useState(true);
+
+  const [showInstallButton, setShowInstallButton] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   //-----------------HOOKS---------------//
   // The `useEffect` hook is used to add event listeners and perform side effects.
@@ -58,6 +63,32 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     return cleanup;
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      // Store the `beforeinstallprompt` event so it can be triggered later
+      setDeferredPrompt(e);
+    });
+
+     // Update UI notify the user they can install the PWA
+     setShowInstallButton(true);
+
+    // Your existing display-mode check code
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      console.log("This is running as standalone.");
+      setShowInstallButton(false);
+    } else {
+      console.log("This is running in a browser tab.");
+    }
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", () => {});
+    };
+  }, []);
+
+  console.log(showInstallButton);
+
+
   //----------HANDLERS ---------\\
   //this function handles updating state of windowPath
   const handlePathChange = (event, newValue) => {
@@ -70,13 +101,11 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     window.location.replace("/");
   };
 
-    //-----------------QUERIES--------------//
+  //-----------------QUERIES--------------//
   //Here we extract the refetch method from the useQuery hook
   //refetch will execute the QUERY_LISTINGS query
   const { refetch } = useQuery(QUERY_LISTINGS); // Import and provide your actual query here
   const { refetch: refetchMe } = useQuery(ME_QUERY);
-
-
 
   // Function to manually refetch data
   const handleRefetch = () => {
@@ -94,7 +123,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
 
   return (
     <BottomNavigation
-    id="bottom-navigation"
+      id="bottom-navigation"
       value={windowPath}
       onChange={handlePathChange}
       showLabels={true}
@@ -241,6 +270,24 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
                 </MuiLink>
               </>
             )}
+
+            <MuiLink
+              id="install-button"
+              component="button"
+              color="inherit"
+              sx={{
+                textDecoration: "none",
+                display: showInstallButton ? "block" : "none",
+              }}
+              onClick={() => deferredPrompt.prompt()}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <DownloadIcon />
+                </ListItemIcon>
+                <ListItemText primary="Install YardGems app" />
+              </ListItem>
+            </MuiLink>
           </List>
         </Box>
       </Drawer>
