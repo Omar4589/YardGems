@@ -23,9 +23,11 @@ import { Link as RouterLink } from "react-router-dom";
 import AuthService from "../../utils/auth";
 import Switch from "@mui/material/Switch";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import { useNavigate } from "react-router-dom";
 
 //-----------------------START OF COMPONENT-----------------------//
 export default function BottomNavBar({ handleThemeChange, darkMode }) {
+  const navigate = useNavigate();
   const pathname = window.location.pathname; // in case user visits the path directly. The BottomNavBar is able to follow suit.
   //-----------------STATE---------------//
   //the 'windowPath' state tracks the path/route/url
@@ -37,6 +39,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
 
   const [showInstallButton, setShowInstallButton] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isIOS, setisIOS] = useState(null);
 
   //-----------------HOOKS---------------//
   // The `useEffect` hook is used to add event listeners and perform side effects.
@@ -70,8 +73,8 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
       setDeferredPrompt(e);
     });
 
-     // Update UI notify the user they can install the PWA
-     setShowInstallButton(true);
+    // Update UI notify the user they can install the PWA
+    setShowInstallButton(true);
 
     // Your existing display-mode check code
     if (window.matchMedia("(display-mode: standalone)").matches) {
@@ -86,8 +89,11 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     };
   }, []);
 
-  console.log(showInstallButton);
-
+  useEffect(() => {
+    const iOSCheck =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    setisIOS(iOSCheck);
+  }, []);
 
   //----------HANDLERS ---------\\
   //this function handles updating state of windowPath
@@ -99,6 +105,20 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   const handleLogout = () => {
     AuthService.logout();
     window.location.replace("/");
+  };
+
+  const handleInstallClick = () => {
+    if (isIOS) {
+      // Redirect to a page with instructions for iOS users
+      navigate("/iOS-installation-instructions");
+    } else {
+      // Your existing logic for invoking the deferred prompt and installing the app
+      if (deferredPrompt) {
+        // assuming deferredPrompt is defined
+        deferredPrompt.prompt();
+        // ... (rest of your installation code)
+      }
+    }
   };
 
   //-----------------QUERIES--------------//
@@ -279,7 +299,10 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
                 textDecoration: "none",
                 display: showInstallButton ? "block" : "none",
               }}
-              onClick={() => deferredPrompt.prompt()}
+              onClick={() => {
+                navigate("/iOS-installation-instructions");
+                setIsDrawerOpen(false);
+              }}
             >
               <ListItem button>
                 <ListItemIcon>

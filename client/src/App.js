@@ -22,6 +22,7 @@ import SavedListings from "./pages/SavedListings/SavedListings";
 import { ListingProvider } from "./utils/ListingContext";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import FAQ from "./pages/FAQ/FAQ";
+import IOSInstall from "./pages/IOSInstall/IOSInstall";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -61,6 +62,10 @@ function App() {
               <Route path="/ContactUs" element={<ContactUs />} />
               <Route path="/MyAccount" element={<MyAccount />} />
               <Route path="/FAQ" element={<FAQ />} />
+              <Route
+                path="/iOS-installation-instructions"
+                element={<IOSInstall />}
+              />
             </Routes>
             <BottomNavBar />
             <Footer />
