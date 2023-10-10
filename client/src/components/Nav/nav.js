@@ -22,16 +22,13 @@ import {
 import SettingsIcon from "@mui/icons-material/Settings";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
-import InstallMobileIcon from "@mui/icons-material/InstallMobile";
 import LoginIcon from "@mui/icons-material/Login";
 import DownloadIcon from "@mui/icons-material/Download";
 import styles from "./styles";
 import { Link as RouterLink } from "react-router-dom";
 import AuthService from "../../utils/auth";
-import Switch from "@mui/material/Switch";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useNavigate } from "react-router-dom";
-import { isIntrospectionType } from "graphql";
 
 //-----------------------START OF COMPONENT-----------------------//
 export default function BottomNavBar({ handleThemeChange, darkMode }) {

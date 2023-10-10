@@ -27,9 +27,7 @@ import {
   Box,
   Typography,
   Button,
-  Avatar,
   CardMedia,
-  Card,
 } from "@mui/material";
 import styles from "./styles";
 
