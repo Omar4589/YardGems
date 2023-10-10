@@ -7,6 +7,8 @@ import {
   Button,
   Link,
   Container,
+  Snackbar,
+  Alert,
 } from "@mui/material/";
 import { Link as RouterLink } from "react-router-dom";
 import { CREATE_USER } from "../../utils/mutations";
@@ -14,6 +16,7 @@ import Auth from "../../utils/auth";
 import { useMutation } from "@apollo/client";
 import appName from "../../assets/images/appName.jpg";
 import styles from "./styles";
+import { trusted } from "mongoose";
 
 //-----------------------START OF COMPONENT-----------------------//
 const SignUpForm = ({ handleComponentChange, LoginForm }) => {
@@ -23,7 +26,17 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
     username: "",
     email: "",
     password: "",
+    confirmpassword: "",
   });
+
+  const [passwordMatch, setPasswordMatch] = useState(false);
+  const [validEmail, setValidEmail] = useState(true);
+
+  //Closes pop over message - 'Please log in'
+  const handleCloseSnackbar = () => {
+    setPasswordMatch(false);
+    setValidEmail(true);
+  };
 
   //-----------------MUTATIONS------------//
   // Use the CREATE_USER mutation for user registration
@@ -34,10 +47,21 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
+    let newValue = value;
+
+    if (name === "email") {
+      newValue = value.toLowerCase();
+    }
+
     setUserFormData({
       ...userFormData,
-      [name]: value,
+      [name]: newValue,
     });
+  };
+
+  const isValidEmail = (email) => {
+    const re = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    return re.test(String(email));
   };
 
   // This function handles the sign up form submission
@@ -45,6 +69,16 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
     event.preventDefault();
 
     try {
+      if (userFormData.confirmpassword !== userFormData.password) {
+        setPasswordMatch(true);
+        return;
+      }
+
+      if (!isValidEmail(userFormData.email)) {
+        setValidEmail(false);
+        return;
+      }
+
       // Use the createUser mutation to register the user
       const { data } = await createUser({
         variables: {
@@ -67,7 +101,6 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
       password: "",
     });
   };
-
 
   return (
     <Container sx={{ ...styles.mainContainer }}>
@@ -159,7 +192,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
             <TextField
               type="password"
               id="confirmpassword-signup"
-              name="password_confirmation"
+              name="confirmpassword"
               fullWidth
               variant="outlined"
               size="small"
@@ -191,6 +224,20 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
           </Typography>
         </Box>
       </Box>
+      <Snackbar
+        open={passwordMatch || validEmail === false}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error">
+          {passwordMatch
+            ? "Passwords don't match. Please try again."
+            : !validEmail
+            ? "Please enter a valid email."
+            : ""}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
