@@ -11,8 +11,8 @@ const styles = {
     mb: 4,
   },
   images: {
-    width: 300,
-    height: 300,
+    width: 150,
+    height: 150,
     objectFit: "cover",
     objectPosition: "center",
     margin: "auto",
