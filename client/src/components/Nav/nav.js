@@ -11,7 +11,14 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import InfoIcon from "@mui/icons-material/Info";
 import { Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { List, ListItem, ListItemIcon, ListItemText, Popover, Typography } from "@mui/material";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Popover,
+  Typography,
+} from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
@@ -115,9 +122,8 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     window.location.replace("/");
   };
 
-    //Closes pop over message - 'Please log in'
-    const closePopOver = () => setchromePopOver(false);
-
+  //Closes pop over message - 'Please log in'
+  const closePopOver = () => setchromePopOver(false);
 
   const handleInstallClick = () => {
     if (isIOS) {
@@ -126,7 +132,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
       return;
     }
 
-    if (isChrome) {
+    if (isChrome === false) {
       setchromePopOver(true);
       return;
     }
@@ -139,7 +145,6 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     }
     return;
   };
-  
 
   //-----------------QUERIES--------------//
   //Here we extract the refetch method from the useQuery hook
