@@ -18,14 +18,14 @@ const styles = {
   card: {},
   button: {
     textAlign: "end",
-    width: "100%",
+    marginLeft:"auto",
     background: "transparent",
     border: "0px ",
     fontSize: "1.2em",
     textColor: "black",
     cursor: "pointer",
     display: "block",
-    padding:"1em 1em 0em 0em"
+    padding:"1em"
   },
   img: {
     maxHeight: "30.25em",
