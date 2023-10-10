@@ -23,7 +23,14 @@ import "./google.css";
 import gem from "../../assets/images/greenGem.png";
 import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
 import image from "../../assets/yardsale.jpg";
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Avatar,
+  CardMedia,
+  Card,
+} from "@mui/material";
 import styles from "./styles";
 
 const libraries = ["places"];
@@ -52,41 +59,40 @@ function Map() {
   const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 });
   const [selected, setSelected] = useState(null);
 
-    // Fetch user's current location if available
-    useEffect(() => {
-      let isMounted = true;
-  
-      const getCurrentLocation = () => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              if (isMounted) {
-                // Check if the component is still mounted
-                const { latitude, longitude } = position.coords;
-                setCenter({ lat: latitude, lng: longitude });
-              }
-            },
-            (error) => {
-              if (isMounted) {
-                // Check if the component is still mounted
-                console.error("Error getting current location:", error);
-              }
+  // Fetch user's current location if available
+  useEffect(() => {
+    let isMounted = true;
+
+    const getCurrentLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            if (isMounted) {
+              // Check if the component is still mounted
+              const { latitude, longitude } = position.coords;
+              setCenter({ lat: latitude, lng: longitude });
             }
-          );
-        } else {
-          if (isMounted) {
-            // Check if the component is still mounted
-            console.error("Geolocation is not supported by this browser.");
+          },
+          (error) => {
+            if (isMounted) {
+              // Check if the component is still mounted
+              console.error("Error getting current location:", error);
+            }
           }
+        );
+      } else {
+        if (isMounted) {
+          // Check if the component is still mounted
+          console.error("Geolocation is not supported by this browser.");
         }
-      };
-      getCurrentLocation();
-  
-      return () => {
-        isMounted = false; // Cleanup: set flag to false when component unmounts
-      };
-    }, []);
-  
+      }
+    };
+    getCurrentLocation();
+
+    return () => {
+      isMounted = false; // Cleanup: set flag to false when component unmounts
+    };
+  }, []);
 
   // Fetch listing data using Apollo useQuery
   const { loading, data } = useQuery(QUERY_LISTINGS);
@@ -164,28 +170,35 @@ function Map() {
                 {activeMarker === _id ? (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                     <Box>
-                      <Typography
+                      <Button
                         onClick={() => openModal(listing)}
                         sx={{ ...styles.viewListing }}
                       >
                         View Listing
+                      </Button>
+                      <Typography variant="h5" sx={{ ...styles.text }}>
+                        {title}
                       </Typography>
-                      <h3 style={{ ...styles.title }}>{title}</h3>
-
-                      <h5>{description}</h5>
-                      <p>{address}</p>
-                      <p>Date of event: {dateOfSale}</p>
-                      <div>
+                      <Typography variant="body2" sx={{ ...styles.text }}>
+                        {description}
+                      </Typography>
+                      <Typography variant="body4" sx={{ ...styles.text }}>
+                        {address}
+                      </Typography>
+                      <Typography variant="body4" sx={{ ...styles.text }}>
+                        Date of event: {dateOfSale}
+                      </Typography>
+                      <Box sx={{ ...styles.imageContainer }}>
                         {images.map((imageURL, imgIndex) => (
-                          <img
+                          <CardMedia
+                            component="img"
+                            image={imageURL}
                             key={imgIndex}
-                            src={imageURL}
                             alt={`${title}-${imgIndex}`}
-                            width="50"
-                            height="50"
+                            sx={{ height: "6em", width: "6em" }}
                           />
                         ))}
-                      </div>
+                      </Box>
                     </Box>
                   </InfoWindow>
                 ) : null}
@@ -215,7 +228,6 @@ const PlacesAutocomplete = ({ setSelected, setCenter }) => {
     suggestions: { status, data },
     clearSuggestions,
   } = usePlacesAutocomplete();
-
 
   // Handle selection of a place from Autocomplete suggestions
   const handleSelect = async (address) => {

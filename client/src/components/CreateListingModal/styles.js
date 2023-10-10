@@ -16,6 +16,17 @@ const styles = {
       width: "50%",
     },
   },
+  button: {
+    textAlign: "end",
+    marginLeft: "auto",
+    background: "transparent",
+    border: "0px ",
+    fontSize: "1.2em",
+    textColor: "black",
+    cursor: "pointer",
+    display: "block",
+    padding: "0em 0em",
+  },
   heading: {
     textAlign: "center",
     fontSize: "20px",

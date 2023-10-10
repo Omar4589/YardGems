@@ -9,7 +9,7 @@ const styles = {
     boxShadow: 6,
     padding: 0,
     overflowY: "auto",
-    overflowX:"hidden",
+    overflowX: "hidden",
     maxHeight: "100vh",
     "@media (min-width: 768px)": {
       width: "900px",
@@ -17,17 +17,18 @@ const styles = {
   },
   card: {},
   button: {
-    position: "absolute",
-    top: "3%",
-    left: "90%",
+    textAlign: "end",
+    marginLeft:"auto",
     background: "transparent",
     border: "0px ",
     fontSize: "1.2em",
     textColor: "black",
     cursor: "pointer",
+    display: "block",
+    padding:"1em"
   },
   img: {
-    maxHeight: "484px",
+    maxHeight: "30.25em",
     marginLeft: "auto",
     marginRight: "auto",
     maxWidth: "100%",
