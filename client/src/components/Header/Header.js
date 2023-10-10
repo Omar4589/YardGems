@@ -2,7 +2,14 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { ME_QUERY, QUERY_LISTINGS } from "../../utils/queries";
-import { Box, IconButton, Link, InputBase } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Link,
+  InputBase,
+  Typography,
+  Popover,
+} from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import SearchIcon from "@mui/icons-material/Search";
 import appName from "../../assets/images/appName.jpg";
@@ -16,6 +23,8 @@ const Header = () => {
   //We create state: 'isSearchVisible' and set the intial state to 'false' to hide the search field
   //'true' displays the search field
   const [isSearchVisible, setIsSearchVisible] = useState(false);
+
+  const [loginPopOver, setLoginPopOver] = useState(false);
 
   //----------HEADER LINKS HANDLERS ---------\\
   //'toggleSearch' function handles updating the state of 'isSearchVisible' by calling the setter
@@ -35,6 +44,9 @@ const Header = () => {
     AuthService.logout();
     window.location.replace("/");
   };
+
+  //Closes pop over message - 'Please log in'
+  const closePopOver = () => setLoginPopOver(false);
 
   //-----------------QUERIES--------------//
   //Here we extract the refetch method from the useQuery hook
@@ -100,16 +112,14 @@ const Header = () => {
           <IconButton
             sx={{ color: "inherit", ...styles.searchIcon }}
             aria-label="search"
-            onClick={toggleSearch}
+            onClick={() => setLoginPopOver(true)}
           >
             <SearchIcon sx={{ ...styles.searchIcon }} />
           </IconButton>
           <IconButton
             sx={{ color: "inherit", size: "small", ...styles.searchIcon }}
             aria-label="message"
-            onClick={() => {
-              alert("You clicked the message button");
-            }}
+            onClick={() => setLoginPopOver(true)}
           >
             <InboxIcon sx={{ ...styles.messagesIcon }} />
           </IconButton>
@@ -155,6 +165,18 @@ const Header = () => {
             </Link>
           </>
         )}
+        <Popover
+          open={loginPopOver}
+          onClose={closePopOver}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          <Typography sx={{ p: 2 }}>
+            This feature is coming soon! Thank you for your patience.
+          </Typography>
+        </Popover>
       </Box>
     </Box>
   );
