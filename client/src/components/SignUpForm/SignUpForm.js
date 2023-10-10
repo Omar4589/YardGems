@@ -31,11 +31,13 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
 
   const [passwordMatch, setPasswordMatch] = useState(false);
   const [validEmail, setValidEmail] = useState(true);
+  const [usernameLengthCheck, setUsernameLengthCheck] = useState(true);
 
   //Closes pop over message - 'Please log in'
   const handleCloseSnackbar = () => {
     setPasswordMatch(false);
     setValidEmail(true);
+    setUsernameLengthCheck(true);
   };
 
   //-----------------MUTATIONS------------//
@@ -69,6 +71,11 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
     event.preventDefault();
 
     try {
+      if (userFormData.username.length > 23) {
+        setUsernameLengthCheck(false);
+        return;
+      }
+
       if (userFormData.confirmpassword !== userFormData.password) {
         setPasswordMatch(true);
         return;
@@ -225,8 +232,8 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
         </Box>
       </Box>
       <Snackbar
-        open={passwordMatch || validEmail === false}
-        autoHideDuration={6000}
+        open={passwordMatch || validEmail === false || usernameLengthCheck === false}
+        autoHideDuration={3000}
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -235,6 +242,8 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
             ? "Passwords don't match. Please try again."
             : !validEmail
             ? "Please enter a valid email."
+            : !usernameLengthCheck
+            ? "The username you entered is too long, please try again."
             : ""}
         </Alert>
       </Snackbar>
