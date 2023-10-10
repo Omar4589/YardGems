@@ -40,7 +40,8 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
 
   const [showInstallButton, setShowInstallButton] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [isIOS, setisIOS] = useState(null);
+  const [isIOS, setIsIOS] = useState(null);
+  const [isChrome, setIsChrome] = useState(null);
 
   //-----------------HOOKS---------------//
   // The `useEffect` hook is used to add event listeners and perform side effects.
@@ -93,7 +94,12 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   useEffect(() => {
     const iOSCheck =
       /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    setisIOS(iOSCheck);
+
+    const chromeCheck =
+      /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+    setIsIOS(iOSCheck);
+    setIsChrome(chromeCheck);
   }, []);
 
   //----------HANDLERS ---------\\
@@ -112,13 +118,21 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     if (isIOS) {
       // Redirect to a page with instructions for iOS users
       navigate("/iOS-installation-instructions");
-    } else {
+      return
+    } 
+
+      if(isChrome){
+        alert("chrome stuff")
+        return
+      }
+
       // Your existing logic for invoking the deferred prompt and installing the app
       if (deferredPrompt) {
         // assuming deferredPrompt is defined
         deferredPrompt.prompt();
         // ... (rest of your installation code)
       }
+      return
     }
   };
 
