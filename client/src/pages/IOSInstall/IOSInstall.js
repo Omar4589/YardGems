@@ -26,7 +26,7 @@ const IOSInstall = () => {
         </Typography>
         <List>
           <Box sx={{ ...styles.steps }}>
-            <ListItem>
+            <ListItem sx={{ paddingLeft: "0px", paddingRight: "0px" }}>
               <ListItemIcon>
                 <ArrowForwardIcon />
               </ListItemIcon>

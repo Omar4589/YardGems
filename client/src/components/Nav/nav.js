@@ -24,6 +24,7 @@ import AuthService from "../../utils/auth";
 import Switch from "@mui/material/Switch";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useNavigate } from "react-router-dom";
+import { isIntrospectionType } from "graphql";
 
 //-----------------------START OF COMPONENT-----------------------//
 export default function BottomNavBar({ handleThemeChange, darkMode }) {
@@ -300,7 +301,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
                 display: showInstallButton ? "block" : "none",
               }}
               onClick={() => {
-                navigate("/iOS-installation-instructions");
+                handleInstallClick();
                 setIsDrawerOpen(false);
               }}
             >
