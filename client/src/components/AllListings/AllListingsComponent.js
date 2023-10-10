@@ -7,7 +7,8 @@ import {
   CardContent,
   CardHeader,
   IconButton,
-  Popover,
+  Snackbar,
+  Alert,
   CardActionArea,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -28,7 +29,7 @@ const settings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-  arrows: false 
+  arrows: false,
 };
 
 //---------------------------START OF COMPONENT----------------------//
@@ -44,7 +45,7 @@ export default function AllListings() {
   //---------STATES--------//
   //State for 'Please login' pop over; We set the initial state to false to hide the popOver
   //this pop over populates when a user clicks on a listing to favorite it, but theyre not logged in
-  const [loginPopOver, setLoginPopOver] = useState(false);
+  const [showSnackBar, setShowSnackBar] = useState(false);
 
   //State for listing modal that displays listing information
   //We set the intial state to 'false' to hide the component
@@ -58,7 +59,7 @@ export default function AllListings() {
   const closeModal = () => setListingModal(false);
 
   //Closes pop over message - 'Please log in'
-  const closePopOver = () => setLoginPopOver(false);
+  const handleCloseSnackbar = () => setShowSnackBar(false);
 
   //---------------------------RETURN STATEMENT-------------------------//
   return (
@@ -135,25 +136,23 @@ export default function AllListings() {
                   </IconButton>
                 ) : (
                   <IconButton
-                    onClick={() => setLoginPopOver(true)}
+                    onClick={() => setShowSnackBar(true)}
                     sx={{ ...styles.iconButton }}
                     aria-label="favorite"
                   >
                     <FavoriteIcon sx={{ color: "grey" }} />
                   </IconButton>
                 )}
-                <Popover
-                  open={loginPopOver}
-                  onClose={closePopOver}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
+                <Snackbar
+                  open={showSnackBar}
+                  autoHideDuration={6000}
+                  onClose={handleCloseSnackbar}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 >
-                  <Typography sx={{ p: 2 }}>
+                  <Alert onClose={handleCloseSnackbar} severity="error">
                     You need to be logged in to save this listing
-                  </Typography>
-                </Popover>
+                  </Alert>
+                </Snackbar>
               </Card>
             </Grid>
           );
