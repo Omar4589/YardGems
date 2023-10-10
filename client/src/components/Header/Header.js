@@ -7,8 +7,8 @@ import {
   IconButton,
   Link,
   InputBase,
-  Typography,
-  Popover,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import SearchIcon from "@mui/icons-material/Search";
@@ -24,7 +24,7 @@ const Header = () => {
   //'true' displays the search field
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
-  const [featurePopOver, setfeaturePopOver] = useState(false);
+  const [featureSnackbar, setFeatureSnackbar] = useState(false);
 
   //----------HEADER LINKS HANDLERS ---------\\
   //'toggleSearch' function handles updating the state of 'isSearchVisible' by calling the setter
@@ -46,7 +46,7 @@ const Header = () => {
   };
 
   //Closes pop over message - 'Please log in'
-  const closePopOver = () => setfeaturePopOver(false);
+  const handleCloseSnackbar = () => setFeatureSnackbar(false);
 
   //-----------------QUERIES--------------//
   //Here we extract the refetch method from the useQuery hook
@@ -112,14 +112,14 @@ const Header = () => {
           <IconButton
             sx={{ color: "inherit", ...styles.searchIcon }}
             aria-label="search"
-            onClick={() => setfeaturePopOver(true)}
+            onClick={() => setFeatureSnackbar(true)}
           >
             <SearchIcon sx={{ ...styles.searchIcon }} />
           </IconButton>
           <IconButton
             sx={{ color: "inherit", size: "small", ...styles.searchIcon }}
             aria-label="message"
-            onClick={() => setfeaturePopOver(true)}
+            onClick={() => setFeatureSnackbar(true)}
           >
             <InboxIcon sx={{ ...styles.messagesIcon }} />
           </IconButton>
@@ -165,18 +165,16 @@ const Header = () => {
             </Link>
           </>
         )}
-        <Popover
-          open={featurePopOver}
-          onClose={closePopOver}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-        >
-          <Typography sx={{ p: 2 }}>
-            This feature is coming soon! Thank you for your patience.
-          </Typography>
-        </Popover>
+        <Snackbar
+                  open={featureSnackbar}
+                  autoHideDuration={6000}
+                  onClose={handleCloseSnackbar}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert onClose={handleCloseSnackbar} severity="error">
+                    This feature is coming soon! Thank you for your patience.
+                  </Alert>
+                </Snackbar>
       </Box>
     </Box>
   );

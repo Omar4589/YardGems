@@ -16,8 +16,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Popover,
-  Typography,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
@@ -103,8 +103,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     const iOSCheck =
       /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-    const chromeCheck =
-      /Chrome/.test(navigator.userAgent);
+    const chromeCheck = /Chrome/.test(navigator.userAgent);
 
     setIsIOS(iOSCheck);
     setIsChrome(chromeCheck);
@@ -123,7 +122,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   };
 
   //Closes pop over message - 'Please log in'
-  const closePopOver = () => setchromePopOver(false);
+  const closeSnackbar = () => setchromePopOver(false);
 
   const handleInstallClick = () => {
     if (isIOS) {
@@ -338,18 +337,16 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
             </MuiLink>
           </List>
         </Box>
-        <Popover
+        <Snackbar
           open={chromePopOver}
-          onClose={closePopOver}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
+          autoHideDuration={6000}
+          onClose={closeSnackbar}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
-          <Typography sx={{ p: 2 }}>
-            Please use Chrome to install this app
-          </Typography>
-        </Popover>
+          <Alert onClose={closeSnackbar} severity="error">
+            Please use Chrome to install this app.
+          </Alert>
+        </Snackbar>
       </Drawer>
     </BottomNavigation>
   );

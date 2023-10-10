@@ -9,6 +9,7 @@ import {
   Typography,
   Container,
   Snackbar,
+  Alert,
 } from "@mui/material/";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";
@@ -164,15 +165,13 @@ export default function SignIn() {
       <Snackbar
         open={showSnackBar}
         autoHideDuration={6000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} 
         onClose={handleCloseSnackbar}
-        message={error ? error.message : "An error occurred"}
-        action={
-          <Button color="secondary" size="small" onClick={handleCloseSnackbar}>
-            Close
-          </Button>
-        }
-      />
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error">
+          {error ? error.message : "An error occurred"}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }
