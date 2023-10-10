@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to your service worker file
-const serviceWorkerPath = path.join(__dirname, '../../client/public/serviceWorker.js');
+const serviceWorkerPath = path.join(__dirname, '../../public/serviceWorker.js');
 
 // Read the service worker file
 fs.readFile(serviceWorkerPath, 'utf8', (err, data) => {
