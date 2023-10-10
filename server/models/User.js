@@ -7,6 +7,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Please enter a username'],
       trim: true,
+      maxlength: [23, "The username you entered is too long, please try again."]
     },
     email: {
       type: String,

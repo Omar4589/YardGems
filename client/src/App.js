@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   ApolloClient,
   InMemoryCache,
@@ -23,6 +23,7 @@ import { ListingProvider } from "./utils/ListingContext";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import FAQ from "./pages/FAQ/FAQ";
 import IOSInstall from "./pages/IOSInstall/IOSInstall";
+import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -46,30 +47,44 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000); // 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <ApolloProvider client={client}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <ListingProvider>
-          <Router>
-            <Header />
-            <Routes>
-              <Route path="/signup-login" element={<SignUpLoginPage />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/MyListings" element={<MyListings />} />
-              <Route path="/SavedListings" element={<SavedListings />} />
-              <Route path="/listings/:listingId" element={<EditListing />} />
-              <Route path="/AboutUs" element={<AboutUs />} />
-              <Route path="/ContactUs" element={<ContactUs />} />
-              <Route path="/MyAccount" element={<MyAccount />} />
-              <Route path="/FAQ" element={<FAQ />} />
-              <Route
-                path="/iOS-installation-instructions"
-                element={<IOSInstall />}
-              />
-            </Routes>
-            <BottomNavBar />
-            <Footer />
-          </Router>
+          {loading && <LoadingScreen />}
+          {/* Show the loading screen if loading is true */}
+          {!loading && (
+            <Router>
+              <Header />
+              <Routes>
+                <Route path="/signup-login" element={<SignUpLoginPage />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/MyListings" element={<MyListings />} />
+                <Route path="/SavedListings" element={<SavedListings />} />
+                <Route path="/listings/:listingId" element={<EditListing />} />
+                <Route path="/AboutUs" element={<AboutUs />} />
+                <Route path="/ContactUs" element={<ContactUs />} />
+                <Route path="/MyAccount" element={<MyAccount />} />
+                <Route path="/FAQ" element={<FAQ />} />
+                <Route
+                  path="/iOS-installation-instructions"
+                  element={<IOSInstall />}
+                />
+              </Routes>
+              <BottomNavBar />
+              <Footer />
+            </Router>
+          )}
         </ListingProvider>
       </LocalizationProvider>
     </ApolloProvider>
