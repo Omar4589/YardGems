@@ -16,7 +16,6 @@ import Auth from "../../utils/auth";
 import { useMutation } from "@apollo/client";
 import appName from "../../assets/images/appName.jpg";
 import styles from "./styles";
-import { trusted } from "mongoose";
 
 //-----------------------START OF COMPONENT-----------------------//
 const SignUpForm = ({ handleComponentChange, LoginForm }) => {
@@ -232,7 +231,9 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
         </Box>
       </Box>
       <Snackbar
-        open={passwordMatch || validEmail === false || usernameLengthCheck === false}
+        open={
+          passwordMatch || validEmail === false || usernameLengthCheck === false
+        }
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}

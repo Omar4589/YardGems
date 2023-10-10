@@ -6,7 +6,6 @@ import { QUERY_SINGLE_LISTING } from "../../utils/queries";
 import {
   Container,
   Box,
-  Grid,
   TextField,
   Button,
   Typography,
@@ -18,13 +17,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
+
 import "@reach/combobox/styles.css";
 import "./styles.js";
 import { useListingContext } from "../../utils/ListingContext";

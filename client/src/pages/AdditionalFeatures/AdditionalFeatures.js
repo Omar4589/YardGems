@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import styles from "./styles";
 import iphone1 from "../../assets/images/iphone1.PNG";
