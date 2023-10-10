@@ -7,9 +7,9 @@ const styles = {
   heading: { marginTop: "20px" },
   thankYou: { marginTop: "20px" },
   steps: {
-    textAlign: "center",
     mb: 4,
   },
+  listItem: {paddingLeft: "0px", paddingRight: "0px" },
   images: {
     width: 150,
     height: 150,

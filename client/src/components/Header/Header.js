@@ -24,7 +24,7 @@ const Header = () => {
   //'true' displays the search field
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
-  const [loginPopOver, setLoginPopOver] = useState(false);
+  const [featurePopOver, setfeaturePopOver] = useState(false);
 
   //----------HEADER LINKS HANDLERS ---------\\
   //'toggleSearch' function handles updating the state of 'isSearchVisible' by calling the setter
@@ -46,7 +46,7 @@ const Header = () => {
   };
 
   //Closes pop over message - 'Please log in'
-  const closePopOver = () => setLoginPopOver(false);
+  const closePopOver = () => setfeaturePopOver(false);
 
   //-----------------QUERIES--------------//
   //Here we extract the refetch method from the useQuery hook
@@ -112,14 +112,14 @@ const Header = () => {
           <IconButton
             sx={{ color: "inherit", ...styles.searchIcon }}
             aria-label="search"
-            onClick={() => setLoginPopOver(true)}
+            onClick={() => setfeaturePopOver(true)}
           >
             <SearchIcon sx={{ ...styles.searchIcon }} />
           </IconButton>
           <IconButton
             sx={{ color: "inherit", size: "small", ...styles.searchIcon }}
             aria-label="message"
-            onClick={() => setLoginPopOver(true)}
+            onClick={() => setfeaturePopOver(true)}
           >
             <InboxIcon sx={{ ...styles.messagesIcon }} />
           </IconButton>
@@ -166,7 +166,7 @@ const Header = () => {
           </>
         )}
         <Popover
-          open={loginPopOver}
+          open={featurePopOver}
           onClose={closePopOver}
           anchorOrigin={{
             vertical: "bottom",

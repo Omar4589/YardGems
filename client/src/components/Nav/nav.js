@@ -42,7 +42,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isIOS, setIsIOS] = useState(null);
   const [isChrome, setIsChrome] = useState(null);
-  const [loginPopOver, setLoginPopOver] = useState(false);
+  const [chromePopOver, setchromePopOver] = useState(false);
 
   //-----------------HOOKS---------------//
   // The `useEffect` hook is used to add event listeners and perform side effects.
@@ -116,7 +116,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   };
 
     //Closes pop over message - 'Please log in'
-    const closePopOver = () => setLoginPopOver(false);
+    const closePopOver = () => setchromePopOver(false);
 
 
   const handleInstallClick = () => {
@@ -127,7 +127,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     }
 
     if (isChrome) {
-      setLoginPopOver(true);
+      setchromePopOver(true);
       return;
     }
 
@@ -334,7 +334,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
           </List>
         </Box>
         <Popover
-          open={loginPopOver}
+          open={chromePopOver}
           onClose={closePopOver}
           anchorOrigin={{
             vertical: "bottom",

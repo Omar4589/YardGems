@@ -8,7 +8,9 @@ import {
   CardHeader,
   Modal,
   Box,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import styles from "./styles";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -40,20 +42,15 @@ export default function ListingModalComponent({
       aria-describedby="modal-modal-description"
     >
       <Box id="listing-modal" sx={{ ...styles.modalPopUp }}>
-        <button
-          onClick={closeModal}
-          style={{
-            ...styles.button,
-          }}
-        >
-          X
-        </button>
         <Card
           component="div"
           sx={{
             ...styles.card,
           }}
         >
+          <IconButton onClick={closeModal} sx={{ ...styles.button }}>
+            <CloseIcon />
+          </IconButton>
           <CardHeader
             title={listingModal.title}
             subheader={`Listed By: ${listingModal.author}`}
@@ -63,21 +60,21 @@ export default function ListingModalComponent({
             {listingModal.images.length > 0 ? (
               listingModal.images.map((url, index) => (
                 <div key={index} style={{}}>
-                  <img
-                    src={url}
+                  <CardMedia
+                    component="img"
                     alt={`slide-${index}`}
-                    style={{
-                      ...styles.img,
-                    }}
+                    image={url}
+                    sx={{ ...styles.img }}
                   />
                 </div>
               ))
             ) : (
               <div>
-                <img
-                  src={image}
+                <CardMedia
+                  component="img"
                   alt="Default slide"
-                  style={{ ...styles.img }}
+                  image={image}
+                  sx={{ ...styles.img }}
                 />
               </div>
             )}
@@ -86,7 +83,7 @@ export default function ListingModalComponent({
             <Typography sx={{ ...styles.date }}>
               Date Of Sale: {listingModal.dateOfSale}
             </Typography>
-            <Typography variant="h5" style={{ ...styles.description }}>
+            <Typography variant="h5" sx={{ ...styles.description }}>
               {listingModal.description}dafa dfsa fdasf adsfasdfadsfa dfda
               dsaafdssdfasdf sad fasds adfasd fasdf dssdfasdf sad fasds adfasd
               fasdf asdfasdfdsfadf a dfsdf sdasfd fsdfsadfdsf saf sdf asd

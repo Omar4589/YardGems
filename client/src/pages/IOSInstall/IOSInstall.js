@@ -26,7 +26,7 @@ const IOSInstall = () => {
         </Typography>
         <List>
           <Box sx={{ ...styles.steps }}>
-            <ListItem sx={{ paddingLeft: "0px", paddingRight: "0px" }}>
+            <ListItem sx={{ ...styles.listItem }}>
               <ListItemIcon>
                 <ArrowForwardIcon />
               </ListItemIcon>
@@ -46,7 +46,7 @@ const IOSInstall = () => {
           </Box>
 
           <Box sx={{ ...styles.steps }}>
-            <ListItem>
+            <ListItem sx={{ ...styles.listItem }}>
               <ListItemIcon>
                 <ArrowForwardIcon />
               </ListItemIcon>
@@ -64,7 +64,7 @@ const IOSInstall = () => {
           </Box>
 
           <Box sx={{ ...styles.steps }}>
-            <ListItem>
+            <ListItem sx={{ ...styles.listItem }}>
               <ListItemIcon>
                 <ArrowForwardIcon />
               </ListItemIcon>
@@ -82,7 +82,7 @@ const IOSInstall = () => {
           </Box>
 
           <Box sx={{ ...styles.steps }}>
-            <ListItem>
+            <ListItem sx={{ ...styles.listItem }}>
               <ListItemIcon>
                 <ArrowForwardIcon />
               </ListItemIcon>
