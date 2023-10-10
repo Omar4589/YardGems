@@ -1,5 +1,14 @@
 // Last Updated: 2023-10-10T19:30:58.084Z
 
+// Activate event - take control of currently open tabs
+self.addEventListener("activate", function (event) {
+  event.waitUntil(self.clients.claim());
+});
+
+// Install event - skip waiting on install to ensure that the new service worker takes over immediately
+self.addEventListener("install", function (event) {
+  self.skipWaiting();
+});
 
 // Fetch event - fetch or fallback to cache
 self.addEventListener("fetch", function (event) {
