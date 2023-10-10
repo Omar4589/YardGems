@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Box, CardMedia, } from "@mui/material";
-import yglogo from "../../assets/images/yargemsloadingscreenlogo.svg";
+import yglogo from "../../assets/images/yargemsloadingscreenlogo.png";
 
 const LoadingScreen = () => {
   useEffect(() => {
