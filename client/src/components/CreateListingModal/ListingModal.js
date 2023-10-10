@@ -12,7 +12,9 @@ import {
   Input,
   TextField,
   Autocomplete,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { DatePicker } from "@mui/x-date-pickers";
 import styles from "./styles";
 import usePlacesAutocomplete, {
@@ -21,8 +23,6 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import dayjs from "dayjs";
 import { useListingContext } from "../../utils/ListingContext";
-
-
 
 //-----------------------START OF COMPONENT-----------------------//
 export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
@@ -206,6 +206,9 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     >
       <Fade in={handleOpen}>
         <Box sx={{ ...styles.main }} id="listing-modal">
+          <IconButton onClick={handleClose} sx={{ ...styles.button }}>
+            <CloseIcon />
+          </IconButton>
           <Typography sx={{ ...styles.heading }} id="transition-modal-title">
             Create a new listing
           </Typography>
