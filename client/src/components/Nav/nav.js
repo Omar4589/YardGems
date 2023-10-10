@@ -11,7 +11,7 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import InfoIcon from "@mui/icons-material/Info";
 import { Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemIcon, ListItemText, Popover, Typography } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
@@ -40,7 +40,9 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
 
   const [showInstallButton, setShowInstallButton] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [isIOS, setisIOS] = useState(null);
+  const [isIOS, setIsIOS] = useState(null);
+  const [isChrome, setIsChrome] = useState(null);
+  const [loginPopOver, setLoginPopOver] = useState(false);
 
   //-----------------HOOKS---------------//
   // The `useEffect` hook is used to add event listeners and perform side effects.
@@ -93,7 +95,12 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   useEffect(() => {
     const iOSCheck =
       /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    setisIOS(iOSCheck);
+
+    const chromeCheck =
+      /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+    setIsIOS(iOSCheck);
+    setIsChrome(chromeCheck);
   }, []);
 
   //----------HANDLERS ---------\\
@@ -108,19 +115,31 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     window.location.replace("/");
   };
 
+    //Closes pop over message - 'Please log in'
+    const closePopOver = () => setLoginPopOver(false);
+
+
   const handleInstallClick = () => {
     if (isIOS) {
       // Redirect to a page with instructions for iOS users
       navigate("/iOS-installation-instructions");
-    } else {
-      // Your existing logic for invoking the deferred prompt and installing the app
-      if (deferredPrompt) {
-        // assuming deferredPrompt is defined
-        deferredPrompt.prompt();
-        // ... (rest of your installation code)
-      }
+      return;
     }
+
+    if (isChrome) {
+      setLoginPopOver(true);
+      return;
+    }
+
+    // Your existing logic for invoking the deferred prompt and installing the app
+    if (deferredPrompt) {
+      // assuming deferredPrompt is defined
+      deferredPrompt.prompt();
+      // ... (rest of your installation code)
+    }
+    return;
   };
+  
 
   //-----------------QUERIES--------------//
   //Here we extract the refetch method from the useQuery hook
@@ -314,6 +333,18 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
             </MuiLink>
           </List>
         </Box>
+        <Popover
+          open={loginPopOver}
+          onClose={closePopOver}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          <Typography sx={{ p: 2 }}>
+            Please use Chrome to install this app
+          </Typography>
+        </Popover>
       </Drawer>
     </BottomNavigation>
   );
