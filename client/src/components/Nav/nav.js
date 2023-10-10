@@ -104,7 +104,7 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
       /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
     const chromeCheck =
-      /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+      /Chrome/.test(navigator.userAgent);
 
     setIsIOS(iOSCheck);
     setIsChrome(chromeCheck);

@@ -8,6 +8,7 @@ import {
   Box,
   Typography,
   Container,
+  Snackbar,
 } from "@mui/material/";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";
@@ -21,6 +22,8 @@ export default function SignIn() {
   //-----------------STATE---------------//
   // State to track the form input fields for email and password
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
+
+  const [showSnackBar, setShowSnackBar] = useState(false);
 
   //-----------------MUTATIONS------------//
   // Define the 'login' mutation using the LOGIN_USER mutation imported above
@@ -36,8 +39,8 @@ export default function SignIn() {
   // Function to handle login form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({ email: data.get("email"), password: data.get("password") });
+    // const data = new FormData(event.currentTarget);
+    // console.log({ email: data.get("email"), password: data.get("password") });
 
     try {
       // Use the 'login' mutation to log the user in
@@ -48,6 +51,7 @@ export default function SignIn() {
       // Log the user in with the generated token
       Auth.login(data.login.token);
     } catch (err) {
+      setShowSnackBar(true);
       console.error(err);
     }
 
@@ -56,6 +60,11 @@ export default function SignIn() {
       email: "",
       password: "",
     });
+  };
+
+  // Function to close the Snackbar
+  const handleCloseSnackbar = () => {
+    setShowSnackBar(false);
   };
 
   return (
@@ -152,6 +161,18 @@ export default function SignIn() {
           </Typography>
         </Box>
       </Box>
+      <Snackbar
+        open={showSnackBar}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} 
+        onClose={handleCloseSnackbar}
+        message={error ? error.message : "An error occurred"}
+        action={
+          <Button color="secondary" size="small" onClick={handleCloseSnackbar}>
+            Close
+          </Button>
+        }
+      />
     </Container>
   );
 }

@@ -38,11 +38,11 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("No user with this information found!");
+        throw new AuthenticationError("Incorrect email or password!");
       }
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
-        throw new AuthenticationError("Incorrect password!");
+        throw new AuthenticationError("Incorrect email or password!");
       }
       const token = signToken(user);
       return { token, user };
