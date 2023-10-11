@@ -29,8 +29,6 @@ import styles from "./styles";
 const libraries = ["places"];
 
 export default function GoogleMaps() {
-
-
   // isLoaded is gives us access to the apiKey
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -51,7 +49,7 @@ function Map() {
   const closeModal = () => setListingModal(false);
 
   // State to manage the map center and selected marker
-  const [center, setCenter] = useState({ lat: 27.50, lng: -99.50 });
+  const [center, setCenter] = useState({ lat: 27.5, lng: -99.5 });
   const [selected, setSelected] = useState(null);
 
   //Fetch user's current location if available
@@ -114,6 +112,8 @@ function Map() {
           streetViewControl: false, // Removes the Pegman
           fullscreenControl: false,
           gestureHandling: "greedy",
+          mapTypeControl: false,
+          zoomControl: false,
           styles: [
             {
               elementType: "labels",

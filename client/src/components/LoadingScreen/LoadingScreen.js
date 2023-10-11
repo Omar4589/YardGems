@@ -20,7 +20,7 @@ const LoadingScreen = () => {
       left={0}
       width="100%"
       height="100vh"
-      zIndex={9999}
+      zIndex="99999"
       bgcolor="transparent"
     >
       <Box
