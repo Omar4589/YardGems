@@ -14,6 +14,8 @@ import {
   Autocomplete,
   IconButton,
 } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
 import CloseIcon from "@mui/icons-material/Close";
 import { DatePicker } from "@mui/x-date-pickers";
 import styles from "./styles";
@@ -37,6 +39,9 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   // This state is used to display a toast message if the user tries to upload more than 5 images
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
+  const [uploading, setUploading] = useState(false);
+  const [confirmUpload, setConfirmUpload] = useState(false);
+
   //We create this 'formState' to hold the rest of the listing properties, we set the intial state to empty strings
   const [formState, setFormState] = useState({
     title: "",
@@ -57,16 +62,10 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
-  console.log(ready);
-  console.log(value);
-  console.log(data);
-  console.log(status);
   //Store list of addresses in a variable from the usePlacesAutoComplete hook data
   const listOfAddresses = data.map((object) => {
     return object.description;
   });
-
-  console.log(listOfAddresses);
 
   //--------------FORM FIELD HANDLERES-----------//
   // Helper function to convert date from "MM/DD/YYYY" format to "yyyy-mm-dd" format
@@ -147,6 +146,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
         //Sets the formstate.images array to the array of urls returned by the server
         setFormState({ ...formState, images: data.imageUrls });
         console.log("uploadImage() returned a 200 status code");
+        setUploading(false);
+        setConfirmUpload(true);
       } else {
         throw new Error("Image upload failed");
       }
@@ -162,6 +163,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     e.preventDefault();
 
     try {
+      await uploadImage();
+
       await addListing({
         description: formState.description,
         address: listingAddress.address,
@@ -310,37 +313,62 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               <Typography component="label" sx={{ ...styles.labels }}>
                 Images
               </Typography>
-              <Input
-                type="file"
-                multiple
-                name="file"
-                fullWidth
-                variant="outlined"
-                size="small"
-                margin="none"
-                onChange={handleFileChange}
-                style={{}}
-                id="file-input"
-              />
-
               <Button
+                sx={{ ...styles.uploadButton }}
+                component="label"
+                variant="contained"
+                startIcon={<CloudUploadIcon />}
+              >
+                {imageFiles.length === 0
+                  ? "Upload images"
+                  : `${imageFiles.length} images selected`}
+                <input
+                  id="file-input"
+                  accept="image*/"
+                  name="file"
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  margin="none"
+                  type="file"
+                  multiple
+                  hidden
+                  onChange={handleFileChange}
+                />
+              </Button>
+
+              {/* <Button
                 variant="outlined"
                 disabled={!imageFiles.length}
                 sx={{ ...styles.uploadButton }}
                 onClick={() => {
+                  setUploading(true);
                   uploadImage();
                 }}
               >
-                Upload
-              </Button>
+                {!uploading ? "Upload" : "Uploading, please wait..."}
+              </Button> */}
 
               <Snackbar
-                open={openSnackbar}
-                autoHideDuration={6000}
-                onClose={() => setOpenSnackbar(false)}
+                open={openSnackbar || confirmUpload}
+                autoHideDuration={5000}
+                onClose={() => {
+                  setOpenSnackbar(false);
+                  setConfirmUpload(false);
+                }}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
               >
-                <Alert onClose={() => setOpenSnackbar(false)} severity="error">
-                  You can only upload a maximum of 5 images.
+                <Alert
+                  onClose={() => setOpenSnackbar(false)}
+                  severity={
+                    openSnackbar ? "error" : confirmUpload ? "success" : "error"
+                  }
+                >
+                  {openSnackbar
+                    ? "You can only upload a maximum of 5 images."
+                    : confirmUpload
+                    ? "Upload Complete!"
+                    : ""}
                 </Alert>
               </Snackbar>
             </Box>
@@ -352,7 +380,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                 ...styles.addButton,
               }}
             >
-              Add
+              {!uploading ? "Add" : "Uploading, please wait..."}
             </Button>
           </form>
         </Box>

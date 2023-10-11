@@ -52,18 +52,14 @@ const styles = {
   labels: { fontWeight: "semibold", mb: 1, display: "block" },
   datePicker: { width: "100%", mt: 1 },
   uploadButton: {
-    width: "100%",
-    height: "3.6em",
+    display: "flex",
+    justifyContent: "center",
+    width: "70%",
     marginBottom: "1.5em",
     marginTop: "1em",
-    fontSize: "1em",
     marginLeft: "auto",
     marginRight: "auto",
-    color: "#66bb6",
-    ":hover": {
-      backgroundColor: "#66bb6a",
-      color: "#ffffff",
-    },
+    bgcolor: "#66bb6a",
   },
   addButton: {
     display: "flex",
