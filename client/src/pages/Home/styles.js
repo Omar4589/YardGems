@@ -25,7 +25,7 @@ const styles = {
     right: "2em",
     top: "6em",
     bgcolor: "#ffffff",
-    color:"#66bb6a",
+    color:"#666666",
     "&:hover": {
       bgcolor: "#ffffff",
     }

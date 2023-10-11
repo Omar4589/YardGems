@@ -11,19 +11,19 @@ const styles = {
     "@media (min-width: 768px)": {
       justifyContent: "space-between",
       padding: "5px 50px 15px 50px",
-      height: "70px"
+      height: "70px",
     },
   },
   appLogobox: {
-    paddingRight: 12,
-    width: "45%",
+    width: "100%",
+
     "@media (min-width: 768px)": {
       width: "25%",
       paddingRight: 0,
     },
   },
   appLogo: {
-    width: "100%",
+    width: "70%",
     "@media (min-width: 768px)": {
       width: "100%",
     },
@@ -40,6 +40,7 @@ const styles = {
     },
   },
   box: {
+    display: "none",
     "@media (min-width: 768px)": {
       width: "33.33%",
       display: "flex",
@@ -70,7 +71,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
-      fontSize:"19px",
+      fontSize: "19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -85,7 +86,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
-      fontSize:"19px",
+      fontSize: "19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -100,7 +101,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
-      fontSize:"19px",
+      fontSize: "19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -115,7 +116,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
-      fontSize:"19px",
+      fontSize: "19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -130,7 +131,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
-      fontSize:"19px",
+      fontSize: "19px",
       "&:hover": {
         color: "#66bb6a",
       },
@@ -145,7 +146,7 @@ const styles = {
       textDecoration: "none",
       padding: "5px 10px",
       borderRadius: "10px",
-      fontSize:"19px",
+      fontSize: "19px",
       "&:hover": {
         color: "#66bb6a",
       },
