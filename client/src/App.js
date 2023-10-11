@@ -63,28 +63,26 @@ function App() {
         <ListingProvider>
           {loading && <LoadingScreen />}
           {/* Show the loading screen if loading is true */}
-          {!loading && (
-            <Router>
-              <Header />
-              <Routes>
-                <Route path="/signup-login" element={<SignUpLoginPage />} />
-                <Route path="/" element={<Home />} />
-                <Route path="/MyListings" element={<MyListings />} />
-                <Route path="/SavedListings" element={<SavedListings />} />
-                <Route path="/listings/:listingId" element={<EditListing />} />
-                <Route path="/AboutUs" element={<AboutUs />} />
-                <Route path="/ContactUs" element={<ContactUs />} />
-                <Route path="/MyAccount" element={<MyAccount />} />
-                <Route path="/FAQ" element={<FAQ />} />
-                <Route
-                  path="/iOS-installation-instructions"
-                  element={<IOSInstall />}
-                />
-              </Routes>
-              <BottomNavBar />
-              <Footer />
-            </Router>
-          )}
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/signup-login" element={<SignUpLoginPage />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/MyListings" element={<MyListings />} />
+              <Route path="/SavedListings" element={<SavedListings />} />
+              <Route path="/listings/:listingId" element={<EditListing />} />
+              <Route path="/AboutUs" element={<AboutUs />} />
+              <Route path="/ContactUs" element={<ContactUs />} />
+              <Route path="/MyAccount" element={<MyAccount />} />
+              <Route path="/FAQ" element={<FAQ />} />
+              <Route
+                path="/iOS-installation-instructions"
+                element={<IOSInstall />}
+              />
+            </Routes>
+            <BottomNavBar />
+            <Footer />
+          </Router>
         </ListingProvider>
       </LocalizationProvider>
     </ApolloProvider>

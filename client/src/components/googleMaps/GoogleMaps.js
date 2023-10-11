@@ -23,20 +23,17 @@ import "./google.css";
 import gem from "../../assets/images/greenGem.png";
 import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
 import image from "../../assets/yardsale.jpg";
-import {
-  Box,
-  Typography,
-  Button,
-  CardMedia,
-} from "@mui/material";
+import { Box, Typography, Button, CardMedia } from "@mui/material";
 import styles from "./styles";
 
 const libraries = ["places"];
 
 export default function GoogleMaps() {
+
+
   // isLoaded is gives us access to the apiKey
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCNzXt-MC2wxZGcPsT_YV9kflh4Lw_cqpk",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
   // If the API is not loaded yet, show loading message
