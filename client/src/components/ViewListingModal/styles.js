@@ -15,17 +15,18 @@ const styles = {
       width: "900px",
     },
   },
-  card: {},
+  card: { padding: "0em 0em 2em 0em" },
+  cardHeader: { paddingTop: "0em" },
   button: {
     textAlign: "end",
-    marginLeft:"auto",
+    marginLeft: "auto",
     background: "transparent",
     border: "0px ",
     fontSize: "1.2em",
     textColor: "black",
     cursor: "pointer",
     display: "block",
-    padding:"1em"
+    padding: "1em 1em 0em 0em",
   },
   img: {
     maxHeight: "30.25em",
@@ -38,6 +39,13 @@ const styles = {
   },
   description: {
     padding: "10px 0px",
+  },
+  addressBox: {
+    display: "flex",
+    alignItems: "flex-end",
+  },
+  address: {
+    display: "inline-block",
   },
 };
 
