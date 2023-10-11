@@ -9,6 +9,7 @@ const styles = {
     padding:"5px 0px 25px 0px",
   },
   icons: {
+    whiteSpace:"nowrap",
     "&:focus": { color: "green" },
     "&:active": { color: "green" },
     "&:hover": { color: "green" },

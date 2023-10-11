@@ -23,7 +23,7 @@ const styles = {
     },
   },
   appLogo: {
-    width: "70%",
+    width: "80%",
     "@media (min-width: 768px)": {
       width: "100%",
     },

@@ -7,10 +7,10 @@ import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import InfoIcon from "@mui/icons-material/Info";
 import { Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
 import {
   List,
   ListItem,
@@ -172,6 +172,15 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     >
       <BottomNavigationAction
         component={RouterLink}
+        to="/"
+        onClick={handleRefetch}
+        label="Home"
+        icon={<HomeIcon />}
+        sx={{ ...styles.icons }}
+      />
+
+      <BottomNavigationAction
+        component={RouterLink}
         to="/MyListings"
         label="My Listings"
         onClick={handleRefetchMe}
@@ -186,15 +195,6 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
         onClick={handleRefetchMe}
         sx={{ ...styles.icons }}
         icon={<FavoriteIcon />}
-      />
-
-      <BottomNavigationAction
-        component={RouterLink}
-        to="/"
-        onClick={handleRefetch}
-        label="Home"
-        icon={<MapOutlinedIcon />}
-        sx={{ ...styles.icons }}
       />
 
       <BottomNavigationAction
