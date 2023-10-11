@@ -42,6 +42,14 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   const [uploading, setUploading] = useState(false);
   const [confirmUpload, setConfirmUpload] = useState(false);
 
+  const [titleLengthCheck, setTitleLengthCheck] = useState(true);
+  const [descriptionLengthCheck, setDescriptionLengthCheck] = useState(true);
+
+  //Closes pop over message
+  const handleCloseSnackbar = () => {
+    setTitleLengthCheck(true);
+  };
+
   //We create this 'formState' to hold the rest of the listing properties, we set the intial state to empty strings
   const [formState, setFormState] = useState({
     title: "",
@@ -163,6 +171,14 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     e.preventDefault();
 
     try {
+      if (formState.title.length > 23) {
+        setTitleLengthCheck(false);
+        return;
+      }
+      if (formState.description.length > 3000) {
+        setDescriptionLengthCheck(false);
+        return;
+      }
       await uploadImage();
 
       await addListing({
@@ -350,7 +366,12 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               </Button> */}
 
               <Snackbar
-                open={openSnackbar || confirmUpload}
+                open={
+                  openSnackbar ||
+                  confirmUpload ||
+                  titleLengthCheck === false ||
+                  descriptionLengthCheck === false
+                }
                 autoHideDuration={5000}
                 onClose={() => {
                   setOpenSnackbar(false);
@@ -368,6 +389,10 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                     ? "You can only upload a maximum of 5 images."
                     : confirmUpload
                     ? "Upload Complete!"
+                    : !titleLengthCheck
+                    ? "Title must be no more than 23 characters."
+                    : !descriptionLengthCheck
+                    ? "Description must be no more than 3000 characters."
                     : ""}
                 </Alert>
               </Snackbar>
