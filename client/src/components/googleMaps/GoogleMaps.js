@@ -113,6 +113,7 @@ function Map() {
         options={{
           streetViewControl: false, // Removes the Pegman
           fullscreenControl: false,
+          gestureHandling: "greedy",
           styles: [
             {
               elementType: "labels",

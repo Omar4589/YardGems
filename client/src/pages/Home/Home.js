@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import GoogleMaps from "../../components/googleMaps/GoogleMaps";
 import styles from "./styles";
@@ -7,15 +8,71 @@ import AllListingsComponent from "../../components/AllListings/AllListingsCompon
 //This simply contains 2 components, GoogleMaps component that renders to the left of the screen
 //and the AllListingsComponent that renders to the right of the screen
 const Home = () => {
+  const [currentComponent, setComponent] = useState("Map");
+
+  //----------HANDLERS ---------\\
+  const renderComponent = () => {
+    if (currentComponent === "Map") {
+      return (
+        <Box id="googlemaps-container" sx={{ ...styles.map }}>
+          <GoogleMaps />
+        </Box>
+      );
+    } else if (currentComponent === "List") {
+      return (
+        <Box id="all-listings-component" sx={{ ...styles.listings }}>
+          <AllListingsComponent />
+        </Box>
+      );
+    }
+  };
+
+  const [isMobile, setIsMobile] = useState(true);
+  const [mapView, setMapView] = useState(null);
+
+  // The `useEffect` hook is used to add event listeners and perform side effects.
+  useEffect(() => {
+    //This function updates the state value of showFooter based on the window width.
+    const handleResize = () => {
+      //Here we are setting the value by passing in the value of the expression
+      //'is my window's innerWidth greater than 768 right now? true or false
+      setIsMobile(window.innerWidth < 768);
+      setMapView(window.innerWidth < 768);
+    };
+
+    //Here we create an event listener for the window's resize event, and pass `handleResize` as the event handler.
+    window.addEventListener("resize", handleResize);
+
+    //Here we call `handleResize` on the initial mount to set the initial value of `showFooter`.
+    handleResize();
+
+    //Here we define a 'cleanup' function that removes the resize event listener
+    const cleanup = () => {
+      window.removeEventListener("resize", handleResize);
+    };
+
+    // Clean up the event listener by removing it when the component is unmounted.
+    return cleanup;
+  }, []);
+
+  console.log("is Mobile:" + isMobile);
+  console.log("mapView:" + mapView);
+
   return (
     <Box id="home-page" sx={{ ...styles.mainContainer }}>
-      <Box id="googlemaps-container" sx={{ ...styles.map }}>
-        <GoogleMaps />
-      </Box>
+      {isMobile ? (
+        renderComponent()
+      ) : (
+        <>
+          <Box id="googlemaps-container" sx={{ ...styles.map }}>
+            <GoogleMaps />
+          </Box>
 
-      <Box id="all-listings-component" sx={{ ...styles.listings }}>
-        <AllListingsComponent />
-      </Box>
+          <Box id="all-listings-component" sx={{ ...styles.listings }}>
+            <AllListingsComponent />
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
