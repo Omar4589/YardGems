@@ -1,10 +1,12 @@
-// Last Updated: 2023-10-10T19:30:58.084Z
+
+const CACHE_NAME = `my-cache-${new Date().toISOString()}`;
+
 
 
 // Install event - cache files
 self.addEventListener("install", function (event) {
   event.waitUntil(
-    caches.open("my-cache").then(function (cache) {
+    caches.open(CACHE_NAME).then(function (cache) {
       return cache.addAll([
         "/",
         "/index.html",
@@ -13,6 +15,21 @@ self.addEventListener("install", function (event) {
         "/whiteLogo.png",
         // add more assets to cache if needed
       ]);
+    })
+  );
+});
+
+// Activate event - clean up old caches
+self.addEventListener("activate", function (event) {
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
 });
