@@ -67,7 +67,7 @@ const Home = () => {
   return (
     <Box id="home-page" sx={{ ...styles.mainContainer }}>
       <Button
-        sx={{ ...styles.button }}
+        sx={{ ...styles.button, display: isMobile ? "flex" : "none" }}
         component="label"
         variant="contained"
         onClick={toggleView}
