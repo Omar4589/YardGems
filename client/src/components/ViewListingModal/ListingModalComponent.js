@@ -10,6 +10,7 @@ import {
   Box,
   IconButton,
 } from "@mui/material";
+import PlaceIcon from "@mui/icons-material/Place";
 import CloseIcon from "@mui/icons-material/Close";
 import styles from "./styles";
 import Slider from "react-slick";
@@ -54,6 +55,7 @@ export default function ListingModalComponent({
           <CardHeader
             title={listingModal.title}
             subheader={`Listed By: ${listingModal.author}`}
+            sx={{ paddingTop: "0em" }}
           />
           <Slider {...settings}>
             {/* First we check if the array 'images' is empty, if it is, we use the default hardcoded image */}
@@ -90,9 +92,16 @@ export default function ListingModalComponent({
               sdfasdfasdf adsfasdfasd fasd fasdf dssdfasdf sad fasds adfasd
               fasdf dssdfasdf sad fasds adfasd fasdf
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {listingModal.address}
-            </Typography>
+            <Box sx={{ ...styles.addressBox }}>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ ...styles.address }}
+              >
+                {listingModal.address}
+              </Typography>
+              <PlaceIcon />
+            </Box>
           </CardContent>
         </Card>
       </Box>
