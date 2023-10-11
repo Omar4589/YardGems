@@ -7,7 +7,7 @@ const LoadingScreen = () => {
     const element = document.getElementById("loadingBox");
     setTimeout(() => {
       element.style.transform = "scale(0)";
-    }, 2700); // Start the transition after 2.5 seconds
+    }, 1000); // Start the transition after 2.5 seconds
   }, []);
 
   return (
@@ -30,7 +30,7 @@ const LoadingScreen = () => {
         alignItems="center"
         width={200} // Fixed width
         height={200} // Fixed height
-        bgcolor="#1dcf6b"
+        bgcolor="#ffffff"
         sx={{
           borderRadius: "100%",
           transform: "scale(10)", // Start with scale 5
