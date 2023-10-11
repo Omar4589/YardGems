@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
+import MapIcon from "@mui/icons-material/Map";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 import GoogleMaps from "../../components/googleMaps/GoogleMaps";
 import styles from "./styles";
 import AllListingsComponent from "../../components/AllListings/AllListingsComponent";
@@ -25,6 +27,10 @@ const Home = () => {
         </Box>
       );
     }
+  };
+
+  const toggleView = () => {
+    setComponent(currentComponent === "Map" ? "List" : "Map");
   };
 
   const [isMobile, setIsMobile] = useState(true);
@@ -60,6 +66,15 @@ const Home = () => {
 
   return (
     <Box id="home-page" sx={{ ...styles.mainContainer }}>
+      <Button
+        sx={{ ...styles.button, display: isMobile ? "flex" : "none" }}
+        component="label"
+        variant="contained"
+        onClick={toggleView}
+        startIcon={currentComponent === "Map" ? <MapIcon /> : <ListAltIcon />}
+      >
+        {currentComponent === "Map" ? "Map" : "List"}
+      </Button>
       {isMobile ? (
         renderComponent()
       ) : (
