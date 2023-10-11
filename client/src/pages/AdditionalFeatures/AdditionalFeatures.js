@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import styles from "./styles";
-import iphone1 from "../../assets/images/iphone1.PNG";
-import iphone2 from "../../assets/images/iphone2.PNG"
+import iphone1 from "../../assets/images/iphone1.png";
+import iphone2 from "../../assets/images/iphone2.png"
 
 
 //This is the AdditionalFeatures page is displayed if a user clicks on "MyListings","SavedListings","MyAccount" and they are not logged in.

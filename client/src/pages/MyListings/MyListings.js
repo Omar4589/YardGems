@@ -79,7 +79,7 @@ const MyListings = () => {
           <Container maxWidth="md">
             <Typography align="center" sx={{ ...styles.heading }}>
               {userListings.length
-                ? `You have ${userListings.length} garage sale ${
+                ? `You have ${userListings.length} yard sale ${
                     userListings.length === 1 ? "listing" : "listings"
                   }:`
                 : "You have no saved listings!"}

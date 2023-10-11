@@ -51,43 +51,43 @@ function Map() {
   const closeModal = () => setListingModal(false);
 
   // State to manage the map center and selected marker
-  const [center, setCenter] = useState({ lat: 29.42, lng: -98.49 });
+  const [center, setCenter] = useState({ lat: 27.50, lng: -99.50 });
   const [selected, setSelected] = useState(null);
 
-  // Fetch user's current location if available
-  useEffect(() => {
-    let isMounted = true;
+  //Fetch user's current location if available
+  // useEffect(() => {
+  //   let isMounted = true;
 
-    const getCurrentLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            if (isMounted) {
-              // Check if the component is still mounted
-              const { latitude, longitude } = position.coords;
-              setCenter({ lat: latitude, lng: longitude });
-            }
-          },
-          (error) => {
-            if (isMounted) {
-              // Check if the component is still mounted
-              console.error("Error getting current location:", error);
-            }
-          }
-        );
-      } else {
-        if (isMounted) {
-          // Check if the component is still mounted
-          console.error("Geolocation is not supported by this browser.");
-        }
-      }
-    };
-    getCurrentLocation();
+  //   const getCurrentLocation = () => {
+  //     if (navigator.geolocation) {
+  //       navigator.geolocation.getCurrentPosition(
+  //         (position) => {
+  //           if (isMounted) {
+  //             // Check if the component is still mounted
+  //             const { latitude, longitude } = position.coords;
+  //             setCenter({ lat: latitude, lng: longitude });
+  //           }
+  //         },
+  //         (error) => {
+  //           if (isMounted) {
+  //             // Check if the component is still mounted
+  //             console.error("Error getting current location:", error);
+  //           }
+  //         }
+  //       );
+  //     } else {
+  //       if (isMounted) {
+  //         // Check if the component is still mounted
+  //         console.error("Geolocation is not supported by this browser.");
+  //       }
+  //     }
+  //   };
+  //   getCurrentLocation();
 
-    return () => {
-      isMounted = false; // Cleanup: set flag to false when component unmounts
-    };
-  }, []);
+  //   return () => {
+  //     isMounted = false; // Cleanup: set flag to false when component unmounts
+  //   };
+  // }, []);
 
   // Fetch listing data using Apollo useQuery
   const { loading, data } = useQuery(QUERY_LISTINGS);
@@ -106,13 +106,14 @@ function Map() {
     <Box className="main">
       {/* below renders the google map */}
       <GoogleMap
-        zoom={10} //how far you want the map to be zoomed in
+        zoom={13} //how far you want the map to be zoomed in
         center={center} // displays location
         mapContainerClassName="map-container" // styling
         onClick={() => setActiveMarker(null)}
         options={{
           streetViewControl: false, // Removes the Pegman
           fullscreenControl: false,
+          gestureHandling: "greedy",
           styles: [
             {
               elementType: "labels",
