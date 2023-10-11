@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, CardMedia, } from "@mui/material";
+import { Box, CardMedia } from "@mui/material";
 import yglogo from "../../assets/images/yargemsloadingscreenlogo.png";
 
 const LoadingScreen = () => {
@@ -40,8 +40,8 @@ const LoadingScreen = () => {
         <CardMedia
           component="img"
           src={yglogo}
-          height="30em"
-          width="30em"
+          height="25em"
+          width="25em"
           sx={{ objectFit: "contain" }}
         />
       </Box>
