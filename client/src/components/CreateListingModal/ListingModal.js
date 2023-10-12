@@ -40,7 +40,6 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const [uploading, setUploading] = useState(false);
-  const [confirmUpload, setConfirmUpload] = useState(false);
 
   const [titleLengthCheck, setTitleLengthCheck] = useState(true);
   const [descriptionLengthCheck, setDescriptionLengthCheck] = useState(true);
@@ -123,6 +122,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
       setOpenSnackbar(true);
       // Reset the file input
       e.target.value = null;
+      setImageFiles([]);
       return;
     }
     setImageFiles(files);
@@ -152,10 +152,11 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
       if (response.ok) {
         const data = await response.json();
         //Sets the formstate.images array to the array of urls returned by the server
-        setFormState({ ...formState, images: data.imageUrls });
+
         console.log("uploadImage() returned a 200 status code");
         setUploading(false);
-        setConfirmUpload(true);
+        console.log(data);
+        return data.imageUrls;
       } else {
         throw new Error("Image upload failed");
       }
@@ -169,9 +170,10 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
   //This function is responsible for creating and adding a listing to the database
   const submitNewListing = async (e) => {
     e.preventDefault();
+    setUploading(true);
 
     try {
-      if (formState.title.length > 23) {
+      if (formState.title.length > 50) {
         setTitleLengthCheck(false);
         return;
       }
@@ -179,13 +181,13 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
         setDescriptionLengthCheck(false);
         return;
       }
-      await uploadImage();
+      const images = await uploadImage();
 
       await addListing({
         description: formState.description,
         address: listingAddress.address,
         dateOfSale: formState.dateOfSale,
-        images: formState.images,
+        images: images,
         title: formState.title,
         lat: listingAddress.lat,
         lng: listingAddress.lng,
@@ -196,7 +198,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
         title: "",
         description: "",
         dateOfSale: "",
-        image: "",
+        images: [],
         author: "",
       });
       setImageFiles([]);
@@ -208,6 +210,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
       console.error(err);
     }
   };
+
+  console.log(imageFiles);
 
   return (
     <Modal
@@ -340,7 +344,6 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                   : `${imageFiles.length} images selected`}
                 <input
                   id="file-input"
-                  accept="image*/"
                   name="file"
                   fullWidth
                   variant="outlined"
@@ -373,21 +376,20 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                 ...styles.addButton,
               }}
             >
-              {!uploading ? "Add" : "Uploading, please wait..."}
+              Add
             </Button>
           </form>
 
           <Snackbar
             open={
               openSnackbar ||
-              confirmUpload ||
+              uploading ||
               titleLengthCheck === false ||
               descriptionLengthCheck === false
             }
             autoHideDuration={5000}
             onClose={() => {
               setOpenSnackbar(false);
-              setConfirmUpload(false);
               setTitleLengthCheck(true);
               setDescriptionLengthCheck(true);
             }}
@@ -396,19 +398,16 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
             <Alert
               onClose={() => {
                 setOpenSnackbar(false);
-                setConfirmUpload(false);
                 setTitleLengthCheck(true);
                 setDescriptionLengthCheck(true);
               }}
-              severity={
-                openSnackbar ? "error" : confirmUpload ? "success" : "error"
-              }
+              severity={openSnackbar ? "error" : uploading ? "info" : "error"}
               sx={{ ...styles.snackAlert }}
             >
               {openSnackbar
                 ? "You can only upload a maximum of 5 images."
-                : confirmUpload
-                ? "Upload Complete!"
+                : uploading
+                ? "Upload images, please wait..."
                 : !titleLengthCheck
                 ? "Title must be no more than 23 characters."
                 : !descriptionLengthCheck
