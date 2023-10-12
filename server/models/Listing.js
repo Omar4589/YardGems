@@ -11,10 +11,7 @@ const listingSchema = new Schema({
   },
   address: {
     type: String,
-    required: [
-      true,
-      "Please enter an address",
-    ],
+    required: [true, "Please enter an address"],
     trim: true,
   },
   // date to hold the sell for buyers
@@ -23,13 +20,13 @@ const listingSchema = new Schema({
     required: [true, "Enter a date"],
   },
   images: {
-    type: [String],  // Changed from String to an array of strings
-    default: [] 
+    type: [String], // Changed from String to an array of strings
+    default: [],
   },
   author: {
     type: String,
     trim: true,
-    required [true, "an author is required"],
+    required: [true, "an author is required"],
   },
   title: {
     type: String,
