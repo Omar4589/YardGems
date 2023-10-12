@@ -171,7 +171,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     e.preventDefault();
 
     try {
-      if (formState.title.length > 23) {
+      if (formState.title.length > 50) {
         setTitleLengthCheck(false);
         return;
       }
