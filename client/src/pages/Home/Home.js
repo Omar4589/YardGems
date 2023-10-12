@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import MapIcon from "@mui/icons-material/Map";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import GoogleMaps from "../../components/googleMaps/GoogleMaps";
+import GoogleMapsComponent from "../../components/GoogleMaps/GoogleMaps";
 import styles from "./styles";
 import AllListingsComponent from "../../components/AllListings/AllListingsComponent";
 
@@ -17,7 +17,7 @@ const Home = () => {
     if (currentComponent === "Map") {
       return (
         <Box id="googlemaps-container" sx={{ ...styles.map }}>
-          <GoogleMaps />
+          <GoogleMapsComponent />
         </Box>
       );
     } else if (currentComponent === "List") {
@@ -79,7 +79,7 @@ const Home = () => {
       ) : (
         <>
           <Box id="googlemaps-container" sx={{ ...styles.map }}>
-            <GoogleMaps />
+            <GoogleMapsComponent />
           </Box>
 
           <Box id="all-listings-component" sx={{ ...styles.listings }}>

@@ -6,6 +6,7 @@ import {
   useLoadScript,
   MarkerF,
   InfoWindow,
+  useGoogleMap,
 } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -25,76 +26,92 @@ import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
 import image from "../../assets/yardsale.jpg";
 import { Box, Typography, Button, CardMedia } from "@mui/material";
 import styles from "./styles";
+import { useMapCenterContext } from "../../utils/MapCenterContext";
 
 const libraries = ["places"];
 
 export default function GoogleMaps() {
-  // isLoaded is gives us access to the apiKey
-  const { isLoaded } = useLoadScript({
+  const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-  // If the API is not loaded yet, show loading message
-  if (!isLoaded) return <div>Loading...</div>;
 
-  // Render the map component
-  return <Map />;
-}
-
-function Map() {
   const [listingModal, setListingModal] = useState(false);
-
-  const openModal = (listing) => setListingModal(listing);
-  //Closes modal when listings is clicked on
-  const closeModal = () => setListingModal(false);
-
-  // State to manage the map center and selected marker
   const [center, setCenter] = useState({ lat: 27.54, lng: -99.485 });
   const [selected, setSelected] = useState(null);
+  const [activeMarker, setActiveMarker] = useState(null);
 
-  
-
-  //Fetch user's current location if available
-  // useEffect(() => {
-  //   let isMounted = true;
-
-  //   const getCurrentLocation = () => {
-  //     if (navigator.geolocation) {
-  //       navigator.geolocation.getCurrentPosition(
-  //         (position) => {
-  //           if (isMounted) {
-  //             // Check if the component is still mounted
-  //             const { latitude, longitude } = position.coords;
-  //             setCenter({ lat: latitude, lng: longitude });
-  //           }
-  //         },
-  //         (error) => {
-  //           if (isMounted) {
-  //             // Check if the component is still mounted
-  //             console.error("Error getting current location:", error);
-  //           }
-  //         }
-  //       );
-  //     } else {
-  //       if (isMounted) {
-  //         // Check if the component is still mounted
-  //         console.error("Geolocation is not supported by this browser.");
-  //       }
-  //     }
-  //   };
-  //   getCurrentLocation();
-
-  //   return () => {
-  //     isMounted = false; // Cleanup: set flag to false when component unmounts
-  //   };
-  // }, []);
-
-  // Fetch listing data using Apollo useQuery
   const { loading, data } = useQuery(QUERY_LISTINGS);
   const allListings = data?.allListings || [];
 
-  // State to manage active marker for InfoWindow display
-  const [activeMarker, setActiveMarker] = useState(null);
+  const { centerOfMap, setCenterOfMap, zoomLevel, setZoomLevel } =
+    useMapCenterContext();
+
+    //Fetch user's current location if available
+// useEffect(() => {
+//   let isMounted = true;
+
+//   const getCurrentLocation = () => {
+//     if (navigator.geolocation) {
+//       navigator.geolocation.getCurrentPosition(
+//         (position) => {
+//           if (isMounted) {
+//             // Check if the component is still mounted
+//             const { latitude, longitude } = position.coords;
+//             setCenterofMap({ lat: latitude, lng: longitude });
+//           }
+//         },
+//         (error) => {
+//           if (isMounted) {
+//             // Check if the component is still mounted
+//             console.error("Error getting current location:", error);
+//           }
+//         }
+//       );
+//     } else {
+//       if (isMounted) {
+//         // Check if the component is still mounted
+//         console.error("Geolocation is not supported by this browser.");
+//       }
+//     }
+//   };
+//   getCurrentLocation();
+
+//   return () => {
+//     isMounted = false; // Cleanup: set flag to false when component unmounts
+//   };
+// }, []);
+
+  const mapMovement = (map) => {
+    const handleCenterChanged = () => {
+      const newCenter = map.getCenter();
+      setCenterOfMap({
+        lat: newCenter.lat(),
+        lng: newCenter.lng(),
+      });
+    };
+
+    map.addListener("dragend", handleCenterChanged);
+
+    // New code for handling zoom changes
+    const handleZoomChanged = () => {
+      const newZoom = map.getZoom();
+      setZoomLevel(newZoom);
+      // You can set this to state if you want to keep track of it
+    };
+    map.addListener("zoom_changed", handleZoomChanged);
+
+    return () => {
+      // Cleanup: remove the event listener
+      map.removeListener("dragend", handleCenterChanged);
+
+      map.removeListener("zoom_changed", handleZoomChanged);
+    };
+  };
+
+
+  const openModal = (listing) => setListingModal(listing);
+  const closeModal = () => setListingModal(false);
   const handleActiveMarker = (markerId) => {
     if (markerId === activeMarker) {
       return;
@@ -102,12 +119,20 @@ function Map() {
     setActiveMarker(markerId);
   };
 
+
+  // If the API is not loaded yet, show loading message
+  if (loadError)
+    return (
+      <div>Something went wrong. Please contact the site administrator.</div>
+    );
+  if (!isLoaded) return <div>Loading...</div>;
+
   return (
     <Box className="main">
-      {/* below renders the google map */}
       <GoogleMap
-        zoom={13} //how far you want the map to be zoomed in
-        center={center} // displays location
+        onLoad={mapMovement}
+        zoom={zoomLevel} //how far you want the map to be zoomed in
+        center={centerOfMap} // displays location
         mapContainerClassName="map-container" // styling
         onClick={() => setActiveMarker(null)}
         options={{
@@ -129,6 +154,7 @@ function Map() {
           {/* will render out a placed based on the selection */}
           {/* <PlacesAutocomplete setSelected={setSelected} setCenter={setCenter} /> */}
         </div>
+
         {allListings.map(
           (
             {
