@@ -238,7 +238,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleCloseSnackbar} severity="error">
+        <Alert onClose={handleCloseSnackbar} severity="error" sx={{...styles.snackAlert}}>
           {passwordMatch
             ? "Passwords don't match. Please try again."
             : !validEmail

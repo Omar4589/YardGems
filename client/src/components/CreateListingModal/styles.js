@@ -69,6 +69,11 @@ const styles = {
     marginRight: "auto",
     bgcolor: "#66bb6a",
   },
+  snackAlert: {
+    boxShadow: "0em 0em 0.5em black",
+    borderRadius: 1,
+    bgcolor: "#ffffff",
+  },
 };
 
 export default styles;

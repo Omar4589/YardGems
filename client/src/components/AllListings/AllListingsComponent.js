@@ -143,16 +143,6 @@ export default function AllListings() {
                     <FavoriteIcon sx={{ color: "grey" }} />
                   </IconButton>
                 )}
-                <Snackbar
-                  open={showSnackBar}
-                  autoHideDuration={6000}
-                  onClose={handleCloseSnackbar}
-                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                >
-                  <Alert onClose={handleCloseSnackbar} severity="error">
-                    You need to be logged in to save this listing
-                  </Alert>
-                </Snackbar>
               </Card>
             </Grid>
           );
@@ -167,6 +157,20 @@ export default function AllListings() {
           image={image}
         />
       )}
+      <Snackbar
+        open={showSnackBar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          sx={{ ...styles.snackAlert }}
+          severity="error"
+        >
+          You need to be logged in to save this listing
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

@@ -2,7 +2,7 @@
 
 ## Description 
 
-YardGems is a free, easy to use garage sale app that helps create and locate garage sales around you! Our mission is to revolutionize the way people discover and explore nearby sales, making the process simple, exciting, and rewarding for everyone. We believe that the thrill of finding unique treasures shouldn’t be limited to chance encounters but should be easily accessible to all. 
+YardGems is a free, easy to use yard sale app that helps create and locate yard sales around you! Our mission is to revolutionize the way people discover and explore nearby sales, making the process simple, exciting, and rewarding for everyone. We believe that the thrill of finding unique treasures shouldn’t be limited to chance encounters but should be easily accessible to all. 
 
 ## Table Of Contents
 
