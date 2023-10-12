@@ -37,6 +37,8 @@ export default function SignIn() {
     setUserFormData({ ...userFormData, [name]: value });
   };
 
+  console.log(userFormData.email);
+
   // Function to handle login form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,9 +46,13 @@ export default function SignIn() {
     // console.log({ email: data.get("email"), password: data.get("password") });
 
     try {
+      const updatedUserFormData = {
+        ...userFormData,
+        email: userFormData.email.toLowerCase(),
+      };
       // Use the 'login' mutation to log the user in
       const { data } = await login({
-        variables: { ...userFormData },
+        variables: { updatedUserFormData },
       });
 
       // Log the user in with the generated token
@@ -168,7 +174,11 @@ export default function SignIn() {
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleCloseSnackbar} severity="error" sx={{...styles.snackAlert}}>
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="error"
+          sx={{ ...styles.snackAlert }}
+        >
           {error ? error.message : "An error occurred"}
         </Alert>
       </Snackbar>

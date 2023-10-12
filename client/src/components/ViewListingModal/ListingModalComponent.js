@@ -86,11 +86,7 @@ export default function ListingModalComponent({
               Date Of Sale: {listingModal.dateOfSale}
             </Typography>
             <Typography variant="h5" sx={{ ...styles.description }}>
-              {listingModal.description}dafa dfsa fdasf adsfasdfadsfa dfda
-              dsaafdssdfasdf sad fasds adfasd fasdf dssdfasdf sad fasds adfasd
-              fasdf asdfasdfdsfadf a dfsdf sdasfd fsdfsadfdsf saf sdf asd
-              sdfasdfasdf adsfasdfasd fasd fasdf dssdfasdf sad fasds adfasd
-              fasdf dssdfasdf sad fasds adfasd fasdf
+              {listingModal.description}
             </Typography>
             <Box sx={{ ...styles.addressBox }}>
               <Typography
