@@ -206,6 +206,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
       // Reset the address input field to an empty string
       setValue("");
       handleClose(); // closing the modal
+      return;
     } catch (err) {
       console.error(err);
     }
