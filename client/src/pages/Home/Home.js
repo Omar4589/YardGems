@@ -61,8 +61,7 @@ const Home = () => {
     return cleanup;
   }, []);
 
-  console.log("is Mobile:" + isMobile);
-  console.log("mapView:" + mapView);
+
 
   return (
     <Box id="home-page" sx={{ ...styles.mainContainer }}>

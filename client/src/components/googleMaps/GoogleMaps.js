@@ -52,6 +52,8 @@ function Map() {
   const [center, setCenter] = useState({ lat: 27.54, lng: -99.485 });
   const [selected, setSelected] = useState(null);
 
+  
+
   //Fetch user's current location if available
   // useEffect(() => {
   //   let isMounted = true;

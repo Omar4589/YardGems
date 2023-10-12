@@ -50,8 +50,6 @@ const Header = () => {
     setFeatureSnackbar(false);
   };
 
-  console.log(featureSnackbar);
-
   //-----------------QUERIES--------------//
   //Here we extract the refetch method from the useQuery hook
   //refetch will execute the QUERY_LISTINGS query
