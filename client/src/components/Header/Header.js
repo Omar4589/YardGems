@@ -46,7 +46,11 @@ const Header = () => {
   };
 
   //Closes pop over message - 'Please log in'
-  const handleCloseSnackbar = () => setFeatureSnackbar(false);
+  const handleCloseSnackbar = () => {
+    setFeatureSnackbar(false);
+  };
+
+  console.log(featureSnackbar);
 
   //-----------------QUERIES--------------//
   //Here we extract the refetch method from the useQuery hook
@@ -112,14 +116,18 @@ const Header = () => {
           <IconButton
             sx={{ color: "inherit", ...styles.searchIcon }}
             aria-label="search"
-            onClick={() => setFeatureSnackbar(true)}
+            onClick={() => {
+              setFeatureSnackbar(true);
+            }}
           >
             <SearchIcon sx={{ ...styles.searchIcon }} />
           </IconButton>
           <IconButton
             sx={{ color: "inherit", size: "small", ...styles.searchIcon }}
             aria-label="message"
-            onClick={() => setFeatureSnackbar(true)}
+            onClick={() => {
+              setFeatureSnackbar(true);
+            }}
           >
             <InboxIcon sx={{ ...styles.messagesIcon }} />
           </IconButton>
@@ -165,17 +173,17 @@ const Header = () => {
             </Link>
           </>
         )}
-        <Snackbar
-                  open={featureSnackbar}
-                  autoHideDuration={6000}
-                  onClose={handleCloseSnackbar}
-                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                >
-                  <Alert onClose={handleCloseSnackbar} severity="error">
-                    This feature is coming soon! Thank you for your patience.
-                  </Alert>
-                </Snackbar>
       </Box>
+      <Snackbar
+        open={featureSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error">
+          This feature is coming soon! Thank you for your patience.
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
