@@ -180,7 +180,11 @@ const Header = () => {
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleCloseSnackbar} severity="error">
+        <Alert
+          sx={{ ...styles.snackAlert }}
+          onClose={handleCloseSnackbar}
+          severity="error"
+        >
           This feature is coming soon! Thank you for your patience.
         </Alert>
       </Snackbar>

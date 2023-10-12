@@ -152,6 +152,11 @@ const styles = {
       },
     },
   },
+  snackAlert: {
+    boxShadow: "0em 0em 1em black",
+    borderRadius: 1,
+    bgcolor: "#ffffff",
+  },
 };
 
 export default styles;
