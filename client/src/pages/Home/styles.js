@@ -22,7 +22,7 @@ const styles = {
   button: {
     position: "absolute",
     zIndex: "100",
-    right: "2em",
+    right: "1em",
     top: "6em",
     bgcolor: "#ffffff",
     color:"#666666",
