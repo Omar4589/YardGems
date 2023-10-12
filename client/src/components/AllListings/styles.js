@@ -12,7 +12,7 @@ const styles = {
     padding: "0px 0px 15px 0px",
     fontSize: "15px",
     "@media (min-width:768px)": {
-      fontSize:"20px"
+      fontSize: "20px",
     },
   },
   grid: { paddingTop: "1%", paddingBottom: "50%" },
@@ -23,6 +23,11 @@ const styles = {
     objectFit: "cover",
   },
   iconButton: { marginLeft: "80%" },
+  snackAlert: {
+    boxShadow: "0em 0em .5em black",
+    borderRadius: 1,
+    bgcolor: "#ffffff",
+  },
 };
 
 export default styles;

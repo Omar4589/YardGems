@@ -30,6 +30,11 @@ const styles = {
       color: "#66bb6a",
     },
   },
+  snackAlert: {
+    boxShadow: "0em 0em .5em black",
+    borderRadius: 1,
+    bgcolor: "#ffffff",
+  },
 };
 
 export default styles;

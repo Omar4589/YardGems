@@ -364,38 +364,6 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               >
                 {!uploading ? "Upload" : "Uploading, please wait..."}
               </Button> */}
-
-              <Snackbar
-                open={
-                  openSnackbar ||
-                  confirmUpload ||
-                  titleLengthCheck === false ||
-                  descriptionLengthCheck === false
-                }
-                autoHideDuration={5000}
-                onClose={() => {
-                  setOpenSnackbar(false);
-                  setConfirmUpload(false);
-                }}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-              >
-                <Alert
-                  onClose={() => setOpenSnackbar(false)}
-                  severity={
-                    openSnackbar ? "error" : confirmUpload ? "success" : "error"
-                  }
-                >
-                  {openSnackbar
-                    ? "You can only upload a maximum of 5 images."
-                    : confirmUpload
-                    ? "Upload Complete!"
-                    : !titleLengthCheck
-                    ? "Title must be no more than 23 characters."
-                    : !descriptionLengthCheck
-                    ? "Description must be no more than 3000 characters."
-                    : ""}
-                </Alert>
-              </Snackbar>
             </Box>
 
             <Button
@@ -408,6 +376,46 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
               {!uploading ? "Add" : "Uploading, please wait..."}
             </Button>
           </form>
+
+          <Snackbar
+            open={
+              openSnackbar ||
+              confirmUpload ||
+              titleLengthCheck === false ||
+              descriptionLengthCheck === false
+            }
+            autoHideDuration={5000}
+            onClose={() => {
+              setOpenSnackbar(false);
+              setConfirmUpload(false);
+              setTitleLengthCheck(true);
+              setDescriptionLengthCheck(true);
+            }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert
+              onClose={() => {
+                setOpenSnackbar(false);
+                setConfirmUpload(false);
+                setTitleLengthCheck(true);
+                setDescriptionLengthCheck(true);
+              }}
+              severity={
+                openSnackbar ? "error" : confirmUpload ? "success" : "error"
+              }
+              sx={{ ...styles.snackAlert }}
+            >
+              {openSnackbar
+                ? "You can only upload a maximum of 5 images."
+                : confirmUpload
+                ? "Upload Complete!"
+                : !titleLengthCheck
+                ? "Title must be no more than 23 characters."
+                : !descriptionLengthCheck
+                ? "Description must be no more than 3000 characters."
+                : ""}
+            </Alert>
+          </Snackbar>
         </Box>
       </Fade>
     </Modal>
