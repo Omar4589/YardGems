@@ -346,10 +346,6 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                 <input
                   id="file-input"
                   name="file"
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  margin="none"
                   type="file"
                   multiple
                   hidden

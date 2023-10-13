@@ -8,8 +8,12 @@ const styles = {
     fontFamily: "'Roboto', sans-serif", // Add this line to set the font
     "@media (min-width: 768px)": { padding: "3% 20% 10% 20%" },
   },
-  heading: { mb: 2, fontSize: 35, fontWeight: "semi-bold" },
-  statement: { mb: 2, fontSize: 20 },
+  heading: { mb: 1, fontSize: 35, fontWeight: "semi-bold" },
+  statement: {
+    mb: 2,
+    fontSize: 17,
+    "@media (min-width: 768px)": { fontSize: 20 },
+  },
   fieldContainers: { mb: 2 },
   labels: { fontSize: 20 },
   inputFields: {

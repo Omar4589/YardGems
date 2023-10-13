@@ -47,12 +47,12 @@ export default function SignIn() {
 
     try {
       const updatedUserFormData = {
-        ...userFormData,
         email: userFormData.email.toLowerCase(),
+        password: userFormData.password,
       };
       // Use the 'login' mutation to log the user in
       const { data } = await login({
-        variables: { updatedUserFormData },
+        variables: updatedUserFormData,
       });
 
       // Log the user in with the generated token

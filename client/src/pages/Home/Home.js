@@ -13,28 +13,12 @@ const Home = () => {
   const [currentComponent, setComponent] = useState("Map");
 
   //----------HANDLERS ---------\\
-  const renderComponent = () => {
-    if (currentComponent === "Map") {
-      return (
-        <Box id="googlemaps-container" sx={{ ...styles.map }}>
-          <GoogleMapsComponent />
-        </Box>
-      );
-    } else if (currentComponent === "List") {
-      return (
-        <Box id="all-listings-component" sx={{ ...styles.listings }}>
-          <AllListingsComponent />
-        </Box>
-      );
-    }
-  };
 
   const toggleView = () => {
     setComponent(currentComponent === "Map" ? "List" : "Map");
   };
 
   const [isMobile, setIsMobile] = useState(true);
-  const [mapView, setMapView] = useState(null);
 
   // The `useEffect` hook is used to add event listeners and perform side effects.
   useEffect(() => {
@@ -43,7 +27,6 @@ const Home = () => {
       //Here we are setting the value by passing in the value of the expression
       //'is my window's innerWidth greater than 768 right now? true or false
       setIsMobile(window.innerWidth < 768);
-      setMapView(window.innerWidth < 768);
     };
 
     //Here we create an event listener for the window's resize event, and pass `handleResize` as the event handler.
@@ -61,8 +44,6 @@ const Home = () => {
     return cleanup;
   }, []);
 
-
-
   return (
     <Box id="home-page" sx={{ ...styles.mainContainer }}>
       <Button
@@ -74,19 +55,28 @@ const Home = () => {
       >
         {currentComponent === "Map" ? "Map" : "List"}
       </Button>
-      {isMobile ? (
-        renderComponent()
-      ) : (
-        <>
-          <Box id="googlemaps-container" sx={{ ...styles.map }}>
-            <GoogleMapsComponent />
-          </Box>
 
-          <Box id="all-listings-component" sx={{ ...styles.listings }}>
-            <AllListingsComponent />
-          </Box>
-        </>
-      )}
+      <>
+        <Box
+          id="googlemaps-container"
+          sx={{
+            ...styles.map,
+            display: isMobile && currentComponent === "List" ? "none" : "block",
+          }}
+        >
+          <GoogleMapsComponent />
+        </Box>
+
+        <Box
+          id="all-listings-component"
+          sx={{
+            ...styles.listings,
+            display: isMobile && currentComponent === "Map" ? "none" : "block",
+          }}
+        >
+          <AllListingsComponent />
+        </Box>
+      </>
     </Box>
   );
 };
