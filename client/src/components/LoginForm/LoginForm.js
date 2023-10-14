@@ -104,7 +104,7 @@ export default function SignIn() {
           Sign In
         </Typography>
 
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{}}>
+        <Box component="form" onSubmit={handleSubmit} >
           <Box sx={{ ...styles.email }}>
             <Typography component="label" sx={{ ...styles.labels }}>
               Email

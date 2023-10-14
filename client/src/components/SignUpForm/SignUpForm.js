@@ -31,7 +31,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
   const [passwordMatch, setPasswordMatch] = useState(false);
   const [validEmail, setValidEmail] = useState(true);
   const [usernameLengthCheck, setUsernameLengthCheck] = useState(true);
-
+  const [passwordLengthCheck, setPasswordLengthCheck] = useState(true);
   //Closes pop over message - 'Please log in'
   const handleCloseSnackbar = () => {
     setPasswordMatch(false);
@@ -138,7 +138,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
           Sign Up
         </Typography>
 
-        <form id="signup-form" onSubmit={handleFormSubmit}>
+        <Box component="form" id="signup-form" onSubmit={handleFormSubmit}>
           <Box sx={{ ...styles.inputBoxes }}>
             <Typography component="label" sx={{ ...styles.labels }}>
               Username
@@ -217,7 +217,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
           >
             Sign Up
           </Button>
-        </form>
+        </Box>
         <Box sx={{ ...styles.login }}>
           <Typography>
             Already have an account?
@@ -238,7 +238,11 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleCloseSnackbar} severity="error" sx={{...styles.snackAlert}}>
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="error"
+          sx={{ ...styles.snackAlert }}
+        >
           {passwordMatch
             ? "Passwords don't match. Please try again."
             : !validEmail
