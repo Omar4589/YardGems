@@ -47,9 +47,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+//----------------START OF COMPONENT------------//
 function App() {
+  ///----------STATE------------------//
+  //state used to show loading screen at first load
   const [loading, setLoading] = useState(true);
-
+  //------------------HOOKS----------------//
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -69,9 +72,7 @@ function App() {
               <Header />
               <Routes>
                 <Route path="/signup-login" element={<SignUpLoginPage />} />
-
                 <Route path="/" element={<Home />} />
-
                 <Route path="/MyListings" element={<MyListings />} />
                 <Route path="/SavedListings" element={<SavedListings />} />
                 <Route path="/listings/:listingId" element={<EditListing />} />
