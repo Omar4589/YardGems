@@ -53,8 +53,6 @@ const MyListings = () => {
   };
 
   //Below we define a variable that holds the user's listings from latest to oldest called 'sortedUserPosts'
-  //If listings is truthy (not null, undefined, or an empty array), it proceeds with the sorting process.
-  //If listings is falsy (null, undefined, or an empty array), it assigns an empty array [].
   //The slice method creates a shallow copy of the listings array. Sort() mutates the array it operates on, avoiding the modification of the original array.
   //The function used by the sort() method takes two elements, a and b, from the array and compares them based on the 'createdAt' property.
   //Read more about the sort() method at https://www.w3schools.com/jsref/jsref_sort.asp

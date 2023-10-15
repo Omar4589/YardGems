@@ -17,9 +17,10 @@ import Auth from "../../utils/auth";
 import styles from "./styles";
 import appName from "../../assets/images/appName.jpg";
 import greenGem from "../../assets/images/greenGem.png";
+import SignUpForm from "../SignUpForm/SignUpForm";
 
 //-----------------------START OF COMPONENT-----------------------//
-export default function SignIn() {
+export default function SignIn({handleComponentChange, SignUpForm}) {
   //-----------------STATE---------------//
   // State to track the form input fields for email and password
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
@@ -153,6 +154,17 @@ export default function SignIn() {
           {/* <Link href="#" variant="body2">
             Forgot password?
           </Link> */}
+        </Box>
+        <Box sx={{ ...styles.signup }}>
+          <Typography>
+            Don't have an account yet?
+            <Button
+              onClick={() => handleComponentChange(SignUpForm)}
+              style={{ ...styles.signupButton }}
+            >
+              Sign Up
+            </Button>
+          </Typography>
         </Box>
         <Box sx={{}}>
           <Typography

@@ -15,7 +15,7 @@ import {
 import styles from "./styles";
 
 const MyAccount = () => {
-  // State to track the form input fields for email and password
+  // State to track the form input fields
   const [userFormData, setUserFormData] = useState({
     username: "",
     email: "",
@@ -24,16 +24,24 @@ const MyAccount = () => {
     confirmNewPassword: "",
   });
 
+  //used to verify new passwords match
   const [passwordMatch, setPasswordMatch] = useState(false);
+  //used to check username length
   const [usernameLengthCheck, setUsernameLengthCheck] = useState(true);
+  //used to check password length
   const [passwordLengthCheck, setPasswordLengthCheck] = useState(true);
+  //used to notify user if they havent made a change and try to submit the form
   const [makeChangeMessage, setMakeChangeMessage] = useState(false);
 
+  //--------------QUERIES----------//
+  //queries data of logged in user
   const { data: loggedInUserData } = useQuery(ME_QUERY);
-
+  //----------------MUTATIONS--------------//
+  //updates username
   const [updateUsername] = useMutation(UPDATE_USERNAME);
+  //updates password
   const [updatePassword] = useMutation(UPDATE_PASSWORD);
-
+  //------------HOOKS-----------//
   useEffect(() => {
     setUserFormData({
       username: loggedInUserData.me.username,
@@ -43,7 +51,7 @@ const MyAccount = () => {
       confirmNewPassword: "",
     });
   }, [loggedInUserData]);
-
+  //-------------------HANDLERS---------------//
   // Handler to update the state when input fields change
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -57,7 +65,7 @@ const MyAccount = () => {
     setMakeChangeMessage(false);
   };
 
-  // Function to handle my account update form submission
+  // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -117,8 +125,6 @@ const MyAccount = () => {
       console.error(err);
     }
   };
-
-
 
   return (
     <Container sx={{ ...styles.mainContainer }}>

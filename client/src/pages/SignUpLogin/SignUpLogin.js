@@ -6,6 +6,7 @@ import LoginForm from "../../components/LoginForm/LoginForm";
 //----------------------START OF COMPONENT----------------------------//
 const SignUpLoginPage = () => {
    //-----------------STATE---------------//
+   //tracks active component that is rendered on screen
   const [currentComponent, setComponent] = useState("SignUp");
 
     //----------HANDLERS ---------\\
@@ -21,7 +22,9 @@ const SignUpLoginPage = () => {
       );
        // If 'currentComponent' is not "SignUp", render the LoginForm component
     } else {
-      return <LoginForm />;
+      return <LoginForm
+      handleComponentChange={handleComponentChange}
+      SignUpForm="SignUp" />;
     }
   };
 
