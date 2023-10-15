@@ -28,7 +28,7 @@ Follow the steps below to install this project:
 Create an account or use this dummy account to log in:
 <br><br>
 Email: `vintagevicky@email.com`<br>
-Password: password1234
+Password: `test1234`
 <br><br>
 YardGems was designed using a `mobile first` approach, but can also be used on a laptop or desktop.
 
@@ -39,29 +39,29 @@ Standard View describes usage in a large tablet, laptop, or desktop.
 
 ### Mobile View
 
-- In mobile view, use the navigation bar at the bottom to navigate through different components.<br>
-- Use the Map component in the Home section to view listings in your area. <br>
-- Each listing is represented by a green gem. Click on the gem to see details about the listing.
-- Click on View Listing in the info window to open a modal with more information about the listing.
-- Use the button at the top right to toggle between Map and List views.
-- In List view, click on a listing to open up the listing modal or click on the heart icon at the bottom right of each listing card to save/favorite the listing.
-- My Listings section displays any listings created by you and features a button for listing creation.
-- Click on the button to create a listing.
-- Each listing must contain a title, description, and date. You may upload up to 5 images with your listing. You can change this limit in ListingModal.js.
+- In mobile view, use the `navigation bar` at the bottom to navigate through different components.<br>
+- Use the `Map component` in the `Home section` to `view listings` in your area. <br>
+- Each listing is represented by a `green gem`. Click on the gem to see details about the listing.
+- Click on `View Listing` in the info window to open a modal with more information about the listing.
+- Use the button at the top right to toggle between `Map and List views`.
+- In List view, click on a listing to open up the `listing modal` or click on the `heart icon` at the bottom right of each listing card to `save/favorite` the listing.
+- My Listings section displays any listings created by you and features a button for `listing creation`.
+- Click on the button to `create a listing`.
+- Each listing `must contain` a title, description, and date. You may upload up to 5 images with your listing. You can change this limit in ListingModal.js.
 - Saved Listings section displays any listings you have saved/favorited.
-- Click the Menu button at the bottom right to open up a drawer with options: About Us, Contact Us, FAQ, My Account(if applicable), Login/Logout, Install YardGems (if applicable)
-- Use Contact Us to send an email to the email in the original code or any email of your choosing. Refer to the Contact Us component in 'pages' folder.
-- Use My Account to update your username or password.
+- Click the `Menu button` at the bottom right to open up a drawer with options: About Us, Contact Us, FAQ, My Account(if applicable), Login/Logout, Install YardGems (if applicable)
+- Use `Contact Us` to send an email to the email in the original code or any email of your choosing. Refer to the 'Contact Us' component in 'pages' folder.
+- Use `My Account` to update your username or password.
 
 ### Standard View
 
-- In standard view, use the header at the top and click on the links to navigate through components.
+- In standard view, use the `header` at the top and click on the links to `navigate` through components.
 
-- Use the Map component or the AllListings component in the Home section to find available listings. There is no toggle button in Standard View.
+- Use the `Map component` or the `AllListings component` in the `Home section` to find available listings. There is no toggle button in Standard View.
 
-- Use the button in My Listings section to create a new listing.
+- Use the button in `My Listings` section to `create a new listing`.
 
-- Standard View features a footer at the bottom instead of a navigation bar. The footer contains: About Us, Contact Us, FAQ.
+- Standard View features a `footer` at the bottom instead of a navigation bar. The footer contains: About Us, Contact Us, FAQ.
 
 <br>
 

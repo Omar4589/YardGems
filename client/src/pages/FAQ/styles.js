@@ -43,6 +43,7 @@ const styles = {
   link: {
     my: 0.5,
     mr: "auto",
+    color:"#000000",
 
     "&:hover": {
       color: "#24CF6B",
