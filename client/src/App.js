@@ -25,6 +25,7 @@ import MyAccount from "./pages/MyAccount/MyAccount";
 import FAQ from "./pages/FAQ/FAQ";
 import IOSInstall from "./pages/IOSInstall/IOSInstall";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen";
+import { displayWelcomeLog } from "./utils/displayConsoleMessage";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -59,6 +60,10 @@ function App() {
     }, 1300);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    displayWelcomeLog();
   }, []);
 
   return (
