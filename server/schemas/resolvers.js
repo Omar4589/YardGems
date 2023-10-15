@@ -58,6 +58,31 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    updatePassword: async (
+      parent,
+      { email, currentPassword, newPassword },
+      context
+    ) => {
+      if (context.user) {
+        const user = await User.findOne({ email });
+
+        const correctPw = await user.isCorrectPassword(currentPassword);
+        if (!correctPw) {
+          throw new AuthenticationError("Incorrect password!");
+        }
+
+        // Update the password field
+        user.password = newPassword;
+
+        // Explicitly save the user to trigger the pre-save hook for hashing the password
+        await user.save();
+
+        return user;
+      }
+      throw new AuthenticationError(
+        "Something went wrong while trying to update a password!"
+      );
+    },
     addListing: async (
       parent,
       { description, address, dateOfSale, images, author, title, lat, lng },

@@ -9,9 +9,8 @@ const styles = {
     "@media (min-width: 768px)": { maxWidth: "100%" },
   },
   myaccountContainer: {
-    width: "50%",
     background: "white",
-    mx: 3,
+    width: "75%",
     px: 4,
     py: 8,
     borderRadius: 2,
@@ -22,6 +21,11 @@ const styles = {
   form: {},
   email: { mb: 2 },
   button: { bgcolor: "#66bb6a", color: "white", fontWeight: "semibold", py: 1 },
+  snackAlert: {
+    boxShadow: "0em 0em .5em black",
+    borderRadius: 1,
+    bgcolor: "#ffffff",
+  },
 };
 
 export default styles;

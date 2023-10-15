@@ -27,12 +27,21 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    py: 3,
+    pb: 3,
   },
   snackAlert: {
     boxShadow: "0em 0em .5em black",
     borderRadius: 1,
     bgcolor: "#ffffff",
+  },
+  signup: { mt: 3, textAlign: "center" },
+  signupButton: {
+    color: "#66bb6a",
+    margin: 10,
+    p: 1,
+    "&:hover": {
+      color: "#66bb6a",
+    },
   },
 };
 

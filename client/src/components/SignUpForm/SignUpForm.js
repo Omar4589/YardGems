@@ -28,22 +28,30 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
     confirmpassword: "",
   });
 
+  //used to confirm the new password, shows snackbar is password dont match
   const [passwordMatch, setPasswordMatch] = useState(false);
+  //used to confirm email is valid
   const [validEmail, setValidEmail] = useState(true);
+  //used to check the length of the username
   const [usernameLengthCheck, setUsernameLengthCheck] = useState(true);
+  //used to check the length of the new password
+  const [passwordLengthCheck, setPasswordLengthCheck] = useState(true);
 
-  //Closes pop over message - 'Please log in'
-  const handleCloseSnackbar = () => {
-    setPasswordMatch(false);
-    setValidEmail(true);
-    setUsernameLengthCheck(true);
-  };
 
   //-----------------MUTATIONS------------//
   // Use the CREATE_USER mutation for user registration
   const [createUser, { error, data }] = useMutation(CREATE_USER);
 
+
+
   //----------SIGNUP FORM HANDLERS ---------\\
+    //Closes snackbar
+    const handleCloseSnackbar = () => {
+      setPasswordMatch(false);
+      setValidEmail(true);
+      setUsernameLengthCheck(true);
+    };
+  
   // Handler for input field changes in the signup form
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -60,6 +68,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
     });
   };
 
+//function with regex to check if email is in valid format
   const isValidEmail = (email) => {
     const re = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
     return re.test(String(email));
@@ -70,22 +79,23 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
     event.preventDefault();
 
     try {
+      //check if the username is greater than 23 characters
       if (userFormData.username.length > 23) {
         setUsernameLengthCheck(false);
         return;
       }
-
+//check if new passwords match
       if (userFormData.confirmpassword !== userFormData.password) {
         setPasswordMatch(true);
         return;
       }
-
+//check if email is in a valid format
       if (!isValidEmail(userFormData.email)) {
         setValidEmail(false);
         return;
       }
 
-      // Use the createUser mutation to register the user
+      // Use the createUser mutation to create the user
       const { data } = await createUser({
         variables: {
           username: userFormData.username,
@@ -138,7 +148,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
           Sign Up
         </Typography>
 
-        <form id="signup-form" onSubmit={handleFormSubmit}>
+        <Box component="form" id="signup-form" onSubmit={handleFormSubmit}>
           <Box sx={{ ...styles.inputBoxes }}>
             <Typography component="label" sx={{ ...styles.labels }}>
               Username
@@ -217,7 +227,7 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
           >
             Sign Up
           </Button>
-        </form>
+        </Box>
         <Box sx={{ ...styles.login }}>
           <Typography>
             Already have an account?
@@ -238,7 +248,11 @@ const SignUpForm = ({ handleComponentChange, LoginForm }) => {
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleCloseSnackbar} severity="error" sx={{...styles.snackAlert}}>
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="error"
+          sx={{ ...styles.snackAlert }}
+        >
           {passwordMatch
             ? "Passwords don't match. Please try again."
             : !validEmail

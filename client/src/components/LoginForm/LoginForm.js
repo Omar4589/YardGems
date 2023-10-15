@@ -17,28 +17,30 @@ import Auth from "../../utils/auth";
 import styles from "./styles";
 import appName from "../../assets/images/appName.jpg";
 import greenGem from "../../assets/images/greenGem.png";
+import SignUpForm from "../SignUpForm/SignUpForm";
 
 //-----------------------START OF COMPONENT-----------------------//
-export default function SignIn() {
+export default function SignIn({handleComponentChange, SignUpForm}) {
   //-----------------STATE---------------//
   // State to track the form input fields for email and password
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
-
+//tracks the snackbar
   const [showSnackBar, setShowSnackBar] = useState(false);
 
   //-----------------MUTATIONS------------//
-  // Define the 'login' mutation using the LOGIN_USER mutation imported above
+  //A mutation to login the user
   const [login, { error }] = useMutation(LOGIN_USER);
 
-  //----------LOGIN FORM HANDLERS ---------\\
+  //----------HANDLERS ---------\\
+    // Function to close the Snackbar
+    const handleCloseSnackbar = () => {
+      setShowSnackBar(false);
+    };  
   // Handler to update the state when input fields change
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
-
-  console.log(userFormData.email);
-
   // Function to handle login form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,13 +48,14 @@ export default function SignIn() {
     // console.log({ email: data.get("email"), password: data.get("password") });
 
     try {
+      //make email lowercase
       const updatedUserFormData = {
-        ...userFormData,
         email: userFormData.email.toLowerCase(),
+        password: userFormData.password,
       };
-      // Use the 'login' mutation to log the user in
+      // Use the 'login' mutation to receive a token
       const { data } = await login({
-        variables: { updatedUserFormData },
+        variables: updatedUserFormData,
       });
 
       // Log the user in with the generated token
@@ -67,11 +70,6 @@ export default function SignIn() {
       email: "",
       password: "",
     });
-  };
-
-  // Function to close the Snackbar
-  const handleCloseSnackbar = () => {
-    setShowSnackBar(false);
   };
 
   return (
@@ -104,7 +102,7 @@ export default function SignIn() {
           Sign In
         </Typography>
 
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{}}>
+        <Box component="form" onSubmit={handleSubmit} >
           <Box sx={{ ...styles.email }}>
             <Typography component="label" sx={{ ...styles.labels }}>
               Email
@@ -157,6 +155,17 @@ export default function SignIn() {
             Forgot password?
           </Link> */}
         </Box>
+        <Box sx={{ ...styles.signup }}>
+          <Typography>
+            Don't have an account yet?
+            <Button
+              onClick={() => handleComponentChange(SignUpForm)}
+              style={{ ...styles.signupButton }}
+            >
+              Sign Up
+            </Button>
+          </Typography>
+        </Box>
         <Box sx={{}}>
           <Typography
             sx={{
@@ -179,7 +188,7 @@ export default function SignIn() {
           severity="error"
           sx={{ ...styles.snackAlert }}
         >
-          {error ? error.message : "An error occurred"}
+          Wrong email or password. Please try again.
         </Alert>
       </Snackbar>
     </Container>

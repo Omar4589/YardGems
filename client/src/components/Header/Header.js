@@ -23,7 +23,7 @@ const Header = () => {
   //We create state: 'isSearchVisible' and set the intial state to 'false' to hide the search field
   //'true' displays the search field
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-
+//tracks the MUI snackbar 
   const [featureSnackbar, setFeatureSnackbar] = useState(false);
 
   //----------HEADER LINKS HANDLERS ---------\\
@@ -50,8 +50,6 @@ const Header = () => {
     setFeatureSnackbar(false);
   };
 
-  console.log(featureSnackbar);
-
   //-----------------QUERIES--------------//
   //Here we extract the refetch method from the useQuery hook
   //refetch will execute the QUERY_LISTINGS query
@@ -59,7 +57,7 @@ const Header = () => {
 
   const { refetch: refetchMe } = useQuery(ME_QUERY);
 
-  // Function to manually refetch data
+  // Functions to manually refetch data
   const handleRefetch = () => {
     refetch();
   };

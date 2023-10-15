@@ -30,6 +30,22 @@ export const UPDATE_USERNAME = gql`
     }
   }
 `;
+export const UPDATE_PASSWORD = gql`
+  mutation updatePassword(
+    $email: String!
+    $currentPassword: String!
+    $newPassword: String!
+  ) {
+    updatePassword(
+      email: $email
+      currentPassword: $currentPassword
+      newPassword: $newPassword
+    ) {
+      _id
+      username
+    }
+  }
+`;
 export const ADD_LISTING = gql`
   mutation addListing(
     $description: String

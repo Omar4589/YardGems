@@ -144,24 +144,3 @@ const SavedListings = () => {
 };
 
 export default SavedListings;
-
-// const [removeFavorites, { err }] = useMutation(REMOVE_FAVORITES);
-
-// //----------functions to handle the DELETE listing ---------\\
-// const removeFromFavorites = async (_id) => {
-//   console.log(_id);
-//   const token = Auth.loggedIn() ? Auth.getToken() : null;
-//   if (!token) {
-//     return false;
-//   }
-//   try {
-//     const { data } = await removeFavorites({ variables: { listingId: _id } });
-
-//     // Update the state to remove the favorite listing
-//     setSavedListings((prevListings) =>
-//       prevListings.filter((listing) => listing._id !== _id)
-//     );
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };

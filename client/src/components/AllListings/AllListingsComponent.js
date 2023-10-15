@@ -43,22 +43,19 @@ export default function AllListings() {
   } = useListingContext();
 
   //---------STATES--------//
-  //State for 'Please login' pop over; We set the initial state to false to hide the popOver
-  //this pop over populates when a user clicks on a listing to favorite it, but theyre not logged in
+ //This controls the snackbar
   const [showSnackBar, setShowSnackBar] = useState(false);
 
-  //State for listing modal that displays listing information
-  //We set the intial state to 'false' to hide the component
+  //This tracks the listing modal
+  //We set the intial state to 'false' to hide the modal, 'true' displays the modal 
   const [listingModal, setListingModal] = useState(false);
 
-  //-----MODAL HANDLERS------//
-
+  //-----HANDLERS------//
   //Opens modal when listings is clicked on
   const openModal = (listing) => setListingModal(listing);
   //Closes modal when listings is clicked on
   const closeModal = () => setListingModal(false);
-
-  //Closes pop over message - 'Please log in'
+  //Closes snackbar component
   const handleCloseSnackbar = () => setShowSnackBar(false);
 
   //---------------------------RETURN STATEMENT-------------------------//
@@ -168,7 +165,7 @@ export default function AllListings() {
           sx={{ ...styles.snackAlert }}
           severity="error"
         >
-          You need to be logged in to save this listing
+          You need to be logged in to save this listing.
         </Alert>
       </Snackbar>
     </Container>

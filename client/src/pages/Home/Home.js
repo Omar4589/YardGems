@@ -2,48 +2,23 @@ import { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import MapIcon from "@mui/icons-material/Map";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import GoogleMaps from "../../components/googleMaps/GoogleMaps";
+import GoogleMapsComponent from "../../components/GoogleMaps/GoogleMaps";
 import styles from "./styles";
 import AllListingsComponent from "../../components/AllListings/AllListingsComponent";
 
 //This is essentially the homepage of our web app. (our header, nav, and footer are fixed)
-//This simply contains 2 components, GoogleMaps component that renders to the left of the screen
-//and the AllListingsComponent that renders to the right of the screen
 const Home = () => {
+  //tracks if user is using a device with a width smaller than 768
+  const [isMobile, setIsMobile] = useState(true);
+  //state to track what component to load if in mobile view
   const [currentComponent, setComponent] = useState("Map");
 
-  //----------HANDLERS ---------\\
-  const renderComponent = () => {
-    if (currentComponent === "Map") {
-      return (
-        <Box id="googlemaps-container" sx={{ ...styles.map }}>
-          <GoogleMaps />
-        </Box>
-      );
-    } else if (currentComponent === "List") {
-      return (
-        <Box id="all-listings-component" sx={{ ...styles.listings }}>
-          <AllListingsComponent />
-        </Box>
-      );
-    }
-  };
-
-  const toggleView = () => {
-    setComponent(currentComponent === "Map" ? "List" : "Map");
-  };
-
-  const [isMobile, setIsMobile] = useState(true);
-  const [mapView, setMapView] = useState(null);
-
-  // The `useEffect` hook is used to add event listeners and perform side effects.
+  //this hook tracks the window size and sets the isMobile state accordingly
   useEffect(() => {
-    //This function updates the state value of showFooter based on the window width.
+
     const handleResize = () => {
-      //Here we are setting the value by passing in the value of the expression
-      //'is my window's innerWidth greater than 768 right now? true or false
+    //check expression (window width)
       setIsMobile(window.innerWidth < 768);
-      setMapView(window.innerWidth < 768);
     };
 
     //Here we create an event listener for the window's resize event, and pass `handleResize` as the event handler.
@@ -61,8 +36,11 @@ const Home = () => {
     return cleanup;
   }, []);
 
-  console.log("is Mobile:" + isMobile);
-  console.log("mapView:" + mapView);
+  //----------HANDLERS ---------\\
+  //toggles between map and list view when in mobile view
+  const toggleView = () => {
+    setComponent(currentComponent === "Map" ? "List" : "Map");
+  };
 
   return (
     <Box id="home-page" sx={{ ...styles.mainContainer }}>
@@ -75,19 +53,28 @@ const Home = () => {
       >
         {currentComponent === "Map" ? "Map" : "List"}
       </Button>
-      {isMobile ? (
-        renderComponent()
-      ) : (
-        <>
-          <Box id="googlemaps-container" sx={{ ...styles.map }}>
-            <GoogleMaps />
-          </Box>
 
-          <Box id="all-listings-component" sx={{ ...styles.listings }}>
-            <AllListingsComponent />
-          </Box>
-        </>
-      )}
+      <>
+        <Box
+          id="googlemaps-container"
+          sx={{
+            ...styles.map,
+            display: isMobile && currentComponent === "List" ? "none" : "block",
+          }}
+        >
+          <GoogleMapsComponent />
+        </Box>
+
+        <Box
+          id="all-listings-component"
+          sx={{
+            ...styles.listings,
+            display: isMobile && currentComponent === "Map" ? "none" : "block",
+          }}
+        >
+          <AllListingsComponent />
+        </Box>
+      </>
     </Box>
   );
 };

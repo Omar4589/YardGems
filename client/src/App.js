@@ -20,6 +20,7 @@ import Home from "./pages/Home/Home";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import SavedListings from "./pages/SavedListings/SavedListings";
 import { ListingProvider } from "./utils/ListingContext";
+import { MapCenterProvider } from "./utils/MapCenterContext";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import FAQ from "./pages/FAQ/FAQ";
 import IOSInstall from "./pages/IOSInstall/IOSInstall";
@@ -46,9 +47,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+//----------------START OF COMPONENT------------//
 function App() {
+  ///----------STATE------------------//
+  //state used to show loading screen at first load
   const [loading, setLoading] = useState(true);
-
+  //------------------HOOKS----------------//
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -60,30 +64,32 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <ListingProvider>
-          {loading && <LoadingScreen />}
-          {/* Show the loading screen if loading is true */}
-          <Router>
-            <Header />
-            <Routes>
-              <Route path="/signup-login" element={<SignUpLoginPage />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/MyListings" element={<MyListings />} />
-              <Route path="/SavedListings" element={<SavedListings />} />
-              <Route path="/listings/:listingId" element={<EditListing />} />
-              <Route path="/AboutUs" element={<AboutUs />} />
-              <Route path="/ContactUs" element={<ContactUs />} />
-              <Route path="/MyAccount" element={<MyAccount />} />
-              <Route path="/FAQ" element={<FAQ />} />
-              <Route
-                path="/iOS-installation-instructions"
-                element={<IOSInstall />}
-              />
-            </Routes>
-            <BottomNavBar />
-            <Footer />
-          </Router>
-        </ListingProvider>
+        <MapCenterProvider>
+          <ListingProvider>
+            {loading && <LoadingScreen />}
+            {/* Show the loading screen if loading is true */}
+            <Router>
+              <Header />
+              <Routes>
+                <Route path="/signup-login" element={<SignUpLoginPage />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/MyListings" element={<MyListings />} />
+                <Route path="/SavedListings" element={<SavedListings />} />
+                <Route path="/listings/:listingId" element={<EditListing />} />
+                <Route path="/AboutUs" element={<AboutUs />} />
+                <Route path="/ContactUs" element={<ContactUs />} />
+                <Route path="/MyAccount" element={<MyAccount />} />
+                <Route path="/FAQ" element={<FAQ />} />
+                <Route
+                  path="/iOS-installation-instructions"
+                  element={<IOSInstall />}
+                />
+              </Routes>
+              <BottomNavBar />
+              <Footer />
+            </Router>
+          </ListingProvider>
+        </MapCenterProvider>
       </LocalizationProvider>
     </ApolloProvider>
   );

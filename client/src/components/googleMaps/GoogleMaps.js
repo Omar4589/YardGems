@@ -25,74 +25,106 @@ import ListingModalComponent from "../ViewListingModal/ListingModalComponent";
 import image from "../../assets/yardsale.jpg";
 import { Box, Typography, Button, CardMedia } from "@mui/material";
 import styles from "./styles";
+import { useMapCenterContext } from "../../utils/MapCenterContext";
 
+//this variables is used to load google's places API in useLoadScript hook below
 const libraries = ["places"];
 
+
+//-----------------START OF COMPONENT--------------//
 export default function GoogleMaps() {
-  // isLoaded is gives us access to the apiKey
-  const { isLoaded } = useLoadScript({
+  //This hook is used to load google's APIs using your api key. 
+  //the second option is the libraries variables, you can include more than just 'places'
+  const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-  // If the API is not loaded yet, show loading message
-  if (!isLoaded) return <div>Loading...</div>;
+  //destructure of states and setters from mapCenterContext
+  const { centerOfMap, setCenterOfMap, zoomLevel, setZoomLevel } =
+  useMapCenterContext();
 
-  // Render the map component
-  return <Map />;
-}
-
-function Map() {
+  //------------STATES---------------//
+  //this state tracks if the listingModal should be displayed or hidden 
   const [listingModal, setListingModal] = useState(false);
-
-  const openModal = (listing) => setListingModal(listing);
-  //Closes modal when listings is clicked on
-  const closeModal = () => setListingModal(false);
-
-  // State to manage the map center and selected marker
-  const [center, setCenter] = useState({ lat: 27.53, lng: -99.49 });
+//this tracks what address was selected from the search bar (currently disabled)
   const [selected, setSelected] = useState(null);
-
-  //Fetch user's current location if available
-  // useEffect(() => {
-  //   let isMounted = true;
-
-  //   const getCurrentLocation = () => {
-  //     if (navigator.geolocation) {
-  //       navigator.geolocation.getCurrentPosition(
-  //         (position) => {
-  //           if (isMounted) {
-  //             // Check if the component is still mounted
-  //             const { latitude, longitude } = position.coords;
-  //             setCenter({ lat: latitude, lng: longitude });
-  //           }
-  //         },
-  //         (error) => {
-  //           if (isMounted) {
-  //             // Check if the component is still mounted
-  //             console.error("Error getting current location:", error);
-  //           }
-  //         }
-  //       );
-  //     } else {
-  //       if (isMounted) {
-  //         // Check if the component is still mounted
-  //         console.error("Geolocation is not supported by this browser.");
-  //       }
-  //     }
-  //   };
-  //   getCurrentLocation();
-
-  //   return () => {
-  //     isMounted = false; // Cleanup: set flag to false when component unmounts
-  //   };
-  // }, []);
-
-  // Fetch listing data using Apollo useQuery
+  //this tracks which listing was selected
+  const [activeMarker, setActiveMarker] = useState(null);
+  
+  //-----------QUERIES----------//
   const { loading, data } = useQuery(QUERY_LISTINGS);
+  //a variable where we store all the listings in our database
   const allListings = data?.allListings || [];
 
-  // State to manage active marker for InfoWindow display
-  const [activeMarker, setActiveMarker] = useState(null);
+ 
+    //Fetch user's current location if available
+// useEffect(() => {
+//   let isMounted = true;
+
+//   const getCurrentLocation = () => {
+//     if (navigator.geolocation) {
+//       navigator.geolocation.getCurrentPosition(
+//         (position) => {
+//           if (isMounted) {
+//             // Check if the component is still mounted
+//             const { latitude, longitude } = position.coords;
+//             setCenterofMap({ lat: latitude, lng: longitude });
+//           }
+//         },
+//         (error) => {
+//           if (isMounted) {
+//             // Check if the component is still mounted
+//             console.error("Error getting current location:", error);
+//           }
+//         }
+//       );
+//     } else {
+//       if (isMounted) {
+//         // Check if the component is still mounted
+//         console.error("Geolocation is not supported by this browser.");
+//       }
+//     }
+//   };
+//   getCurrentLocation();
+
+//   return () => {
+//     isMounted = false; // Cleanup: set flag to false when component unmounts
+//   };
+// }, []);
+
+//-----------------HANDLERS-------------//
+//a function to update the state that tracks the center of the map
+//when the user switches between pages/components, the map wont reload back to the starting point (Laredo)
+  const mapMovement = (map) => {
+    const handleCenterChanged = () => {
+      const newCenter = map.getCenter();
+      setCenterOfMap({
+        lat: newCenter.lat(),
+        lng: newCenter.lng(),
+      });
+    };
+
+    map.addListener("dragend", handleCenterChanged);
+
+    // New code for handling zoom changes
+    const handleZoomChanged = () => {
+      const newZoom = map.getZoom();
+      setZoomLevel(newZoom);
+      // You can set this to state if you want to keep track of it
+    };
+    map.addListener("zoom_changed", handleZoomChanged);
+
+    return () => {
+      // Cleanup: remove the event listener
+      map.removeListener("dragend", handleCenterChanged);
+
+      map.removeListener("zoom_changed", handleZoomChanged);
+    };
+  };
+
+  const openModal = (listing) => setListingModal(listing);
+  const closeModal = () => setListingModal(false);
+  //handles the render of infoWindow
   const handleActiveMarker = (markerId) => {
     if (markerId === activeMarker) {
       return;
@@ -100,16 +132,24 @@ function Map() {
     setActiveMarker(markerId);
   };
 
+
+  // If the API is not loaded yet, show loading message
+  if (loadError)
+    return (
+      <div>Something went wrong. Please contact the site administrator.</div>
+    );
+  if (!isLoaded) return <div>Loading...</div>;
+
   return (
     <Box className="main">
-      {/* below renders the google map */}
       <GoogleMap
-        zoom={13} //how far you want the map to be zoomed in
-        center={center} // displays location
+        onLoad={mapMovement}
+        zoom={zoomLevel} //how far you want the map to be zoomed in
+        center={centerOfMap} // displays location
         mapContainerClassName="map-container" // styling
         onClick={() => setActiveMarker(null)}
         options={{
-          streetViewControl: false, // Removes the Pegman
+          streetViewControl: false, 
           fullscreenControl: false,
           gestureHandling: "greedy",
           mapTypeControl: false,
@@ -127,6 +167,7 @@ function Map() {
           {/* will render out a placed based on the selection */}
           {/* <PlacesAutocomplete setSelected={setSelected} setCenter={setCenter} /> */}
         </div>
+
         {allListings.map(
           (
             {
@@ -215,6 +256,7 @@ function Map() {
   );
 }
 
+//underneath is the search bar, its currently not used.
 const PlacesAutocomplete = ({ setSelected, setCenter }) => {
   // Use the usePlacesAutocomplete hook to manage Places Autocomplete functionality
   const {
@@ -270,22 +312,3 @@ const PlacesAutocomplete = ({ setSelected, setCenter }) => {
     </Combobox>
   );
 };
-
-// when GoogleMaps component renders, it will look for if i have access to useLoadScripts to
-// connect to google maps and the libray, if i do not have access "loading" is displayed to users
-//IF i do have access, its going to render the Map component
-// the Map component is going to set two states: center and selected
-// the selected state is to display a pin on the screen based on user input
-// center state is to redirect maps to display the location selected by the user
-// i then need to pass setCenter and setSelected to the PlacesAutocomplete  component
-// these two states need to be passed in SO THAT i can access data from the user's input address
-// SINCE we have a useEffect hook with an empty dependency, when the page first loads, its going to ask permission for google to use the user's location
-// IF yes, google maps will redirect them to their current location by setting setCenter
-//IF the user chooses to search for a different location, the Combobox element is going to listen for onSelect(handleSelect) event listener based on the user's input
-// its going to take the value and use the usePlacesAutocomplete hook that has predeterminated properties to be used
-// its going to take the value from the handleSelect event listener, pass it to the geoCode function
-// SO THAT we can then get the lat and lng, then setCenter and setSelected to redirect the maps and pin
-
-// i know the two states are both being set to lat and lng values, however, i made two states
-// so that if the user does not want to share their location then the map will redirect them to
-// the inital center value, and kept the selected state null to not place a pin until the user selects a address from input box

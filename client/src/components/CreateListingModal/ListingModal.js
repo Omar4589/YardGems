@@ -9,13 +9,11 @@ import {
   Backdrop,
   Snackbar,
   Alert,
-  Input,
   TextField,
   Autocomplete,
   IconButton,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-
 import CloseIcon from "@mui/icons-material/Close";
 import { DatePicker } from "@mui/x-date-pickers";
 import styles from "./styles";
@@ -28,27 +26,12 @@ import { useListingContext } from "../../utils/ListingContext";
 
 //-----------------------START OF COMPONENT-----------------------//
 export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
+  //here we destructure the logged in user's data from the listing context
   const { loggedInUserData } = useListingContext();
 
-  //-----------------STATE---------------//
+  //-----------------STATES---------------//
   //Here we create a state 'listingAddress' that will hold an object containing the address value of the listing
   const [listingAddress, setListingAddress] = useState({});
-
-  // This state holds the array of images the user uploads before creating a new listing
-  const [imageFiles, setImageFiles] = useState([]);
-  // This state is used to display a toast message if the user tries to upload more than 5 images
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  const [uploading, setUploading] = useState(false);
-
-  const [titleLengthCheck, setTitleLengthCheck] = useState(true);
-  const [descriptionLengthCheck, setDescriptionLengthCheck] = useState(true);
-
-  //Closes pop over message
-  const handleCloseSnackbar = () => {
-    setTitleLengthCheck(true);
-  };
-
   //We create this 'formState' to hold the rest of the listing properties, we set the intial state to empty strings
   const [formState, setFormState] = useState({
     title: "",
@@ -57,6 +40,15 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     images: [],
     author: "",
   });
+  // This state holds the array of images the user uploads before creating a new listing
+  const [imageFiles, setImageFiles] = useState([]);
+  // This state is used to display a snackbar with a message
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  //this tracks the uploading of selected images, we use it to show user images are being uploaded
+  const [uploading, setUploading] = useState(false);
+  //these states checks the length of title and description, set to false if it fails the check
+  const [titleLengthCheck, setTitleLengthCheck] = useState(true);
+  const [descriptionLengthCheck, setDescriptionLengthCheck] = useState(true);
 
   //-----------------HOOKS-----------------//
   //This hook below is responsible for the autocomplete functionality of the app
@@ -68,8 +60,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     setValue,
     clearSuggestions,
   } = usePlacesAutocomplete();
-
-  //Store list of addresses in a variable from the usePlacesAutoComplete hook data
+  //Stores list of addresses in a variable from the usePlacesAutoComplete hook data
   const listOfAddresses = data.map((object) => {
     return object.description;
   });
@@ -153,9 +144,8 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
         const data = await response.json();
         //Sets the formstate.images array to the array of urls returned by the server
 
-        console.log("uploadImage() returned a 200 status code");
         setUploading(false);
-        console.log(data);
+
         return data.imageUrls;
       } else {
         throw new Error("Image upload failed");
@@ -212,7 +202,7 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
     }
   };
 
-  console.log(imageFiles);
+
 
   return (
     <Modal
@@ -346,28 +336,12 @@ export const CreateListingModal = ({ handleClose, handleOpen, addListing }) => {
                 <input
                   id="file-input"
                   name="file"
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  margin="none"
                   type="file"
                   multiple
                   hidden
                   onChange={handleFileChange}
                 />
               </Button>
-
-              {/* <Button
-                variant="outlined"
-                disabled={!imageFiles.length}
-                sx={{ ...styles.uploadButton }}
-                onClick={() => {
-                  setUploading(true);
-                  uploadImage();
-                }}
-              >
-                {!uploading ? "Upload" : "Uploading, please wait..."}
-              </Button> */}
             </Box>
 
             <Button

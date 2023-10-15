@@ -10,6 +10,7 @@ import {
   Button,
   Typography,
   Autocomplete,
+  Snackbar, Alert
 } from "@mui/material/";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -26,17 +27,19 @@ import styles from "./styles";
 
 //-----------------------START OF COMPONENT-----------------------//
 const SinglePost = () => {
-  //destrcture from ListingContext
+  //destructure mutation from ListingContext
   const { editAListing } = useListingContext();
-  //Here we set a variable for the userNavigate hook from react-router-dom
+  //this hook is used to navigate to other routes
   const navigate = useNavigate();
 
   //-----------------STATE---------------//
-  //First state: 'listingAddress' and set the intial state to empty object because we expect an object when setting the state
+  //First state: 'listingAddress' tracks the listing address of the listing we are editing
   const [listingAddress, setListingAddress] = useState("");
-
-  //Second state: 'formState' and set the intial state to an empty object
+  //Second state: 'formState' used to track the rest of the input fields
   const [formState, setFormState] = useState({});
+  //these states checks the length of title and description, set to false if it fails the check
+  const [titleLengthCheck, setTitleLengthCheck] = useState(true);
+  const [descriptionLengthCheck, setDescriptionLengthCheck] = useState(true);
 
   //-----------------HOOKS-----------------//
   //Here we use the useParams hook to destructure the listingID param that we defined in App.js
@@ -109,7 +112,7 @@ const SinglePost = () => {
       const results = await getGeocode({ address: address }); // Retrieve geocode data for the selected address
       const { lat, lng } = await getLatLng(results[0]); // Extract latitude and longitude from geocode data
       setListingAddress({ address, lat, lng }); // Update the state with the selected address and its coordinates
-      console.log(results, lat, lng);
+
       clearSuggestions();
     } catch (error) {
       console.error("Error:", error);
@@ -123,6 +126,14 @@ const SinglePost = () => {
     e.preventDefault();
 
     try {
+      if (formState.title.length > 50) {
+        setTitleLengthCheck(false);
+        return;
+      }
+      if (formState.description.length > 3000) {
+        setDescriptionLengthCheck(false);
+        return;
+      }
       await editAListing({
         id: formState.id,
         description: formState.description,
@@ -145,8 +156,6 @@ const SinglePost = () => {
       console.error(err);
     }
   };
-
-  console.log(listingAddress);
 
   // Only render the component if data has been fetched
   if (loading || !queryData) {
@@ -259,8 +268,6 @@ const SinglePost = () => {
             />
           </Box>
 
-          {/* <TextField fullWidth label="fullWidth" id="fullWidth"  /> */}
-
           <Button
             type="submit"
             fullWidth
@@ -272,6 +279,30 @@ const SinglePost = () => {
             Submit Edit
           </Button>
         </form>
+        <Snackbar
+          open={titleLengthCheck === false || descriptionLengthCheck === false}
+          autoHideDuration={5000}
+          onClose={() => {
+            setTitleLengthCheck(true);
+            setDescriptionLengthCheck(true);
+          }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert
+            onClose={() => {
+              setTitleLengthCheck(true);
+              setDescriptionLengthCheck(true);
+            }}
+            severity={"error"}
+            sx={{ ...styles.snackAlert }}
+          >
+            {!titleLengthCheck
+              ? "Title must be no more than 23 characters."
+              : !descriptionLengthCheck
+              ? "Description must be no more than 3000 characters."
+              : ""}
+          </Alert>
+        </Snackbar>
       </Box>
     </Container>
   );
