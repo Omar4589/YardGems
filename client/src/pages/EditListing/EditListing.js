@@ -109,7 +109,7 @@ const SinglePost = () => {
       const results = await getGeocode({ address: address }); // Retrieve geocode data for the selected address
       const { lat, lng } = await getLatLng(results[0]); // Extract latitude and longitude from geocode data
       setListingAddress({ address, lat, lng }); // Update the state with the selected address and its coordinates
-      console.log(results, lat, lng);
+      
       clearSuggestions();
     } catch (error) {
       console.error("Error:", error);
@@ -146,7 +146,7 @@ const SinglePost = () => {
     }
   };
 
-  console.log(listingAddress);
+  
 
   // Only render the component if data has been fetched
   if (loading || !queryData) {

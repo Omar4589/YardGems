@@ -1,8 +1,15 @@
 //-----------------IMPORTS-----------------------//
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import React, { useState } from "react";
 import styles from "./styles";
-import emailjs from "@emailjs/browser"; //For more info visit : https://www.emailjs.com/docs/
+import emailjs, { send } from "@emailjs/browser"; //For more info visit : https://www.emailjs.com/docs/
 
 //-----------------------START OF COMPONENT-----------------------//
 const ContactUs = () => {
@@ -13,6 +20,13 @@ const ContactUs = () => {
     user_email: "",
     message: "",
   });
+
+  const [emailWasSent, setEmailWasSent] = useState(false);
+
+  //Closes pop over message - 'Please log in'
+  const handleCloseSnackbar = () => {
+    setEmailWasSent(false);
+  };
 
   //--------------FORM FIELD HANDLERES-----------//
   // Event handler for input field changes, this updates the state of the input fields to
@@ -34,6 +48,10 @@ const ContactUs = () => {
 
     try {
       await sendEmail();
+      setEmailWasSent(true);
+      setTimeout(() => {
+        window.location.replace("/");
+      }, 3200);
     } catch (err) {
       console.error(err);
     }
@@ -61,7 +79,6 @@ const ContactUs = () => {
       document.getElementById("user_name").value = "";
       document.getElementById("user_email").value = "";
       document.getElementById("message").value = "";
-      console.log("Email Sent Successfully!");
     } catch (err) {
       console.log(err);
     }
@@ -127,6 +144,7 @@ const ContactUs = () => {
           ></TextField>
         </Box>
         <Button
+          id="send-button"
           sx={{ ...styles.button }}
           type="submit"
           fullWidth
@@ -135,6 +153,20 @@ const ContactUs = () => {
           Send
         </Button>
       </form>
+      <Snackbar
+        open={emailWasSent}
+        autoHideDuration={2500}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          sx={{ ...styles.snackAlert }}
+          onClose={handleCloseSnackbar}
+          severity="error"
+        >
+          Message sent! We will respond ASAP.
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

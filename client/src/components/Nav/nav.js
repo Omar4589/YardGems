@@ -32,6 +32,7 @@ import { useNavigate } from "react-router-dom";
 
 //-----------------------START OF COMPONENT-----------------------//
 export default function BottomNavBar({ handleThemeChange, darkMode }) {
+  //useNavigate hook allows us to navigate between routes
   const navigate = useNavigate();
   const pathname = window.location.pathname; // in case user visits the path directly. The BottomNavBar is able to follow suit.
   //-----------------STATE---------------//
@@ -41,20 +42,22 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   //This state tracks whether the bottom nav component is visible or hidden
   const [showBottomNav, setShowBottomNav] = useState(true);
-
+  //tracks the visibility of the install button in the drawer
   const [showInstallButton, setShowInstallButton] = useState(false);
+  //state to hold the deferred prompt
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  //state that tracks if user is using an iOS device
   const [isIOS, setIsIOS] = useState(null);
+  //tracks if the user's browser is a chrome broswer
   const [isChrome, setIsChrome] = useState(null);
+  //tracks snackbar
   const [chromePopOver, setchromePopOver] = useState(false);
 
   //-----------------HOOKS---------------//
-  // The `useEffect` hook is used to add event listeners and perform side effects.
+  //this useEffect hook tracks and responds to the width of the window
   useEffect(() => {
-    //This function updates the value of showBottomNav based on the window width.
+    //This function handles showing or hiding the bottom nav
     const handleResize = () => {
-      //Here we are setting the value by passing in the value of the expression
-      //'is my window's innerWidth less than 768 right now? true or false
       setShowBottomNav(window.innerWidth < 768);
     };
 
@@ -74,34 +77,38 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
   }, []);
 
   useEffect(() => {
+    //set up a listener for the install prompt
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
       // Store the `beforeinstallprompt` event so it can be triggered later
       setDeferredPrompt(e);
     });
 
-    // Update UI notify the user they can install the PWA
+    //update state to show install button
     setShowInstallButton(true);
 
-    // Your existing display-mode check code
+    //here we check if the app's already installed by checking the display-mode.
     if (window.matchMedia("(display-mode: standalone)").matches) {
-      console.log("This is running as standalone.");
       setShowInstallButton(false);
     } else {
-      console.log("This is running in a browser tab.");
+      //write your logic here
     }
 
+    //clean up function
     return () => {
       window.removeEventListener("beforeinstallprompt", () => {});
     };
   }, []);
 
+  //this hook check if the device is an iOS device and if it's a chrome browser.
   useEffect(() => {
+    //use navigator.userAgent to get browser details & window.MSStream to check if it's a windows phone
     const iOSCheck =
       /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
+    //check if the broswer is a chrome broswer
     const chromeCheck = /Chrome/.test(navigator.userAgent);
-
+    //update states accordingly
     setIsIOS(iOSCheck);
     setIsChrome(chromeCheck);
   }, []);
@@ -118,9 +125,10 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
     window.location.replace("/");
   };
 
-  //Closes pop over message - 'Please log in'
+  //Closes snackbar
   const closeSnackbar = () => setchromePopOver(false);
 
+  //handles install button click
   const handleInstallClick = () => {
     if (isIOS) {
       // Redirect to a page with instructions for iOS users
@@ -128,16 +136,14 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
       return;
     }
 
+    //if it's not a chrome browser, alert user using snackbar
     if (isChrome === false) {
       setchromePopOver(true);
       return;
     }
-
-    // Your existing logic for invoking the deferred prompt and installing the app
+    //run the install
     if (deferredPrompt) {
-      // assuming deferredPrompt is defined
       deferredPrompt.prompt();
-      // ... (rest of your installation code)
     }
     return;
   };
@@ -254,13 +260,6 @@ export default function BottomNavBar({ handleThemeChange, darkMode }) {
                 <ListItemText primary="FAQ" />
               </ListItem>
             </MuiLink>
-
-            {/* <ListItem button>
-              <ListItemIcon>
-                <Switch checked={darkMode} onChange={handleThemeChange} />
-              </ListItemIcon>
-              <ListItemText primary="Theme Switcher" />
-            </ListItem> */}
 
             {AuthService.loggedIn() ? (
               <>

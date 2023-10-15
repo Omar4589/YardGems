@@ -118,7 +118,7 @@ const MyAccount = () => {
     }
   };
 
-  console.log(userFormData);
+
 
   return (
     <Container sx={{ ...styles.mainContainer }}>

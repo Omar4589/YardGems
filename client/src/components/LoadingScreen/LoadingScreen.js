@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { Box, CardMedia } from "@mui/material";
 import yglogo from "../../assets/images/yargemsloadingscreenlogo.png";
 
+//--------START OF COMPONENT--------//
 const LoadingScreen = () => {
+//this use effect includes a setTimeout function that runs after 1 second, it bings the scale of 'loadingBox' to 0.
   useEffect(() => {
     const element = document.getElementById("loadingBox");
     setTimeout(() => {
       element.style.transform = "scale(0)";
-    }, 1000); // Start the transition after 2.5 seconds
+    }, 1000); // Start the transition after 1 seconds
   }, []);
 
   return (
@@ -28,12 +30,12 @@ const LoadingScreen = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        width={200} // Fixed width
-        height={200} // Fixed height
+        width={200} 
+        height={200} 
         bgcolor="#ffffff"
         sx={{
           borderRadius: "100%",
-          transform: "scale(10)", // Start with scale 5
+          transform: "scale(10)", 
           transition: "transform 0.3s ease-in-out",
         }}
       >

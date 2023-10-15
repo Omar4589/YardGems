@@ -10,7 +10,7 @@ import {
   Grid,
   Button,
 } from "@mui/material";
-import { CreateListingButton } from "../../components/CreateListingModal/CreateListingButton";
+import AddIcon from "@mui/icons-material/Add";
 import { CreateListingModal } from "../../components/CreateListingModal/ListingModal";
 import image from "../../assets/yardsale.jpg"; // hard coding for now
 import Auth from "../../utils/auth";
@@ -85,7 +85,14 @@ const MyListings = () => {
                 : "You have no saved listings!"}
             </Typography>
             {/* button is the create new listing button to open modal, passing a prop that handles a function */}
-            <CreateListingButton openModal={handleOpenModal} />
+             <Button
+        sx={{...styles.button}}
+        onClick={handleOpenModal}
+        variant="contained"
+        endIcon={<AddIcon />}
+      >
+        Create New Listing
+      </Button>
             {/* this is the modal to create a new listing, give is a state of false, pass the prop handleCloseModal and a state to open/close the modal */}
             <CreateListingModal
               handleOpen={isModalOpen}

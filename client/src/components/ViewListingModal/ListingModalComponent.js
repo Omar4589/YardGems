@@ -26,7 +26,7 @@ const settings = {
   slidesToScroll: 1,
 };
 
-//This is the modal that appears when a user clicks on a listing from the AllListingsComponent in the Home page
+//This is the modal that appears when a user clicks on a listing from the AllListingsComponent in the Home page or in GoogleMaps component
 
 //----------------------START OF COMPONENT----------------------------//
 export default function ListingModalComponent({

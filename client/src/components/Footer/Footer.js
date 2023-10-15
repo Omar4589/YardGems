@@ -8,17 +8,15 @@ import appName from "../../assets/images/appName.jpg";
 //-----------------------START OF COMPONENT-----------------------//
 const Footer = () => {
    //-----------------STATE---------------//
-  // Here we create a variable 'showFooter' and use State to set the value to true.
-  //the function responsible for setting the state for this variable is 'setShowFooter'
+  //Tracks if the footer should be rendered or hidden
+  //false = hidden
   const [showFooter, setShowFooter] = useState(true);
 
     //-----------------HOOKS-----------------//
-  // The `useEffect` hook is used to add event listeners and perform side effects.
   useEffect(() => {
     //This function updates the state value of showFooter based on the window width.
     const handleResize = () => {
-      //Here we are setting the value by passing in the value of the expression
-      //'is my window's innerWidth greater than 768 right now? true or false
+      //Here we are setting showFooter by passing in the value of the expression
       setShowFooter(window.innerWidth > 768);
     };
 
