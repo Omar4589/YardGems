@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import MapIcon from "@mui/icons-material/Map";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import GoogleMapsComponent from "../../components/GoogleMaps/GoogleMaps";
+import GoogleMapsComponent from "../../components/GoogleMaps/GoogleMapsComponent";
 import styles from "./styles";
 import AllListingsComponent from "../../components/AllListings/AllListingsComponent";
 
@@ -15,9 +15,8 @@ const Home = () => {
 
   //this hook tracks the window size and sets the isMobile state accordingly
   useEffect(() => {
-
     const handleResize = () => {
-    //check expression (window width)
+      //check expression (window width)
       setIsMobile(window.innerWidth < 768);
     };
 
