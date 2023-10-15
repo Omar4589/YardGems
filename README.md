@@ -1,160 +1,127 @@
 # YardGems
 
-## Description 
+## Description
 
-YardGems is a free, easy to use yard sale app that helps create and locate yard sales around you! Our mission is to revolutionize the way people discover and explore nearby sales, making the process simple, exciting, and rewarding for everyone. We believe that the thrill of finding unique treasures shouldn’t be limited to chance encounters but should be easily accessible to all. 
+Designed as a community-driven platform to streamline the yard sale experience. The application eliminates the tedious need to drive around in search of yard sales by providing a centralized platform where users can find and list yard sales in their area.
 
 ## Table Of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Technologies](#technologies)
 - [Demo](#Demo)
 - [Questions](#questions)
-- [Technologies](#technologies)
 - [Collaborators](#collaborators)
+<br> 
 
-<br>
-<br>
+## Installation <a id="installation"></a>
 
-## User Story
+Follow the steps below to install this project:
 
-As a user of YardGems, <br>
-I want to discover nearby yard/garage sales<br>
-So that I can easily find sales and explore different items.
+1.  `Clone` this repo to your local machine
+2.  Open a terminal and navigate to the `root` of the project's directory
+3.  Type `npm run install` and press enter/return on your keyboard to run the command.
+4.  Once the installation finishes, type and run `npm run develop`. This starts the server and runs the react app. Refer to package.json file in the root for more scripts.
 
-<br>
-<br>
+## Usage <a id="usage"></a>
 
-## Acceptance Criteria:
+Create an account or use this dummy account to log in:
+<br><br>
+Email: `vintagevicky@email.com`<br>
+Password: password1234
+<br><br>
+YardGems was designed using a `mobile first` approach, but can also be used on a laptop or desktop.
 
-Given the YardGems web app,<br>
-When I load the app or open the Progressive Web App (PWA),<br>
-Then I am presented with a header that includes the app name, and 2 icons (search, messages), a visually appealing map interface displaying nearby sales, accompanied by a user-friendly navigation menu at the bottom. The menu includes options such as Menu, My Starred Sales, and Map.
+Below are two sections - `Mobile View` and `Standard View`.
 
-When I click on the Search icon at the top right of the page,<br>
-Then I am provided with an input field where I can enter search keywords related to the type of sales I am interested in, such as "table," "art," "tools," or "toys." Additionally, there is an option to choose a specific date to only search sales that have that date, and a submit button to initiate the search.
+Mobile View describes usage in a mobile device like a phone or small tablet.
+Standard View describes usage in a large tablet, laptop, or desktop.
 
-When I enter a search term in the input field and click the submit button,<br>
-Then I am presented with several search results, each featuring a cover photo, the sale's title, address, and description. Furthermore, there is a convenient button to save a sale for later reference.
+### Mobile View
 
-When I click on the Save button for a sale while being logged into my account,<br>
-Then the sale's information is saved to my account for easy access in the future. If I am not logged in, I receive a prompt asking me to either log in or sign up.
+- In mobile view, use the navigation bar at the bottom to navigate through different components.<br>
+- Use the Map component in the Home section to view listings in your area. <br>
+- Each listing is represented by a green gem. Click on the gem to see details about the listing.
+- Click on View Listing in the info window to open a modal with more information about the listing.
+- Use the button at the top right to toggle between Map and List views.
+- In List view, click on a listing to open up the listing modal or click on the heart icon at the bottom right of each listing card to save/favorite the listing.
+- My Listings section displays any listings created by you and features a button for listing creation.
+- Click on the button to create a listing.
+- Each listing must contain a title, description, and date. You may upload up to 5 images with your listing. You can change this limit in ListingModal.js.
+- Saved Listings section displays any listings you have saved/favorited.
+- Click the Menu button at the bottom right to open up a drawer with options: About Us, Contact Us, FAQ, My Account(if applicable), Login/Logout, Install YardGems (if applicable)
+- Use Contact Us to send an email to the email in the original code or any email of your choosing. Refer to the Contact Us component in 'pages' folder.
+- Use My Account to update your username or password.
 
+### Standard View
 
-When I click on the Login or Signup option in the prompt,<br>
-Then I am redirected to the respective pages accordingly.
+- In standard view, use the header at the top and click on the links to navigate through components.
 
-When I am redirected to the SignUp page,<br>
-Then I am presented with input fields to enter a username, email address, password, and a signup button.
+- Use the Map component or the AllListings component in the Home section to find available listings. There is no toggle button in Standard View.
 
-When I provide a valid email address, create a secure password, and click the signup button,<br>
-Then my user account is successfully created, and I am automatically logged into the YardGems platform.
+- Use the button in My Listings section to create a new listing.
 
-When I am redirected to the Login page,<br>
-Then I see input fields to enter my email address and password, along with a login button.
+- Standard View features a footer at the bottom instead of a navigation bar. The footer contains: About Us, Contact Us, FAQ.
 
-When I enter my account's email address and password and click the login button,<br>
-Then I am redirected to the main page that presents the map, and I am successfully logged into the YardGems platform, allowing me to access additional features and functionality.
-
-When I click on the My Saved Sales option in the nav menu, and I am logged into my account,<br>
-Then I am presented with all the sales I have previously saved. Each saved sale includes the sale's title, address, and a cover photo. Additionally, I can easily remove a sale from my saved list using the provided button. If I am not logged in, I receive a prompt asking me to either log in or sign up.
-
-When I click on the Remove button for a sale in my saved list,<br>
-Then the corresponding sale is promptly removed from my saved sales list.
-
-When I click on the Post A Sale button, and I am logged in,<br>
-Then I am asked if i am the host of the sale, if I select yes, I am taken to the Post A Sale Form - Host page. If I am not the host, I am presented with the Post A Sale Form - User page. If I am not logged in, I am taken to the Sign Up page. 
-
-When I am presented with the Post A Sale Form - Host page, <br>
-Then I am able to fill out a form that consists of a title, description, sale categories, start and end time, sale address, and item images(all fields required, minimum one photo and one sale category. We can have a preselected list of categories to choose from). I then click a Submit Sale button and the sale is posted to the map so everyone else can see. 
-
-When I am presented with the Post A Sale Form - User page, <br>
-Then I am able to fill out a form that consists of a title, description, sale categories, start and end time(optional), sale address, and item images(optional. If they don’t upload a photo we’ll have a default photo). I then click a Submit Sale button and the sale is posted to the map so everyone else can see. 
-
-When I click on an existing pin in the map, <br>
-Then I am presented with a small popup that displays the title of the sale along with the address. 
-
-When I click on the sale popup, <br>
-Then I am presented with the sale page that displays the sale’s title, description, categories, start and end time(if applicable), address, item images(if applicable), and a map preview. I can also click on a star icon at the top right of the page to save the sale to my ‘starred sales’. (This button could possibly be a toggle button). I can click on the ‘message seller’ button to message the seller. If I am logged out, I am redirected to the sign up page to access this feature. If I click on the ‘get directions’ button, I am taken to the map and presented with directions to the sale.
-
-
-When I click on the Logout button, <br>
-Then I am safely logged out of the YardGems platform, and the app brings me back to the initial map view, allowing me to continue exploring and discovering sales in my area.
-
-<br>
 <br>
 
 ## Technologies <a id="technologies"></a>
 
 The following technologies were used to develop YardGems:
 <br>
-<br>
 
 <strong>Languages</strong>
+
 - JavaScript
 - Html
 - Css
-    
-<strong>Frameworks</strong> 
+
+<strong>Libraries & Frameworks</strong>
+
+- React
+- Material-UI
 - Express
 - GraphQL
-- Apollo Server Express 
-    
-<strong>Libraries</strong>
-- React
-- React Router Dom
-- Material UI Styling 
-- Bcrypt 
+- Apollo Client & Apollo Server
 
-<strong>Tool Url</strong>
-- Eslint 
-- Dotenv 
+<strong>Database</strong>
 
-    
-<strong>APIs</strong>
+- MongoDB
+- Mongoose ODM
 
-- React Google Maps 
-
-<strong>Other</strong>
+<strong>Tools</strong>
 
 - Node.js
-- Jwt decode 
-- Mongoose 
+- bcrypt
+- JWT
+- dotenv
+- Day.js
+- Cloudinary
+- Emailjs
 
-<br>
+<strong>APIs</strong>
+
+- Google Maps API
+
 <br>
 
 ## Demo <a id="Demo"></a>
 
 https://yardgems-15b0faee737f.herokuapp.com/
-
-
-<br>
-<br>
-
-## Usage <a id="usage"></a> 
-
-Once you reach the landing page you will see a Google Maps rendered with data as well as a list of garage sale postings. You will be able to click on the Google Map markers and the listing post to view more data about the post. For more functionality, you can click on signup button to create an account. Once you've created an account, and have logged in, you are able to post your own garage sale listings, as well as save garage sale listings to your favorite page. You also have the ability to delete and edit your post as well. 
-
-<br>
 <br>
 
 ## Questions <a id="questions"></a>
 
-If you have any questions about this project, please contact the project owners by visiting their GitHub repository at https://github.com/Omar4589/YardGems.
-
-<br>
+If you have any questions about this project, please contact the project owners by visiting their GitHub profiles below.
 <br>
 
 ## Collaborators <a id="collaborators"></a>
 
-<br>
-
 Omar Zumaya <br>
-     https://github.com/Omar4589
+https://github.com/Omar4589
 <br>
 Kristin De Salme<br>
-     https://github.com/KR1ISTIN
+https://github.com/KR1ISTIN
 <br>
 Taylor Aldridge <br>
-     https://github.com/Rolyat512
+https://github.com/Rolyat512
