@@ -53,7 +53,7 @@ export default function GoogleMaps() {
   
   //-----------QUERIES----------//
   const { loading, data } = useQuery(QUERY_LISTINGS);
-  //a variable where we store all the listings in our database
+  //a variable where we store all the listings available in our database
   const allListings = data?.allListings || [];
 
  
