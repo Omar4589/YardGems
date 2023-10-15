@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import MapIcon from "@mui/icons-material/Map";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import GoogleMapsComponent from "../../components/GoogleMaps/GoogleMapsComponent";
+import GoogleMapsComponent from "../../components/googleMaps/GoogleMaps";
 import styles from "./styles";
 import AllListingsComponent from "../../components/AllListings/AllListingsComponent";
 
