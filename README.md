@@ -112,68 +112,22 @@ https://yardgems-15b0faee737f.herokuapp.com/
 
 ## Screenshots <a id="Screenshots"></a>
 
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412859/yardgemsScreenshots/ffqeafkljh3knqqm7czm.png" alt="Caption 1" width="200"/>
-    Launch Screen
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/ghfj1limrbyyvvz2da2r.png" alt="Caption 2" width="200"/>
-    Home - Map View
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/j7wj14wyqzc3vypfb9yw.png" alt="Caption 3" width="200"/>
-   Home - Map View - Info Window
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/guaglkh4ojoquvrgwhcg.png" alt="Caption 4" width="200"/>
-    Listing Modal
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412860/yardgemsScreenshots/sz2wa1rmtts3qynucjd7.png" alt="Caption 5" width="200"/>
-    Home - List View
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412859/yardgemsScreenshots/wv2geybjmocn89eaying.png" alt="Caption 6" width="200"/>
-    Sign Up Page
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412861/yardgemsScreenshots/rkckwbuxaqyfdclvnhie.png" alt="Caption 7" width="200"/>
-    Sign In Page
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412861/yardgemsScreenshots/kq0faossridfqkdkc7j1.png" alt="Caption 8" width="200"/>
-    My Listings
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412861/yardgemsScreenshots/lznyebmrsvxiiibariem.png" alt="Caption 9" width="200"/>
-    Create Listing Modal
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412864/yardgemsScreenshots/p1afzrvmulzfasegm7lv.png" alt="Caption 10" width="200"/>
-    Saved Listings
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412862/yardgemsScreenshots/gwxjnyus4zieyavbovgr.png" alt="Caption 11" width="200"/>
-    Menu Drawer
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/cbpqnygk2zfaokuholoo.png" alt="Caption 12" width="200"/>
-    My Account
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/qs33xgrrplhg4moyihch.png" alt="Caption 13" width="200"/>
-    Contact Us
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/fqv6lghnqmmlka4upq1a.png" alt="Caption 14" width="200"/>
-    About Us
-  </div>
-  <div style="text-align: center; width: 200px;">
-    <img src="https://res.cloudinary.com/yardgems/image/upload/v1697412862/yardgemsScreenshots/wsddydwh8m1kd5mzrez4.png" alt="Caption 15" width="200"/>
-    FAQ
-  </div>
-</div>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412859/yardgemsScreenshots/ffqeafkljh3knqqm7czm.png" alt="Launch Screen" width="200" hspace="50" />
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/ghfj1limrbyyvvz2da2r.png" alt="Home - Map View" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/j7wj14wyqzc3vypfb9yw.png" alt="Home - Map View - Info Window" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/guaglkh4ojoquvrgwhcg.png" alt="Listing Modal" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412860/yardgemsScreenshots/sz2wa1rmtts3qynucjd7.png" alt="Home - List View" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412859/yardgemsScreenshots/wv2geybjmocn89eaying.png" alt="Sign Up Page" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412861/yardgemsScreenshots/rkckwbuxaqyfdclvnhie.png" alt="Sign In Page" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412861/yardgemsScreenshots/kq0faossridfqkdkc7j1.png" alt="My Listings" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412861/yardgemsScreenshots/lznyebmrsvxiiibariem.png" alt="Create Listing Modal" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412864/yardgemsScreenshots/p1afzrvmulzfasegm7lv.png" alt="Saved Listings" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412862/yardgemsScreenshots/gwxjnyus4zieyavbovgr.png" alt="Menu Drawer" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/cbpqnygk2zfaokuholoo.png" alt="My Account" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/qs33xgrrplhg4moyihch.png" alt="Contact Us" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412863/yardgemsScreenshots/fqv6lghnqmmlka4upq1a.png" alt="About Us" width="200" hspace="50"/>
+<img src="https://res.cloudinary.com/yardgems/image/upload/v1697412862/yardgemsScreenshots/wsddydwh8m1kd5mzrez4.png" alt="FAQ" width="200" hspace="50"/>
+
 
 ## Questions <a id="questions"></a>
 
