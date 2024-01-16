@@ -46,6 +46,7 @@ export const QUERY_LISTINGS = gql`
     }
   }
 `;
+
 export const QUERY_SINGLE_LISTING= gql`
   query getSingleListing($listingId: ID!) {
     listing(listingId: $listingId) {
