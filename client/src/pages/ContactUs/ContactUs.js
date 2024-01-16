@@ -56,7 +56,6 @@ const ContactUs = () => {
    const handleCloseSnackbar = () => {
     setEmailWasSent(false);
   };
-  console.log(process.env.REACT_APP_EMAILJS_KEY);
 
   //When using EMAILJS, we must first initiate the service using init() which takes a PUBLIC_KEY as a parameter
   //The public key is provided by EMAILJS when you sign up .
