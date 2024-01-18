@@ -20,7 +20,7 @@ Follow the steps below to install this project:
 
 1.  `Clone` this repo to your local machine
 2.  Open a terminal and navigate to the `root` of the project's directory
-3.  Type `npm run install` and press enter/return on your keyboard to run the command.
+3.  Type `npm install` and press enter/return on your keyboard to run the command.
 4.  Once the installation finishes, type and run `npm run develop`. This starts the server and runs the react app. Refer to package.json file in the root for more scripts.
 
 ## Usage <a id="usage"></a>
