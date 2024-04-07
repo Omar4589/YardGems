@@ -51,7 +51,7 @@ const client = new ApolloClient({
 //----------------START OF COMPONENT------------//
 function App() {
   ///----------STATE------------------//
-  //state used to show loading screen at first load
+  //state used to show loading/splash screen when app loads
   const [loading, setLoading] = useState(true);
   //------------------HOOKS----------------//
   useEffect(() => {
@@ -61,7 +61,7 @@ function App() {
 
     return () => clearTimeout(timer);
   }, []);
-
+  //simple hook that logs a welcome message to the console
   useEffect(() => {
     displayWelcomeLog();
   }, []);
@@ -71,8 +71,8 @@ function App() {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <MapCenterProvider>
           <ListingProvider>
-            {loading && <LoadingScreen />}
             {/* Show the loading screen if loading is true */}
+            {loading && <LoadingScreen />}
             <Router>
               <Header />
               <Routes>

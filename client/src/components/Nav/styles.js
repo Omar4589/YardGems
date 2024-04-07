@@ -4,9 +4,11 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     position: "fixed",
+    zIndex:10,
     bottom: "0",
     textAlign: "center",
     padding:"5px 0px 25px 0px",
+    
   },
   icons: {
     whiteSpace:"nowrap",
