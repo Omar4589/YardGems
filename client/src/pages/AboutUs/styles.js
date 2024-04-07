@@ -68,7 +68,7 @@ const styles = {
   },
   heading4: {
     mt: 5,
-    fontSize: 35,
+    fontSize: 40,
     textAlign: "center",
     fontFamily: "Fjalla One",
     color: "#66bb6a",
