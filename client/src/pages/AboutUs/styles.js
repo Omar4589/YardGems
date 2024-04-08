@@ -2,11 +2,16 @@ const styles = {
   mainContainer: {
     mx: "auto",
     fontFamily: "Roboto",
-    "@media (min-width: 768px)": { padding: "3% 8% 5% 8%" },
+    "@media (min-width: 768px)": {},
   },
-  imageBox: { height: "40rem" },
+  imageBox: {
+    height: "40rem",
+    "@media (min-width: 768px)": {
+      height: "35rem",
+    },
+  },
   bgimage: {
-    position: "initial",
+    position: "relative",
     zIndex: 0,
     objectFit: "fill",
     height: "100%",
@@ -27,11 +32,14 @@ const styles = {
     fontFamily: "Fjalla One",
     zIndex: 4,
     color: "#f1f5f9",
-    position: "relative",
-    bottom: "195%",
     textShadow: "2px 2px 10px #1a1a1a",
+    "@media (min-width: 768px)": {},
   },
-  box2: { zIndex: 4, px: 2, position: "relative", bottom: "195%" },
+  box2: {
+    zIndex: 4,
+    px: 2,
+    "@media (min-width: 768px)": { width: "70%" },
+  },
 
   statement1: {
     mb: 4,
@@ -57,6 +65,7 @@ const styles = {
     textAlign: "center",
     fontFamily: "Fjalla One",
     color: "#66bb6a",
+    "@media (min-width: 768px)": { mb: 1, fontSize: 45 },
   },
   heading3: {
     mt: 5,
@@ -65,6 +74,7 @@ const styles = {
     textAlign: "left",
     fontFamily: "Fjalla One",
     color: "#66bb6a",
+    "@media (min-width: 768px)": { width: "70%", mx: "auto", fontSize: 30 },
   },
   heading4: {
     mt: 5,
@@ -72,6 +82,7 @@ const styles = {
     textAlign: "center",
     fontFamily: "Fjalla One",
     color: "#66bb6a",
+    "@media (min-width: 768px)": { mb: 1, fontSize: 50 },
   },
   statement: {
     mb: 4,
@@ -80,18 +91,18 @@ const styles = {
     fontSize: 17,
     fontFamily: "Roboto",
     zIndex: 4,
+    lineHeight: 2,
     position: "relative",
-    "@media (min-width: 768px)": { fontSize: 20 },
+    "@media (min-width: 768px)": { fontSize: 20, width: "70%", mx: "auto" },
   },
   lastStatment1: {
     px: 2,
     py: 3,
     fontSize: 17,
-
-    "@media (min-width: 768px)": { fontSize: 20 },
+    "@media (min-width: 768px)": { fontSize: 20, width: "70%", mx: "auto" },
   },
   lastStatment2: {
-    mb:14,
+    mb: 4,
     px: 2,
     py: 3,
     fontSize: 17,
